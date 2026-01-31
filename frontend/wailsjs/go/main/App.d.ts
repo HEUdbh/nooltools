@@ -6,6 +6,12 @@ export function AddCharacterAttribute(arg1:number,arg2:string,arg3:string,arg4:n
 
 export function AddCharacterSkill(arg1:number,arg2:string,arg3:string):Promise<void>;
 
+export function AddDaojuFunction(arg1:number,arg2:string,arg3:string):Promise<void>;
+
+export function AddPetAttribute(arg1:number,arg2:string,arg3:string,arg4:number):Promise<void>;
+
+export function AddPetSkill(arg1:number,arg2:string,arg3:string):Promise<void>;
+
 export function AddWeaponAttribute(arg1:number,arg2:string,arg3:string,arg4:number):Promise<void>;
 
 export function AddWeaponSkill(arg1:number,arg2:string,arg3:string):Promise<void>;
@@ -13,6 +19,10 @@ export function AddWeaponSkill(arg1:number,arg2:string,arg3:string):Promise<void
 export function CheckDatabaseStatus():Promise<boolean|string>;
 
 export function CreateCharacter(arg1:string,arg2:string,arg3:number,arg4:number):Promise<number>;
+
+export function CreateDaoju(arg1:string,arg2:string,arg3:number):Promise<number>;
+
+export function CreatePet(arg1:string,arg2:string,arg3:number):Promise<number>;
 
 export function CreateWeapon(arg1:string,arg2:string,arg3:number):Promise<number>;
 
@@ -22,6 +32,16 @@ export function DeleteCharacterAttribute(arg1:number):Promise<void>;
 
 export function DeleteCharacterSkill(arg1:number):Promise<void>;
 
+export function DeleteDaoju(arg1:number):Promise<void>;
+
+export function DeleteDaojuFunction(arg1:number):Promise<void>;
+
+export function DeletePet(arg1:number):Promise<void>;
+
+export function DeletePetAttribute(arg1:number):Promise<void>;
+
+export function DeletePetSkill(arg1:number):Promise<void>;
+
 export function DeleteWeapon(arg1:number):Promise<void>;
 
 export function DeleteWeaponAttribute(arg1:number):Promise<void>;
@@ -30,13 +50,23 @@ export function DeleteWeaponSkill(arg1:number):Promise<void>;
 
 export function GetAllCharacters():Promise<Array<Record<string, any>>>;
 
+export function GetAllDaoju():Promise<Array<Record<string, any>>>;
+
+export function GetAllPets():Promise<Array<Record<string, any>>>;
+
 export function GetAllWeapons():Promise<Array<Record<string, any>>>;
 
 export function GetCharacterInfo(arg1:number):Promise<Record<string, any>>;
 
+export function GetDaojuFunctions(arg1:number):Promise<Array<Record<string, any>>>;
+
+export function GetDaojuInfo(arg1:number):Promise<Record<string, any>>;
+
 export function GetDatabase():Promise<database.Database>;
 
 export function GetDatabaseInfo():Promise<Record<string, any>>;
+
+export function GetPetInfo(arg1:number):Promise<Record<string, any>>;
 
 export function GetWeaponInfo(arg1:number):Promise<Record<string, any>>;
 
@@ -45,6 +75,16 @@ export function UpdateCharacterAttribute(arg1:number,arg2:string,arg3:string,arg
 export function UpdateCharacterBasicInfo(arg1:number,arg2:string,arg3:string,arg4:number,arg5:number):Promise<void>;
 
 export function UpdateCharacterSkill(arg1:number,arg2:string,arg3:string):Promise<void>;
+
+export function UpdateDaojuBasicInfo(arg1:number,arg2:string,arg3:number):Promise<void>;
+
+export function UpdateDaojuFunction(arg1:number,arg2:string,arg3:string):Promise<void>;
+
+export function UpdatePetAttribute(arg1:number,arg2:string,arg3:string,arg4:number):Promise<void>;
+
+export function UpdatePetBasicInfo(arg1:number,arg2:string,arg3:number):Promise<void>;
+
+export function UpdatePetSkill(arg1:number,arg2:string,arg3:string):Promise<void>;
 
 export function UpdateWeaponAttribute(arg1:number,arg2:string,arg3:string,arg4:number):Promise<void>;
 

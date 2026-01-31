@@ -305,3 +305,214 @@ func (a *app) UpdateWeaponSkill(skillID int, name, description string) error {
 	}
 	return a.database.UpdateWeaponSkill(skillID, name, description)
 }
+
+// ============ 宠物相关接口 ============
+
+// GetAllPets 获取所有宠物列表
+func (a *app) GetAllPets() ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+	return a.database.GetAllPets()
+}
+
+// GetPetInfo 获取宠物详细信息
+func (a *app) GetPetInfo(petID int) (map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+
+	info, err := a.database.GetPetInfo(petID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := map[string]interface{}{
+		"id":         info.ID,
+		"name":       info.Name,
+		"level":      info.Level,
+		"owner":      info.Owner,
+		"attributes": info.Attributes,
+		"skills":     info.Skills,
+	}
+
+	return result, nil
+}
+
+// CreatePet 创建新宠物
+func (a *app) CreatePet(name, owner string, level int) (int, error) {
+	if a.database == nil {
+		return 0, fmt.Errorf("数据库未初始化")
+	}
+	return a.database.CreatePet(name, owner, level)
+}
+
+// UpdatePetBasicInfo 更新宠物基本信息
+func (a *app) UpdatePetBasicInfo(petID int, owner string, level int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdatePetBasicInfo(petID, owner, level)
+}
+
+// DeletePet 删除宠物
+func (a *app) DeletePet(petID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeletePet(petID)
+}
+
+// AddPetAttribute 添加宠物属性
+func (a *app) AddPetAttribute(petID int, name, description string, value int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.AddPetAttribute(petID, name, description, value)
+}
+
+// DeletePetAttribute 删除宠物属性
+func (a *app) DeletePetAttribute(attributeID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeletePetAttribute(attributeID)
+}
+
+// UpdatePetAttribute 更新宠物属性
+func (a *app) UpdatePetAttribute(attributeID int, name, description string, value int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdatePetAttribute(attributeID, name, description, value)
+}
+
+// AddPetSkill 添加宠物技能
+func (a *app) AddPetSkill(petID int, name, description string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.AddPetSkill(petID, name, description)
+}
+
+// DeletePetSkill 删除宠物技能
+func (a *app) DeletePetSkill(skillID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeletePetSkill(skillID)
+}
+
+// UpdatePetSkill 更新宠物技能
+func (a *app) UpdatePetSkill(skillID int, name, description string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdatePetSkill(skillID, name, description)
+}
+
+// ============ 道具相关接口 ============
+
+// GetAllDaoju 获取所有道具列表
+func (a *app) GetAllDaoju() ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+	return a.database.GetAllDaoju()
+}
+
+// GetDaojuInfo 获取道具详细信息
+func (a *app) GetDaojuInfo(daojuID int) (map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+
+	info, err := a.database.GetDaojuInfo(daojuID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := map[string]interface{}{
+		"id":        info.ID,
+		"name":      info.Name,
+		"level":     info.Level,
+		"holder":    info.Holder,
+		"functions": info.Functions,
+	}
+
+	return result, nil
+}
+
+// CreateDaoju 创建新道具
+func (a *app) CreateDaoju(name, holder string, level int) (int, error) {
+	if a.database == nil {
+		return 0, fmt.Errorf("数据库未初始化")
+	}
+	id, err := a.database.CreateDaoju(name, level, holder)
+	return int(id), err
+}
+
+// UpdateDaojuBasicInfo 更新道具基本信息
+func (a *app) UpdateDaojuBasicInfo(daojuID int, holder string, level int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdateDaojuBasicInfo(daojuID, level, holder)
+}
+
+// DeleteDaoju 删除道具
+func (a *app) DeleteDaoju(daojuID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeleteDaoju(daojuID)
+}
+
+// GetDaojuFunctions 获取道具功能列表
+func (a *app) GetDaojuFunctions(daojuID int) ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+	functions, err := a.database.GetDaojuFunctions(daojuID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := make([]map[string]interface{}, len(functions))
+	for i, function := range functions {
+		result[i] = map[string]interface{}{
+			"id":          function.ID,
+			"name":        function.Name,
+			"description": function.Description,
+		}
+	}
+
+	return result, nil
+}
+
+// AddDaojuFunction 添加道具功能
+func (a *app) AddDaojuFunction(daojuID int, name, description string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.AddDaojuFunction(daojuID, name, description)
+}
+
+// DeleteDaojuFunction 删除道具功能
+func (a *app) DeleteDaojuFunction(functionID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeleteDaojuFunction(functionID)
+}
+
+// UpdateDaojuFunction 更新道具功能
+func (a *app) UpdateDaojuFunction(functionID int, name, description string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdateDaojuFunction(functionID, name, description)
+}

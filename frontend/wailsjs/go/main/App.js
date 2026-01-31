@@ -10,6 +10,18 @@ export function AddCharacterSkill(arg1, arg2, arg3) {
   return window['go']['main']['app']['AddCharacterSkill'](arg1, arg2, arg3);
 }
 
+export function AddDaojuFunction(arg1, arg2, arg3) {
+  return window['go']['main']['app']['AddDaojuFunction'](arg1, arg2, arg3);
+}
+
+export function AddPetAttribute(arg1, arg2, arg3, arg4) {
+  return window['go']['main']['app']['AddPetAttribute'](arg1, arg2, arg3, arg4);
+}
+
+export function AddPetSkill(arg1, arg2, arg3) {
+  return window['go']['main']['app']['AddPetSkill'](arg1, arg2, arg3);
+}
+
 export function AddWeaponAttribute(arg1, arg2, arg3, arg4) {
   return window['go']['main']['app']['AddWeaponAttribute'](arg1, arg2, arg3, arg4);
 }
@@ -24,6 +36,14 @@ export function CheckDatabaseStatus() {
 
 export function CreateCharacter(arg1, arg2, arg3, arg4) {
   return window['go']['main']['app']['CreateCharacter'](arg1, arg2, arg3, arg4);
+}
+
+export function CreateDaoju(arg1, arg2, arg3) {
+  return window['go']['main']['app']['CreateDaoju'](arg1, arg2, arg3);
+}
+
+export function CreatePet(arg1, arg2, arg3) {
+  return window['go']['main']['app']['CreatePet'](arg1, arg2, arg3);
 }
 
 export function CreateWeapon(arg1, arg2, arg3) {
@@ -42,6 +62,26 @@ export function DeleteCharacterSkill(arg1) {
   return window['go']['main']['app']['DeleteCharacterSkill'](arg1);
 }
 
+export function DeleteDaoju(arg1) {
+  return window['go']['main']['app']['DeleteDaoju'](arg1);
+}
+
+export function DeleteDaojuFunction(arg1) {
+  return window['go']['main']['app']['DeleteDaojuFunction'](arg1);
+}
+
+export function DeletePet(arg1) {
+  return window['go']['main']['app']['DeletePet'](arg1);
+}
+
+export function DeletePetAttribute(arg1) {
+  return window['go']['main']['app']['DeletePetAttribute'](arg1);
+}
+
+export function DeletePetSkill(arg1) {
+  return window['go']['main']['app']['DeletePetSkill'](arg1);
+}
+
 export function DeleteWeapon(arg1) {
   return window['go']['main']['app']['DeleteWeapon'](arg1);
 }
@@ -58,6 +98,14 @@ export function GetAllCharacters() {
   return window['go']['main']['app']['GetAllCharacters']();
 }
 
+export function GetAllDaoju() {
+  return window['go']['main']['app']['GetAllDaoju']();
+}
+
+export function GetAllPets() {
+  return window['go']['main']['app']['GetAllPets']();
+}
+
 export function GetAllWeapons() {
   return window['go']['main']['app']['GetAllWeapons']();
 }
@@ -66,12 +114,24 @@ export function GetCharacterInfo(arg1) {
   return window['go']['main']['app']['GetCharacterInfo'](arg1);
 }
 
+export function GetDaojuFunctions(arg1) {
+  return window['go']['main']['app']['GetDaojuFunctions'](arg1);
+}
+
+export function GetDaojuInfo(arg1) {
+  return window['go']['main']['app']['GetDaojuInfo'](arg1);
+}
+
 export function GetDatabase() {
   return window['go']['main']['app']['GetDatabase']();
 }
 
 export function GetDatabaseInfo() {
   return window['go']['main']['app']['GetDatabaseInfo']();
+}
+
+export function GetPetInfo(arg1) {
+  return window['go']['main']['app']['GetPetInfo'](arg1);
 }
 
 export function GetWeaponInfo(arg1) {
@@ -88,6 +148,26 @@ export function UpdateCharacterBasicInfo(arg1, arg2, arg3, arg4, arg5) {
 
 export function UpdateCharacterSkill(arg1, arg2, arg3) {
   return window['go']['main']['app']['UpdateCharacterSkill'](arg1, arg2, arg3);
+}
+
+export function UpdateDaojuBasicInfo(arg1, arg2, arg3) {
+  return window['go']['main']['app']['UpdateDaojuBasicInfo'](arg1, arg2, arg3);
+}
+
+export function UpdateDaojuFunction(arg1, arg2, arg3) {
+  return window['go']['main']['app']['UpdateDaojuFunction'](arg1, arg2, arg3);
+}
+
+export function UpdatePetAttribute(arg1, arg2, arg3, arg4) {
+  return window['go']['main']['app']['UpdatePetAttribute'](arg1, arg2, arg3, arg4);
+}
+
+export function UpdatePetBasicInfo(arg1, arg2, arg3) {
+  return window['go']['main']['app']['UpdatePetBasicInfo'](arg1, arg2, arg3);
+}
+
+export function UpdatePetSkill(arg1, arg2, arg3) {
+  return window['go']['main']['app']['UpdatePetSkill'](arg1, arg2, arg3);
 }
 
 export function UpdateWeaponAttribute(arg1, arg2, arg3, arg4) {

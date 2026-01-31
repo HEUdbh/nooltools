@@ -130,6 +130,21 @@ func (d *Database) initTables() error {
 		return err
 	}
 
+	// 创建宠物属性表
+	if err := d.createChongwuAttributesTable(); err != nil {
+		return err
+	}
+
+	// 创建宠物技能表
+	if err := d.createChongwuSkillsTable(); err != nil {
+		return err
+	}
+
+	// 创建道具功能表
+	if err := d.createDaojuFunctionsTable(); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -372,7 +387,7 @@ func (d *Database) CheckDatabase() (bool, error) {
 	}
 
 	// 检查所有表是否存在
-	tables := []string{"renwu", "renwu_attributes", "renwu_skills", "wuqi", "wuqi_attributes", "wuqi_skills", "shiqing", "shili", "guaiwu", "daoju", "chongwu"}
+	tables := []string{"renwu", "renwu_attributes", "renwu_skills", "wuqi", "wuqi_attributes", "wuqi_skills", "shiqing", "shili", "guaiwu", "daoju", "chongwu", "chongwu_attributes", "chongwu_skills"}
 
 	for _, table := range tables {
 		if err := d.checkTableExists(table); err != nil {
@@ -441,6 +456,58 @@ func (d *Database) createRenwuSkillsTable() error {
 		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 		FOREIGN KEY (renwu_id) REFERENCES renwu(id) ON DELETE CASCADE
+	)`
+
+	_, err := d.db.Exec(query)
+	return err
+}
+
+// createChongwuAttributesTable 创建宠物属性表
+func (d *Database) createChongwuAttributesTable() error {
+	query := `
+	CREATE TABLE IF NOT EXISTS chongwu_attributes (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		chongwu_id INTEGER NOT NULL,
+		name TEXT NOT NULL,
+		description TEXT DEFAULT '',
+		value INTEGER DEFAULT 0,
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY (chongwu_id) REFERENCES chongwu(id) ON DELETE CASCADE
+	)`
+
+	_, err := d.db.Exec(query)
+	return err
+}
+
+// createChongwuSkillsTable 创建宠物技能表
+func (d *Database) createChongwuSkillsTable() error {
+	query := `
+	CREATE TABLE IF NOT EXISTS chongwu_skills (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		chongwu_id INTEGER NOT NULL,
+		name TEXT NOT NULL,
+		description TEXT DEFAULT '',
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY (chongwu_id) REFERENCES chongwu(id) ON DELETE CASCADE
+	)`
+
+	_, err := d.db.Exec(query)
+	return err
+}
+
+// createDaojuFunctionsTable 创建道具功能表
+func (d *Database) createDaojuFunctionsTable() error {
+	query := `
+	CREATE TABLE IF NOT EXISTS daoju_functions (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		daoju_id INTEGER NOT NULL,
+		name TEXT NOT NULL,
+		description TEXT DEFAULT '',
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY (daoju_id) REFERENCES daoju(id) ON DELETE CASCADE
 	)`
 
 	_, err := d.db.Exec(query)
