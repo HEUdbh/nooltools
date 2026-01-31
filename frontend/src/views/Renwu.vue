@@ -187,13 +187,16 @@ function handleAddCharacter() {
 
 // 确认添加人物
 async function handleAddCharacterConfirm(data) {
+  console.log('开始添加人物，数据:', data)
   try {
+    console.log('调用 CreateCharacter 接口，参数:', data.name, data.faction, data.wealth, data.level)
     const newId = await window.go.main.app.CreateCharacter(
       data.name,
       data.faction,
       data.wealth,
       data.level
     )
+    console.log('创建人物成功，ID:', newId)
     
     // 重新加载列表
     await loadCharacters()
@@ -201,6 +204,7 @@ async function handleAddCharacterConfirm(data) {
     await loadCharacterDetail(newId)
   } catch (error) {
     console.error('添加人物失败:', error)
+    alert('添加人物失败: ' + error.message)
   }
 }
 

@@ -30,21 +30,21 @@ function handleConfirm() {
     alert('请输入人物名称')
     return
   }
-  if (!level.value.trim()) {
-    alert('请输入人物等级')
+  if (!level.value || level.value <= 0) {
+    alert('请输入有效的人物等级')
     return
   }
-  
+
   const wealthNum = parseInt(wealth.value) || 0
   const levelNum = parseInt(level.value) || 1
-  
+
   emit('confirm', {
     name: name.value.trim(),
     faction: faction.value.trim(),
     wealth: wealthNum,
     level: levelNum
   })
-  
+
   emit('update:visible', false)
 }
 
