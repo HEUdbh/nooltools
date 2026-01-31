@@ -516,3 +516,107 @@ func (a *app) UpdateDaojuFunction(functionID int, name, description string) erro
 	}
 	return a.database.UpdateDaojuFunction(functionID, name, description)
 }
+
+// ============ 任务相关接口 ============
+
+// GetAllShiqing 获取所有任务列表
+func (a *app) GetAllShiqing() ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+	return a.database.GetAllShiqing()
+}
+
+// GetShiqingInfo 获取任务详细信息
+func (a *app) GetShiqingInfo(shiqingID int) (map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+
+	info, err := a.database.GetShiqingInfo(shiqingID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := map[string]interface{}{
+		"id":       info.ID,
+		"name":     info.Name,
+		"location": info.Location,
+		"time":     info.Time,
+		"details":  info.Details,
+	}
+
+	return result, nil
+}
+
+// CreateShiqing 创建新任务
+func (a *app) CreateShiqing(name, location, time string) (int, error) {
+	if a.database == nil {
+		return 0, fmt.Errorf("数据库未初始化")
+	}
+	id, err := a.database.CreateShiqing(name, location, time)
+	return int(id), err
+}
+
+// UpdateShiqingBasicInfo 更新任务基本信息
+func (a *app) UpdateShiqingBasicInfo(shiqingID int, location, time string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdateShiqingBasicInfo(shiqingID, location, time)
+}
+
+// DeleteShiqing 删除任务
+func (a *app) DeleteShiqing(shiqingID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeleteShiqing(shiqingID)
+}
+
+// GetShiqingDetails 获取任务详情列表
+func (a *app) GetShiqingDetails(shiqingID int) ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+	details, err := a.database.GetShiqingDetails(shiqingID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := make([]map[string]interface{}, len(details))
+	for i, detail := range details {
+		result[i] = map[string]interface{}{
+			"id":          detail.ID,
+			"description": detail.Description,
+		}
+	}
+
+	return result, nil
+}
+
+// AddShiqingDetail 添加任务详情
+func (a *app) AddShiqingDetail(shiqingID int, description string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.AddShiqingDetail(shiqingID, description)
+}
+
+// DeleteShiqingDetail 删除任务详情
+func (a *app) DeleteShiqingDetail(detailID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeleteShiqingDetail(detailID)
+}
+
+// UpdateShiqingDetail 更新任务详情
+func (a *app) UpdateShiqingDetail(detailID int, description string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdateShiqingDetail(detailID, description)
+}

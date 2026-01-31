@@ -110,6 +110,11 @@ func (d *Database) initTables() error {
 		return err
 	}
 
+	// 创建任务详情表
+	if err := d.createShiqingDetailsTable(); err != nil {
+		return err
+	}
+
 	// 创建帮派表
 	if err := d.createShiliTable(); err != nil {
 		return err
@@ -508,6 +513,22 @@ func (d *Database) createDaojuFunctionsTable() error {
 		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 		FOREIGN KEY (daoju_id) REFERENCES daoju(id) ON DELETE CASCADE
+	)`
+
+	_, err := d.db.Exec(query)
+	return err
+}
+
+// createShiqingDetailsTable 创建任务详情表
+func (d *Database) createShiqingDetailsTable() error {
+	query := `
+	CREATE TABLE IF NOT EXISTS shiqing_details (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		shiqing_id INTEGER NOT NULL,
+		description TEXT NOT NULL,
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY (shiqing_id) REFERENCES shiqing(id) ON DELETE CASCADE
 	)`
 
 	_, err := d.db.Exec(query)

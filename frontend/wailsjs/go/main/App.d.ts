@@ -12,6 +12,8 @@ export function AddPetAttribute(arg1:number,arg2:string,arg3:string,arg4:number)
 
 export function AddPetSkill(arg1:number,arg2:string,arg3:string):Promise<void>;
 
+export function AddShiqingDetail(arg1:number,arg2:string):Promise<void>;
+
 export function AddWeaponAttribute(arg1:number,arg2:string,arg3:string,arg4:number):Promise<void>;
 
 export function AddWeaponSkill(arg1:number,arg2:string,arg3:string):Promise<void>;
@@ -23,6 +25,8 @@ export function CreateCharacter(arg1:string,arg2:string,arg3:number,arg4:number)
 export function CreateDaoju(arg1:string,arg2:string,arg3:number):Promise<number>;
 
 export function CreatePet(arg1:string,arg2:string,arg3:number):Promise<number>;
+
+export function CreateShiqing(arg1:string,arg2:string,arg3:string):Promise<number>;
 
 export function CreateWeapon(arg1:string,arg2:string,arg3:number):Promise<number>;
 
@@ -42,6 +46,10 @@ export function DeletePetAttribute(arg1:number):Promise<void>;
 
 export function DeletePetSkill(arg1:number):Promise<void>;
 
+export function DeleteShiqing(arg1:number):Promise<void>;
+
+export function DeleteShiqingDetail(arg1:number):Promise<void>;
+
 export function DeleteWeapon(arg1:number):Promise<void>;
 
 export function DeleteWeaponAttribute(arg1:number):Promise<void>;
@@ -53,6 +61,8 @@ export function GetAllCharacters():Promise<Array<Record<string, any>>>;
 export function GetAllDaoju():Promise<Array<Record<string, any>>>;
 
 export function GetAllPets():Promise<Array<Record<string, any>>>;
+
+export function GetAllShiqing():Promise<Array<Record<string, any>>>;
 
 export function GetAllWeapons():Promise<Array<Record<string, any>>>;
 
@@ -67,6 +77,10 @@ export function GetDatabase():Promise<database.Database>;
 export function GetDatabaseInfo():Promise<Record<string, any>>;
 
 export function GetPetInfo(arg1:number):Promise<Record<string, any>>;
+
+export function GetShiqingDetails(arg1:number):Promise<Array<Record<string, any>>>;
+
+export function GetShiqingInfo(arg1:number):Promise<Record<string, any>>;
 
 export function GetWeaponInfo(arg1:number):Promise<Record<string, any>>;
 
@@ -85,6 +99,10 @@ export function UpdatePetAttribute(arg1:number,arg2:string,arg3:string,arg4:numb
 export function UpdatePetBasicInfo(arg1:number,arg2:string,arg3:number):Promise<void>;
 
 export function UpdatePetSkill(arg1:number,arg2:string,arg3:string):Promise<void>;
+
+export function UpdateShiqingBasicInfo(arg1:number,arg2:string,arg3:string):Promise<void>;
+
+export function UpdateShiqingDetail(arg1:number,arg2:string):Promise<void>;
 
 export function UpdateWeaponAttribute(arg1:number,arg2:string,arg3:string,arg4:number):Promise<void>;
 

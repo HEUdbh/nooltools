@@ -22,6 +22,10 @@ export function AddPetSkill(arg1, arg2, arg3) {
   return window['go']['main']['app']['AddPetSkill'](arg1, arg2, arg3);
 }
 
+export function AddShiqingDetail(arg1, arg2) {
+  return window['go']['main']['app']['AddShiqingDetail'](arg1, arg2);
+}
+
 export function AddWeaponAttribute(arg1, arg2, arg3, arg4) {
   return window['go']['main']['app']['AddWeaponAttribute'](arg1, arg2, arg3, arg4);
 }
@@ -44,6 +48,10 @@ export function CreateDaoju(arg1, arg2, arg3) {
 
 export function CreatePet(arg1, arg2, arg3) {
   return window['go']['main']['app']['CreatePet'](arg1, arg2, arg3);
+}
+
+export function CreateShiqing(arg1, arg2, arg3) {
+  return window['go']['main']['app']['CreateShiqing'](arg1, arg2, arg3);
 }
 
 export function CreateWeapon(arg1, arg2, arg3) {
@@ -82,6 +90,14 @@ export function DeletePetSkill(arg1) {
   return window['go']['main']['app']['DeletePetSkill'](arg1);
 }
 
+export function DeleteShiqing(arg1) {
+  return window['go']['main']['app']['DeleteShiqing'](arg1);
+}
+
+export function DeleteShiqingDetail(arg1) {
+  return window['go']['main']['app']['DeleteShiqingDetail'](arg1);
+}
+
 export function DeleteWeapon(arg1) {
   return window['go']['main']['app']['DeleteWeapon'](arg1);
 }
@@ -104,6 +120,10 @@ export function GetAllDaoju() {
 
 export function GetAllPets() {
   return window['go']['main']['app']['GetAllPets']();
+}
+
+export function GetAllShiqing() {
+  return window['go']['main']['app']['GetAllShiqing']();
 }
 
 export function GetAllWeapons() {
@@ -132,6 +152,14 @@ export function GetDatabaseInfo() {
 
 export function GetPetInfo(arg1) {
   return window['go']['main']['app']['GetPetInfo'](arg1);
+}
+
+export function GetShiqingDetails(arg1) {
+  return window['go']['main']['app']['GetShiqingDetails'](arg1);
+}
+
+export function GetShiqingInfo(arg1) {
+  return window['go']['main']['app']['GetShiqingInfo'](arg1);
 }
 
 export function GetWeaponInfo(arg1) {
@@ -168,6 +196,14 @@ export function UpdatePetBasicInfo(arg1, arg2, arg3) {
 
 export function UpdatePetSkill(arg1, arg2, arg3) {
   return window['go']['main']['app']['UpdatePetSkill'](arg1, arg2, arg3);
+}
+
+export function UpdateShiqingBasicInfo(arg1, arg2, arg3) {
+  return window['go']['main']['app']['UpdateShiqingBasicInfo'](arg1, arg2, arg3);
+}
+
+export function UpdateShiqingDetail(arg1, arg2) {
+  return window['go']['main']['app']['UpdateShiqingDetail'](arg1, arg2);
 }
 
 export function UpdateWeaponAttribute(arg1, arg2, arg3, arg4) {
