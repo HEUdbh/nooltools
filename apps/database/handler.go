@@ -125,6 +125,21 @@ func (d *Database) initTables() error {
 		return err
 	}
 
+	// 更新怪物表结构（处理旧版本数据库）
+	if err := d.updateGuaiwuTableSchema(); err != nil {
+		return err
+	}
+
+	// 创建怪物属性表
+	if err := d.createGuaiwuAttributesTable(); err != nil {
+		return err
+	}
+
+	// 创建怪物技能表
+	if err := d.createGuaiwuSkillsTable(); err != nil {
+		return err
+	}
+
 	// 创建道具表
 	if err := d.createDaojuTable(); err != nil {
 		return err
@@ -333,6 +348,7 @@ func (d *Database) createGuaiwuTable() error {
 	query := `
 	CREATE TABLE IF NOT EXISTS guaiwu (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		name TEXT NOT NULL DEFAULT '未命名',
 		type TEXT NOT NULL,
 		level INTEGER DEFAULT 1,
 		health INTEGER DEFAULT 100,
@@ -345,6 +361,16 @@ func (d *Database) createGuaiwuTable() error {
 
 	_, err := d.db.Exec(query)
 	return err
+}
+
+// updateGuaiwuTableSchema 更新怪物表结构（处理旧版本数据库）
+func (d *Database) updateGuaiwuTableSchema() error {
+	// 检查并添加 name 字段
+	if err := d.addColumnIfNotExists("guaiwu", "name", "TEXT NOT NULL DEFAULT '未命名'"); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // createDaojuTable 创建道具表
@@ -392,7 +418,7 @@ func (d *Database) CheckDatabase() (bool, error) {
 	}
 
 	// 检查所有表是否存在
-	tables := []string{"renwu", "renwu_attributes", "renwu_skills", "wuqi", "wuqi_attributes", "wuqi_skills", "shiqing", "shili", "guaiwu", "daoju", "chongwu", "chongwu_attributes", "chongwu_skills"}
+	tables := []string{"renwu", "renwu_attributes", "renwu_skills", "wuqi", "wuqi_attributes", "wuqi_skills", "shiqing", "shili", "guaiwu", "guaiwu_attributes", "guaiwu_skills", "daoju", "chongwu", "chongwu_attributes", "chongwu_skills"}
 
 	for _, table := range tables {
 		if err := d.checkTableExists(table); err != nil {
@@ -529,6 +555,41 @@ func (d *Database) createShiqingDetailsTable() error {
 		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 		FOREIGN KEY (shiqing_id) REFERENCES shiqing(id) ON DELETE CASCADE
+	)`
+
+	_, err := d.db.Exec(query)
+	return err
+}
+
+// createGuaiwuAttributesTable 创建怪物属性表
+func (d *Database) createGuaiwuAttributesTable() error {
+	query := `
+	CREATE TABLE IF NOT EXISTS guaiwu_attributes (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		guaiwu_id INTEGER NOT NULL,
+		name TEXT NOT NULL,
+		description TEXT DEFAULT '',
+		value INTEGER DEFAULT 0,
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY (guaiwu_id) REFERENCES guaiwu(id) ON DELETE CASCADE
+	)`
+
+	_, err := d.db.Exec(query)
+	return err
+}
+
+// createGuaiwuSkillsTable 创建怪物技能表
+func (d *Database) createGuaiwuSkillsTable() error {
+	query := `
+	CREATE TABLE IF NOT EXISTS guaiwu_skills (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		guaiwu_id INTEGER NOT NULL,
+		name TEXT NOT NULL,
+		description TEXT DEFAULT '',
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY (guaiwu_id) REFERENCES guaiwu(id) ON DELETE CASCADE
 	)`
 
 	_, err := d.db.Exec(query)

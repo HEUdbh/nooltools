@@ -8,6 +8,10 @@ export function AddCharacterSkill(arg1:number,arg2:string,arg3:string):Promise<v
 
 export function AddDaojuFunction(arg1:number,arg2:string,arg3:string):Promise<void>;
 
+export function AddGuaiwuAttribute(arg1:number,arg2:string,arg3:string,arg4:number):Promise<void>;
+
+export function AddGuaiwuSkill(arg1:number,arg2:string,arg3:string):Promise<void>;
+
 export function AddPetAttribute(arg1:number,arg2:string,arg3:string,arg4:number):Promise<void>;
 
 export function AddPetSkill(arg1:number,arg2:string,arg3:string):Promise<void>;
@@ -24,6 +28,8 @@ export function CreateCharacter(arg1:string,arg2:string,arg3:number,arg4:number)
 
 export function CreateDaoju(arg1:string,arg2:string,arg3:number):Promise<number>;
 
+export function CreateGuaiwu(arg1:string,arg2:string,arg3:number,arg4:number,arg5:number,arg6:number,arg7:string):Promise<number>;
+
 export function CreatePet(arg1:string,arg2:string,arg3:number):Promise<number>;
 
 export function CreateShiqing(arg1:string,arg2:string,arg3:string):Promise<number>;
@@ -39,6 +45,12 @@ export function DeleteCharacterSkill(arg1:number):Promise<void>;
 export function DeleteDaoju(arg1:number):Promise<void>;
 
 export function DeleteDaojuFunction(arg1:number):Promise<void>;
+
+export function DeleteGuaiwu(arg1:number):Promise<void>;
+
+export function DeleteGuaiwuAttribute(arg1:number):Promise<void>;
+
+export function DeleteGuaiwuSkill(arg1:number):Promise<void>;
 
 export function DeletePet(arg1:number):Promise<void>;
 
@@ -60,6 +72,8 @@ export function GetAllCharacters():Promise<Array<Record<string, any>>>;
 
 export function GetAllDaoju():Promise<Array<Record<string, any>>>;
 
+export function GetAllGuaiwu():Promise<Array<Record<string, any>>>;
+
 export function GetAllPets():Promise<Array<Record<string, any>>>;
 
 export function GetAllShiqing():Promise<Array<Record<string, any>>>;
@@ -75,6 +89,12 @@ export function GetDaojuInfo(arg1:number):Promise<Record<string, any>>;
 export function GetDatabase():Promise<database.Database>;
 
 export function GetDatabaseInfo():Promise<Record<string, any>>;
+
+export function GetGuaiwuAttributes(arg1:number):Promise<Array<Record<string, any>>>;
+
+export function GetGuaiwuInfo(arg1:number):Promise<Record<string, any>>;
+
+export function GetGuaiwuSkills(arg1:number):Promise<Array<Record<string, any>>>;
 
 export function GetPetInfo(arg1:number):Promise<Record<string, any>>;
 
@@ -93,6 +113,12 @@ export function UpdateCharacterSkill(arg1:number,arg2:string,arg3:string):Promis
 export function UpdateDaojuBasicInfo(arg1:number,arg2:string,arg3:number):Promise<void>;
 
 export function UpdateDaojuFunction(arg1:number,arg2:string,arg3:string):Promise<void>;
+
+export function UpdateGuaiwuAttribute(arg1:number,arg2:string,arg3:string,arg4:number):Promise<void>;
+
+export function UpdateGuaiwuBasicInfo(arg1:number,arg2:number,arg3:number,arg4:number,arg5:number,arg6:string):Promise<void>;
+
+export function UpdateGuaiwuSkill(arg1:number,arg2:string,arg3:string):Promise<void>;
 
 export function UpdatePetAttribute(arg1:number,arg2:string,arg3:string,arg4:number):Promise<void>;
 

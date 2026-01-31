@@ -620,3 +620,193 @@ func (a *app) UpdateShiqingDetail(detailID int, description string) error {
 	}
 	return a.database.UpdateShiqingDetail(detailID, description)
 }
+
+// ============ 怪物相关接口 ============
+
+// GetAllGuaiwu 获取所有怪物列表
+func (a *app) GetAllGuaiwu() ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+	guaiwuList, err := a.database.GetAllGuaiwu()
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := make([]map[string]interface{}, len(guaiwuList))
+	for i, g := range guaiwuList {
+		result[i] = map[string]interface{}{
+			"id":      g.ID,
+			"name":    g.Name,
+			"type":    g.Type,
+			"level":   g.Level,
+			"health":  g.Health,
+			"attack":  g.Attack,
+			"defense": g.Defense,
+			"rewards": g.Rewards,
+		}
+	}
+
+	return result, nil
+}
+
+// GetGuaiwuInfo 获取怪物详细信息
+func (a *app) GetGuaiwuInfo(guaiwuID int) (map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+
+	info, err := a.database.GetGuaiwuInfo(guaiwuID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 获取属性和技能
+	attributes, err := a.database.GetGuaiwuAttributes(guaiwuID)
+	if err != nil {
+		return nil, err
+	}
+
+	skills, err := a.database.GetGuaiwuSkills(guaiwuID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := map[string]interface{}{
+		"id":         info.ID,
+		"name":       info.Name,
+		"type":       info.Type,
+		"level":      info.Level,
+		"health":     info.Health,
+		"attack":     info.Attack,
+		"defense":    info.Defense,
+		"rewards":    info.Rewards,
+		"attributes": attributes,
+		"skills":     skills,
+	}
+
+	return result, nil
+}
+
+// CreateGuaiwu 创建新怪物
+func (a *app) CreateGuaiwu(name, guaiwuType string, level, health, attack, defense int, rewards string) (int, error) {
+	if a.database == nil {
+		return 0, fmt.Errorf("数据库未初始化")
+	}
+	return a.database.CreateGuaiwu(name, guaiwuType, level, health, attack, defense, rewards)
+}
+
+// UpdateGuaiwuBasicInfo 更新怪物基本信息
+func (a *app) UpdateGuaiwuBasicInfo(guaiwuID int, level, health, attack, defense int, rewards string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdateGuaiwuBasicInfo(guaiwuID, level, health, attack, defense, rewards)
+}
+
+// DeleteGuaiwu 删除怪物
+func (a *app) DeleteGuaiwu(guaiwuID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeleteGuaiwu(guaiwuID)
+}
+
+// GetGuaiwuAttributes 获取怪物属性列表
+func (a *app) GetGuaiwuAttributes(guaiwuID int) ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+	attributes, err := a.database.GetGuaiwuAttributes(guaiwuID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := make([]map[string]interface{}, len(attributes))
+	for i, attr := range attributes {
+		result[i] = map[string]interface{}{
+			"id":          attr.ID,
+			"guaiwu_id":   attr.GuaiwuID,
+			"name":        attr.Name,
+			"description": attr.Description,
+			"value":       attr.Value,
+		}
+	}
+
+	return result, nil
+}
+
+// AddGuaiwuAttribute 添加怪物属性
+func (a *app) AddGuaiwuAttribute(guaiwuID int, name, description string, value int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.AddGuaiwuAttribute(guaiwuID, name, description, value)
+}
+
+// DeleteGuaiwuAttribute 删除怪物属性
+func (a *app) DeleteGuaiwuAttribute(attributeID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeleteGuaiwuAttribute(attributeID)
+}
+
+// UpdateGuaiwuAttribute 更新怪物属性
+func (a *app) UpdateGuaiwuAttribute(attributeID int, name, description string, value int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdateGuaiwuAttribute(attributeID, name, description, value)
+}
+
+// GetGuaiwuSkills 获取怪物技能列表
+func (a *app) GetGuaiwuSkills(guaiwuID int) ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+	skills, err := a.database.GetGuaiwuSkills(guaiwuID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := make([]map[string]interface{}, len(skills))
+	for i, skill := range skills {
+		result[i] = map[string]interface{}{
+			"id":          skill.ID,
+			"guaiwu_id":   skill.GuaiwuID,
+			"name":        skill.Name,
+			"description": skill.Description,
+		}
+	}
+
+	return result, nil
+}
+
+// AddGuaiwuSkill 添加怪物技能
+func (a *app) AddGuaiwuSkill(guaiwuID int, name, description string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.AddGuaiwuSkill(guaiwuID, name, description)
+}
+
+// DeleteGuaiwuSkill 删除怪物技能
+func (a *app) DeleteGuaiwuSkill(skillID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeleteGuaiwuSkill(skillID)
+}
+
+// UpdateGuaiwuSkill 更新怪物技能
+func (a *app) UpdateGuaiwuSkill(skillID int, name, description string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdateGuaiwuSkill(skillID, name, description)
+}

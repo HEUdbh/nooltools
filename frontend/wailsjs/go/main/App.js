@@ -14,6 +14,14 @@ export function AddDaojuFunction(arg1, arg2, arg3) {
   return window['go']['main']['app']['AddDaojuFunction'](arg1, arg2, arg3);
 }
 
+export function AddGuaiwuAttribute(arg1, arg2, arg3, arg4) {
+  return window['go']['main']['app']['AddGuaiwuAttribute'](arg1, arg2, arg3, arg4);
+}
+
+export function AddGuaiwuSkill(arg1, arg2, arg3) {
+  return window['go']['main']['app']['AddGuaiwuSkill'](arg1, arg2, arg3);
+}
+
 export function AddPetAttribute(arg1, arg2, arg3, arg4) {
   return window['go']['main']['app']['AddPetAttribute'](arg1, arg2, arg3, arg4);
 }
@@ -46,6 +54,10 @@ export function CreateDaoju(arg1, arg2, arg3) {
   return window['go']['main']['app']['CreateDaoju'](arg1, arg2, arg3);
 }
 
+export function CreateGuaiwu(arg1, arg2, arg3, arg4, arg5, arg6, arg7) {
+  return window['go']['main']['app']['CreateGuaiwu'](arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+}
+
 export function CreatePet(arg1, arg2, arg3) {
   return window['go']['main']['app']['CreatePet'](arg1, arg2, arg3);
 }
@@ -76,6 +88,18 @@ export function DeleteDaoju(arg1) {
 
 export function DeleteDaojuFunction(arg1) {
   return window['go']['main']['app']['DeleteDaojuFunction'](arg1);
+}
+
+export function DeleteGuaiwu(arg1) {
+  return window['go']['main']['app']['DeleteGuaiwu'](arg1);
+}
+
+export function DeleteGuaiwuAttribute(arg1) {
+  return window['go']['main']['app']['DeleteGuaiwuAttribute'](arg1);
+}
+
+export function DeleteGuaiwuSkill(arg1) {
+  return window['go']['main']['app']['DeleteGuaiwuSkill'](arg1);
 }
 
 export function DeletePet(arg1) {
@@ -118,6 +142,10 @@ export function GetAllDaoju() {
   return window['go']['main']['app']['GetAllDaoju']();
 }
 
+export function GetAllGuaiwu() {
+  return window['go']['main']['app']['GetAllGuaiwu']();
+}
+
 export function GetAllPets() {
   return window['go']['main']['app']['GetAllPets']();
 }
@@ -148,6 +176,18 @@ export function GetDatabase() {
 
 export function GetDatabaseInfo() {
   return window['go']['main']['app']['GetDatabaseInfo']();
+}
+
+export function GetGuaiwuAttributes(arg1) {
+  return window['go']['main']['app']['GetGuaiwuAttributes'](arg1);
+}
+
+export function GetGuaiwuInfo(arg1) {
+  return window['go']['main']['app']['GetGuaiwuInfo'](arg1);
+}
+
+export function GetGuaiwuSkills(arg1) {
+  return window['go']['main']['app']['GetGuaiwuSkills'](arg1);
 }
 
 export function GetPetInfo(arg1) {
@@ -184,6 +224,18 @@ export function UpdateDaojuBasicInfo(arg1, arg2, arg3) {
 
 export function UpdateDaojuFunction(arg1, arg2, arg3) {
   return window['go']['main']['app']['UpdateDaojuFunction'](arg1, arg2, arg3);
+}
+
+export function UpdateGuaiwuAttribute(arg1, arg2, arg3, arg4) {
+  return window['go']['main']['app']['UpdateGuaiwuAttribute'](arg1, arg2, arg3, arg4);
+}
+
+export function UpdateGuaiwuBasicInfo(arg1, arg2, arg3, arg4, arg5, arg6) {
+  return window['go']['main']['app']['UpdateGuaiwuBasicInfo'](arg1, arg2, arg3, arg4, arg5, arg6);
+}
+
+export function UpdateGuaiwuSkill(arg1, arg2, arg3) {
+  return window['go']['main']['app']['UpdateGuaiwuSkill'](arg1, arg2, arg3);
 }
 
 export function UpdatePetAttribute(arg1, arg2, arg3, arg4) {
