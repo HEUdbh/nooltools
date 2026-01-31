@@ -1,21 +1,31 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'</script>
+import Sidebar from './components/Sidebar.vue'
+</script>
 
 <template>
-  <img id="logo" alt="Wails logo" src="./assets/images/logo-universal.png"/>
-  <HelloWorld/>
+  <div class="app-container">
+    <!-- 左侧侧边栏 -->
+    <Sidebar />
+
+    <!-- 右侧内容区域 -->
+    <main class="main-content">
+      <router-view />
+    </main>
+  </div>
 </template>
 
 <style>
-#logo {
-  display: block;
-  width: 50%;
-  height: 50%;
-  margin: auto;
-  padding: 10% 0 0;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-origin: content-box;
+.app-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f5f7fa;
+}
+
+/* 主内容区域样式 */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 </style>
