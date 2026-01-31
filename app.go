@@ -168,6 +168,14 @@ func (a *app) DeleteCharacterAttribute(attributeID int) error {
 	return a.database.DeleteCharacterAttribute(attributeID)
 }
 
+// UpdateCharacterAttribute 更新人物属性
+func (a *app) UpdateCharacterAttribute(attributeID int, name, description string, value int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdateCharacterAttribute(attributeID, name, description, value)
+}
+
 // AddCharacterSkill 添加人物技能
 func (a *app) AddCharacterSkill(characterID int, name, description string) error {
 	if a.database == nil {
@@ -182,4 +190,12 @@ func (a *app) DeleteCharacterSkill(skillID int) error {
 		return fmt.Errorf("数据库未初始化")
 	}
 	return a.database.DeleteCharacterSkill(skillID)
+}
+
+// UpdateCharacterSkill 更新人物技能
+func (a *app) UpdateCharacterSkill(skillID int, name, description string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdateCharacterSkill(skillID, name, description)
 }

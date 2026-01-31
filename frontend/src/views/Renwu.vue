@@ -5,6 +5,7 @@
       :active-character-id="activeCharacterId"
       @select="handleSelectCharacter"
       @add="handleAddCharacter"
+      @delete="handleDeleteCharacter"
     />
     <div class="main-content">
       <div v-if="activeCharacter" class="character-detail">
@@ -18,17 +19,40 @@
               <label>名称</label>
               <div class="info-value">{{ activeCharacter.name }}</div>
             </div>
-            <div class="info-item">
+            <div class="info-item" :class="{ editing: editingBasicInfo.field === 'faction' }" @dblclick="startEditBasicInfo('faction')">
               <label>势力</label>
-              <div class="info-value">{{ activeCharacter.faction || '无' }}</div>
+              <div v-if="editingBasicInfo.field !== 'faction'" class="info-value">{{ activeCharacter.faction || '无' }}</div>
+              <input
+                v-else
+                v-model="editingBasicInfo.faction"
+                class="edit-input"
+                @blur="saveBasicInfo('faction')"
+                @keyup.enter="saveBasicInfo('faction')"
+              />
             </div>
-            <div class="info-item">
+            <div class="info-item" :class="{ editing: editingBasicInfo.field === 'wealth' }" @dblclick="startEditBasicInfo('wealth')">
               <label>财产</label>
-              <div class="info-value">{{ activeCharacter.wealth || 0 }}</div>
+              <div v-if="editingBasicInfo.field !== 'wealth'" class="info-value">{{ activeCharacter.wealth || 0 }}</div>
+              <input
+                v-else
+                v-model.number="editingBasicInfo.wealth"
+                type="number"
+                class="edit-input"
+                @blur="saveBasicInfo('wealth')"
+                @keyup.enter="saveBasicInfo('wealth')"
+              />
             </div>
-            <div class="info-item">
+            <div class="info-item" :class="{ editing: editingBasicInfo.field === 'level' }" @dblclick="startEditBasicInfo('level')">
               <label>等级</label>
-              <div class="info-value">Lv.{{ activeCharacter.level }}</div>
+              <div v-if="editingBasicInfo.field !== 'level'" class="info-value">Lv.{{ activeCharacter.level }}</div>
+              <input
+                v-else
+                v-model.number="editingBasicInfo.level"
+                type="number"
+                class="edit-input"
+                @blur="saveBasicInfo('level')"
+                @keyup.enter="saveBasicInfo('level')"
+              />
             </div>
           </div>
         </section>
@@ -44,12 +68,34 @@
               :key="attr.id"
               class="attribute-item"
             >
-              <div class="attribute-content">
+              <div v-if="editingAttribute.id !== attr.id" class="attribute-content" @dblclick="startEditAttribute(attr)">
                 <div class="attribute-name">{{ attr.name }}</div>
                 <div v-if="attr.description" class="attribute-description">{{ attr.description }}</div>
                 <div class="attribute-value">{{ attr.value }}</div>
               </div>
-              <button class="delete-btn" @click="handleDeleteAttribute(attr.id)" title="删除属性">
+              <div v-else class="attribute-content editing">
+                <input
+                  v-model="editingAttribute.name"
+                  class="edit-input"
+                  placeholder="属性名称"
+                />
+                <input
+                  v-model="editingAttribute.description"
+                  class="edit-input"
+                  placeholder="属性描述"
+                />
+                <input
+                  v-model.number="editingAttribute.value"
+                  type="number"
+                  class="edit-input"
+                  placeholder="属性值"
+                />
+                <div class="edit-actions">
+                  <button class="save-btn" @click="saveAttribute">保存</button>
+                  <button class="cancel-btn" @click="cancelEditAttribute">取消</button>
+                </div>
+              </div>
+              <button v-if="editingAttribute.id !== attr.id" class="delete-btn" @click="handleDeleteAttribute(attr.id)" title="删除属性">
                 ×
               </button>
             </div>
@@ -70,11 +116,27 @@
               :key="skill.id"
               class="skill-item"
             >
-              <div class="skill-content">
+              <div v-if="editingSkill.id !== skill.id" class="skill-content" @dblclick="startEditSkill(skill)">
                 <div class="skill-name">{{ skill.name }}</div>
                 <div v-if="skill.description" class="skill-description">{{ skill.description }}</div>
               </div>
-              <button class="delete-btn" @click="handleDeleteSkill(skill.id)" title="删除技能">
+              <div v-else class="skill-content editing">
+                <input
+                  v-model="editingSkill.name"
+                  class="edit-input"
+                  placeholder="技能名称"
+                />
+                <input
+                  v-model="editingSkill.description"
+                  class="edit-input"
+                  placeholder="技能描述"
+                />
+                <div class="edit-actions">
+                  <button class="save-btn" @click="saveSkill">保存</button>
+                  <button class="cancel-btn" @click="cancelEditSkill">取消</button>
+                </div>
+              </div>
+              <button v-if="editingSkill.id !== skill.id" class="delete-btn" @click="handleDeleteSkill(skill.id)" title="删除技能">
                 ×
               </button>
             </div>
@@ -110,7 +172,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import CharacterSidebar from '../components/CharacterSidebar.vue'
 import AddAttributeModal from '../components/AddAttributeModal.vue'
 import AddSkillModal from '../components/AddSkillModal.vue'
@@ -123,6 +185,30 @@ const showAttributeModal = ref(false)
 const showSkillModal = ref(false)
 const showCharacterModal = ref(false)
 const loading = ref(false)
+
+// 基本信息编辑状态
+const editingBasicInfo = ref({
+  field: '', // 当前正在编辑的字段
+  name: '',
+  faction: '',
+  wealth: 0,
+  level: 0
+})
+
+// 属性编辑状态
+const editingAttribute = ref({
+  id: null,
+  name: '',
+  description: '',
+  value: 0
+})
+
+// 技能编辑状态
+const editingSkill = ref({
+  id: null,
+  name: '',
+  description: ''
+})
 
 const activeCharacter = computed(() => {
   return characters.value.find(c => c.id === activeCharacterId.value)
@@ -139,11 +225,11 @@ async function loadCharacters() {
   try {
     const result = await window.go.main.app.GetAllCharacters()
     characters.value = result.map(char => ({
-      id: char.id,
+      id: parseInt(char.id),
       name: char.name,
       faction: char.shili,
-      wealth: char.property,
-      level: char.level,
+      wealth: parseInt(char.property),
+      level: parseInt(char.level),
       attributes: [],
       skills: []
     }))
@@ -163,9 +249,15 @@ async function loadCharacters() {
 // 从数据库加载人物详细信息
 async function loadCharacterDetail(characterId) {
   try {
-    const result = await window.go.main.app.GetCharacterInfo(characterId)
-    const character = characters.value.find(c => c.id === characterId)
+    const result = await window.go.main.app.GetCharacterInfo(parseInt(characterId))
+    const character = characters.value.find(c => c.id === parseInt(characterId))
     if (character) {
+      // 更新基本信息
+      character.name = result.name
+      character.faction = result.shili
+      character.wealth = parseInt(result.property)
+      character.level = parseInt(result.level)
+      // 更新属性和技能
       character.attributes = result.attributes || []
       character.skills = result.skills || []
     }
@@ -193,18 +285,40 @@ async function handleAddCharacterConfirm(data) {
     const newId = await window.go.main.app.CreateCharacter(
       data.name,
       data.faction,
-      data.wealth,
-      data.level
+      parseInt(data.wealth),
+      parseInt(data.level)
     )
     console.log('创建人物成功，ID:', newId)
     
     // 重新加载列表
     await loadCharacters()
-    activeCharacterId.value = newId
+    activeCharacterId.value = parseInt(newId)
     await loadCharacterDetail(newId)
   } catch (error) {
     console.error('添加人物失败:', error)
     alert('添加人物失败: ' + error.message)
+  }
+}
+
+// 删除人物
+async function handleDeleteCharacter(characterId) {
+  if (!confirm('确定要删除这个人物吗？删除后无法恢复。')) {
+    return
+  }
+  
+  try {
+    await window.go.main.app.DeleteCharacter(characterId)
+    
+    // 如果删除的是当前选中的人物，清空选中状态
+    if (activeCharacterId.value === characterId) {
+      activeCharacterId.value = null
+    }
+    
+    // 重新加载列表
+    await loadCharacters()
+  } catch (error) {
+    console.error('删除人物失败:', error)
+    alert('删除人物失败: ' + error.message)
   }
 }
 
@@ -263,6 +377,130 @@ async function handleDeleteSkill(id) {
   } catch (error) {
     console.error('删除技能失败:', error)
   }
+}
+
+// 开始编辑基本信息
+function startEditBasicInfo(field) {
+  if (!activeCharacter.value) return
+  
+  // 设置当前编辑的字段
+  editingBasicInfo.value.field = field
+  
+  // 复制当前值到编辑状态
+  editingBasicInfo.value[field] = activeCharacter.value[field]
+  
+  // 聚焦到对应的输入框
+  nextTick(() => {
+    const inputs = document.querySelectorAll('.info-item.editing .edit-input')
+    if (inputs.length > 0) {
+      inputs[0].focus()
+    }
+  })
+}
+
+// 保存基本信息
+async function saveBasicInfo(field) {
+  if (!activeCharacter.value) return
+  
+  const value = editingBasicInfo.value[field]
+  
+  try {
+    // 调用后端接口更新基本信息
+    await window.go.main.app.UpdateCharacterBasicInfo(
+      parseInt(activeCharacter.value.id),
+      activeCharacter.value.name,
+      field === 'faction' ? value : activeCharacter.value.faction,
+      field === 'wealth' ? parseInt(value) : parseInt(activeCharacter.value.wealth),
+      field === 'level' ? parseInt(value) : parseInt(activeCharacter.value.level)
+    )
+    
+    // 重新加载人物信息
+    await loadCharacterDetail(activeCharacter.value.id)
+    
+    // 清空编辑状态
+    editingBasicInfo.value.field = ''
+    editingBasicInfo.value[field] = ''
+  } catch (error) {
+    console.error('更新基本信息失败:', error)
+    alert('更新失败: ' + error.message)
+    // 清空编辑状态
+    editingBasicInfo.value.field = ''
+    editingBasicInfo.value[field] = ''
+  }
+}
+
+// 开始编辑属性
+function startEditAttribute(attr) {
+  editingAttribute.value = {
+    id: attr.id,
+    name: attr.name,
+    description: attr.description || '',
+    value: attr.value
+  }
+  nextTick(() => {
+    const inputs = document.querySelectorAll('.attribute-item.editing .edit-input')
+    if (inputs.length > 0) {
+      inputs[0].focus()
+    }
+  })
+}
+
+// 保存属性
+async function saveAttribute() {
+  try {
+    await window.go.main.app.UpdateCharacterAttribute(
+      editingAttribute.value.id,
+      editingAttribute.value.name,
+      editingAttribute.value.description,
+      editingAttribute.value.value
+    )
+    editingAttribute.value = { id: null, name: '', description: '', value: 0 }
+    await loadCharacterDetail(activeCharacter.value.id)
+  } catch (error) {
+    console.error('保存属性失败:', error)
+    alert('保存失败: ' + error.message)
+  }
+}
+
+// 取消编辑属性
+function cancelEditAttribute() {
+  editingAttribute.value = { id: null, name: '', description: '', value: 0 }
+}
+
+// 开始编辑技能
+function startEditSkill(skill) {
+  editingSkill.value = {
+    id: skill.id,
+    name: skill.name,
+    description: skill.description || ''
+  }
+  nextTick(() => {
+    const inputs = document.querySelectorAll('.skill-item.editing .edit-input')
+    if (inputs.length > 0) {
+      inputs[0].focus()
+    }
+  })
+}
+
+// 保存技能
+async function saveSkill() {
+  try {
+    await window.go.main.app.UpdateCharacterSkill(
+      editingSkill.value.id,
+      editingSkill.value.name,
+      editingSkill.value.description
+    )
+    editingSkill.value = { id: null, name: '', description: '' }
+    await loadCharacterDetail(activeCharacter.value.id)
+  } catch (error) {
+    console.error('保存技能失败:', error)
+    alert('保存失败: ' + error.message)
+  }
+}
+
+// 取消编辑技能
+function cancelEditSkill() {
+  editingSkill.value = { id: null, name: '', description: '' }
 }
 </script>
 
@@ -497,6 +735,97 @@ async function handleDeleteSkill(id) {
   height: 500px;
   color: #8c92a0;
   font-size: 16px;
+}
+
+/* 编辑输入框 */
+.edit-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: #1890ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+}
+
+.edit-input::placeholder {
+  color: #b0b8c3;
+}
+
+/* 编辑状态 */
+.attribute-item.editing,
+.skill-item.editing {
+  border-color: #1890ff;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.15);
+}
+
+/* 编辑按钮 */
+.edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.save-btn {
+  flex: 1;
+  padding: 6px 12px;
+  border: none;
+  background-color: #1890ff;
+  color: white;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.save-btn:hover {
+  background-color: #40a9ff;
+}
+
+.cancel-btn {
+  flex: 1;
+  padding: 6px 12px;
+  border: 1px solid #d9d9d9;
+  background-color: white;
+  color: #595959;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-btn:hover {
+  border-color: #8c92a0;
+  color: #2c3e50;
+}
+
+/* 基本信息编辑状态 */
+.info-item.editing .info-value {
+  display: none;
+}
+
+.info-item.editing .edit-input {
+  display: block;
+}
+
+.info-item .edit-input {
+  display: none;
+}
+
+/* 编辑状态下的info-item样式 */
+.info-item[style*="cursor: pointer"] {
+  cursor: pointer;
+}
+
+.info-item:hover {
+  cursor: pointer;
 }
 
 /* 响应式调整 */

@@ -12,7 +12,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['select', 'add'])
+const emit = defineEmits(['select', 'add', 'delete'])
 
 const activeCharacter = computed(() => {
   return props.characters.find(c => c.id === props.activeCharacterId)
@@ -24,6 +24,11 @@ function selectCharacter(character) {
 
 function addCharacter() {
   emit('add')
+}
+
+function deleteCharacter(characterId, event) {
+  event.stopPropagation()
+  emit('delete', characterId)
 }
 </script>
 
@@ -49,6 +54,13 @@ function addCharacter() {
           <div class="character-name">{{ character.name }}</div>
           <div class="character-level">Lv.{{ character.level }}</div>
         </div>
+        <button
+          class="delete-character-btn"
+          @click="deleteCharacter(character.id, $event)"
+          title="删除人物"
+        >
+          ×
+        </button>
       </div>
       <div v-if="characters.length === 0" class="empty-tip">
         <p>暂无人物</p>
@@ -118,10 +130,15 @@ function addCharacter() {
   cursor: pointer;
   transition: all 0.2s ease;
   background-color: #f8f9fa;
+  position: relative;
 }
 
 .character-item:hover {
   background-color: #f0f7ff;
+}
+
+.character-item:hover .delete-character-btn {
+  opacity: 1;
 }
 
 .character-item.active {
@@ -177,5 +194,29 @@ function addCharacter() {
 .tip {
   font-size: 12px;
   color: #b0b8c3;
+}
+
+.delete-character-btn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  color: #8c92a0;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  line-height: 1;
+  padding: 0;
+  opacity: 0;
+  flex-shrink: 0;
+}
+
+.delete-character-btn:hover {
+  background-color: #fff1f0;
+  color: #ff4d4f;
 }
 </style>

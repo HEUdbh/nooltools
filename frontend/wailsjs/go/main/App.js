@@ -46,6 +46,14 @@ export function GetDatabaseInfo() {
   return window['go']['main']['app']['GetDatabaseInfo']();
 }
 
+export function UpdateCharacterAttribute(arg1, arg2, arg3, arg4) {
+  return window['go']['main']['app']['UpdateCharacterAttribute'](arg1, arg2, arg3, arg4);
+}
+
 export function UpdateCharacterBasicInfo(arg1, arg2, arg3, arg4, arg5) {
   return window['go']['main']['app']['UpdateCharacterBasicInfo'](arg1, arg2, arg3, arg4, arg5);
+}
+
+export function UpdateCharacterSkill(arg1, arg2, arg3) {
+  return window['go']['main']['app']['UpdateCharacterSkill'](arg1, arg2, arg3);
 }

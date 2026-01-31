@@ -185,6 +185,26 @@ func (d *Database) DeleteCharacterAttribute(attributeID int) error {
 	return nil
 }
 
+// UpdateCharacterAttribute 更新人物属性
+func (d *Database) UpdateCharacterAttribute(attributeID int, name, description string, value int) error {
+	query := `
+	UPDATE renwu_attributes
+	SET name = ?, description = ?, value = ?, updated_at = CURRENT_TIMESTAMP
+	WHERE id = ?`
+
+	result, err := d.db.Exec(query, name, description, value, attributeID)
+	if err != nil {
+		return fmt.Errorf("更新属性失败: %v", err)
+	}
+
+	rowsAffected, _ := result.RowsAffected()
+	if rowsAffected == 0 {
+		return fmt.Errorf("属性不存在")
+	}
+
+	return nil
+}
+
 // AddCharacterSkill 添加人物技能
 func (d *Database) AddCharacterSkill(characterID int, name, description string) error {
 	query := `
@@ -206,6 +226,26 @@ func (d *Database) DeleteCharacterSkill(skillID int) error {
 	result, err := d.db.Exec(query, skillID)
 	if err != nil {
 		return fmt.Errorf("删除技能失败: %v", err)
+	}
+
+	rowsAffected, _ := result.RowsAffected()
+	if rowsAffected == 0 {
+		return fmt.Errorf("技能不存在")
+	}
+
+	return nil
+}
+
+// UpdateCharacterSkill 更新人物技能
+func (d *Database) UpdateCharacterSkill(skillID int, name, description string) error {
+	query := `
+	UPDATE renwu_skills
+	SET name = ?, description = ?, updated_at = CURRENT_TIMESTAMP
+	WHERE id = ?`
+
+	result, err := d.db.Exec(query, name, description, skillID)
+	if err != nil {
+		return fmt.Errorf("更新技能失败: %v", err)
 	}
 
 	rowsAffected, _ := result.RowsAffected()
