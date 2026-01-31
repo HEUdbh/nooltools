@@ -810,3 +810,193 @@ func (a *app) UpdateGuaiwuSkill(skillID int, name, description string) error {
 	}
 	return a.database.UpdateGuaiwuSkill(skillID, name, description)
 }
+
+// ============ 势力相关接口 ============
+
+// GetAllShili 获取所有势力列表
+func (a *app) GetAllShili() ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+	shiliList, err := a.database.GetAllShili()
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := make([]map[string]interface{}, len(shiliList))
+	for i, s := range shiliList {
+		result[i] = map[string]interface{}{
+			"id":           s.ID,
+			"name":         s.Name,
+			"level":        s.Level,
+			"founder":      s.Founder,
+			"wealth":       s.Wealth,
+			"member_count": s.MemberCount,
+			"max_members":  s.MaxMembers,
+		}
+	}
+
+	return result, nil
+}
+
+// GetShiliInfo 获取势力详细信息
+func (a *app) GetShiliInfo(shiliID int) (map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+
+	info, err := a.database.GetShiliInfo(shiliID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 获取职务和属性
+	positions, err := a.database.GetShiliPositions(shiliID)
+	if err != nil {
+		return nil, err
+	}
+
+	attributes, err := a.database.GetShiliAttributes(shiliID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := map[string]interface{}{
+		"id":           info.ID,
+		"name":         info.Name,
+		"level":        info.Level,
+		"founder":      info.Founder,
+		"wealth":       info.Wealth,
+		"member_count": info.MemberCount,
+		"max_members":  info.MaxMembers,
+		"positions":    positions,
+		"attributes":   attributes,
+	}
+
+	return result, nil
+}
+
+// CreateShili 创建新势力
+func (a *app) CreateShili(name, founder string, level, wealth, maxMembers int) (int, error) {
+	if a.database == nil {
+		return 0, fmt.Errorf("数据库未初始化")
+	}
+	id, err := a.database.CreateShili(name, founder, level, wealth, maxMembers)
+	return int(id), err
+}
+
+// UpdateShiliBasicInfo 更新势力基本信息
+func (a *app) UpdateShiliBasicInfo(shiliID int, level int, founder string, wealth, memberCount, maxMembers int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdateShiliBasicInfo(shiliID, level, founder, wealth, memberCount, maxMembers)
+}
+
+// DeleteShili 删除势力
+func (a *app) DeleteShili(shiliID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeleteShili(shiliID)
+}
+
+// GetShiliPositions 获取势力职务列表
+func (a *app) GetShiliPositions(shiliID int) ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+	positions, err := a.database.GetShiliPositions(shiliID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := make([]map[string]interface{}, len(positions))
+	for i, pos := range positions {
+		result[i] = map[string]interface{}{
+			"id":            pos.ID,
+			"shili_id":      pos.ShiliID,
+			"position_name": pos.PositionName,
+			"person_name":   pos.PersonName,
+			"description":   pos.Description,
+		}
+	}
+
+	return result, nil
+}
+
+// AddShiliPosition 添加势力职务
+func (a *app) AddShiliPosition(shiliID int, positionName, personName, description string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.AddShiliPosition(shiliID, positionName, personName, description)
+}
+
+// DeleteShiliPosition 删除势力职务
+func (a *app) DeleteShiliPosition(positionID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeleteShiliPosition(positionID)
+}
+
+// UpdateShiliPosition 更新势力职务
+func (a *app) UpdateShiliPosition(positionID int, positionName, personName, description string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdateShiliPosition(positionID, positionName, personName, description)
+}
+
+// GetShiliAttributes 获取势力属性列表
+func (a *app) GetShiliAttributes(shiliID int) ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+	attributes, err := a.database.GetShiliAttributes(shiliID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := make([]map[string]interface{}, len(attributes))
+	for i, attr := range attributes {
+		result[i] = map[string]interface{}{
+			"id":          attr.ID,
+			"shili_id":    attr.ShiliID,
+			"name":        attr.Name,
+			"description": attr.Description,
+			"value":       attr.Value,
+		}
+	}
+
+	return result, nil
+}
+
+// AddShiliAttribute 添加势力属性
+func (a *app) AddShiliAttribute(shiliID int, name, description string, value int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.AddShiliAttribute(shiliID, name, description, value)
+}
+
+// DeleteShiliAttribute 删除势力属性
+func (a *app) DeleteShiliAttribute(attributeID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeleteShiliAttribute(attributeID)
+}
+
+// UpdateShiliAttribute 更新势力属性
+func (a *app) UpdateShiliAttribute(attributeID int, name, description string, value int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdateShiliAttribute(attributeID, name, description, value)
+}

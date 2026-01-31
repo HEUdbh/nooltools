@@ -30,6 +30,14 @@ export function AddPetSkill(arg1, arg2, arg3) {
   return window['go']['main']['app']['AddPetSkill'](arg1, arg2, arg3);
 }
 
+export function AddShiliAttribute(arg1, arg2, arg3, arg4) {
+  return window['go']['main']['app']['AddShiliAttribute'](arg1, arg2, arg3, arg4);
+}
+
+export function AddShiliPosition(arg1, arg2, arg3, arg4) {
+  return window['go']['main']['app']['AddShiliPosition'](arg1, arg2, arg3, arg4);
+}
+
 export function AddShiqingDetail(arg1, arg2) {
   return window['go']['main']['app']['AddShiqingDetail'](arg1, arg2);
 }
@@ -60,6 +68,10 @@ export function CreateGuaiwu(arg1, arg2, arg3, arg4, arg5, arg6, arg7) {
 
 export function CreatePet(arg1, arg2, arg3) {
   return window['go']['main']['app']['CreatePet'](arg1, arg2, arg3);
+}
+
+export function CreateShili(arg1, arg2, arg3, arg4, arg5) {
+  return window['go']['main']['app']['CreateShili'](arg1, arg2, arg3, arg4, arg5);
 }
 
 export function CreateShiqing(arg1, arg2, arg3) {
@@ -114,6 +126,18 @@ export function DeletePetSkill(arg1) {
   return window['go']['main']['app']['DeletePetSkill'](arg1);
 }
 
+export function DeleteShili(arg1) {
+  return window['go']['main']['app']['DeleteShili'](arg1);
+}
+
+export function DeleteShiliAttribute(arg1) {
+  return window['go']['main']['app']['DeleteShiliAttribute'](arg1);
+}
+
+export function DeleteShiliPosition(arg1) {
+  return window['go']['main']['app']['DeleteShiliPosition'](arg1);
+}
+
 export function DeleteShiqing(arg1) {
   return window['go']['main']['app']['DeleteShiqing'](arg1);
 }
@@ -148,6 +172,10 @@ export function GetAllGuaiwu() {
 
 export function GetAllPets() {
   return window['go']['main']['app']['GetAllPets']();
+}
+
+export function GetAllShili() {
+  return window['go']['main']['app']['GetAllShili']();
 }
 
 export function GetAllShiqing() {
@@ -192,6 +220,18 @@ export function GetGuaiwuSkills(arg1) {
 
 export function GetPetInfo(arg1) {
   return window['go']['main']['app']['GetPetInfo'](arg1);
+}
+
+export function GetShiliAttributes(arg1) {
+  return window['go']['main']['app']['GetShiliAttributes'](arg1);
+}
+
+export function GetShiliInfo(arg1) {
+  return window['go']['main']['app']['GetShiliInfo'](arg1);
+}
+
+export function GetShiliPositions(arg1) {
+  return window['go']['main']['app']['GetShiliPositions'](arg1);
 }
 
 export function GetShiqingDetails(arg1) {
@@ -248,6 +288,18 @@ export function UpdatePetBasicInfo(arg1, arg2, arg3) {
 
 export function UpdatePetSkill(arg1, arg2, arg3) {
   return window['go']['main']['app']['UpdatePetSkill'](arg1, arg2, arg3);
+}
+
+export function UpdateShiliAttribute(arg1, arg2, arg3, arg4) {
+  return window['go']['main']['app']['UpdateShiliAttribute'](arg1, arg2, arg3, arg4);
+}
+
+export function UpdateShiliBasicInfo(arg1, arg2, arg3, arg4, arg5, arg6) {
+  return window['go']['main']['app']['UpdateShiliBasicInfo'](arg1, arg2, arg3, arg4, arg5, arg6);
+}
+
+export function UpdateShiliPosition(arg1, arg2, arg3, arg4) {
+  return window['go']['main']['app']['UpdateShiliPosition'](arg1, arg2, arg3, arg4);
 }
 
 export function UpdateShiqingBasicInfo(arg1, arg2, arg3) {

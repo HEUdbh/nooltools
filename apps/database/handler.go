@@ -120,6 +120,21 @@ func (d *Database) initTables() error {
 		return err
 	}
 
+	// 更新势力表结构（处理旧版本数据库）
+	if err := d.updateShiliTableSchema(); err != nil {
+		return err
+	}
+
+	// 创建势力职务表
+	if err := d.createShiliPositionsTable(); err != nil {
+		return err
+	}
+
+	// 创建势力属性表
+	if err := d.createShiliAttributesTable(); err != nil {
+		return err
+	}
+
 	// 创建怪物表
 	if err := d.createGuaiwuTable(); err != nil {
 		return err
@@ -332,11 +347,79 @@ func (d *Database) createShiliTable() error {
 	CREATE TABLE IF NOT EXISTS shili (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		name TEXT NOT NULL UNIQUE,
-		position TEXT,
+		level INTEGER DEFAULT 1,
+		founder TEXT NOT NULL DEFAULT '',
+		wealth INTEGER DEFAULT 0,
 		member_count INTEGER DEFAULT 0,
-		attributes TEXT,
+		max_members INTEGER DEFAULT 10,
 		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+	)`
+
+	_, err := d.db.Exec(query)
+	return err
+}
+
+// updateShiliTableSchema 更新势力表结构（处理旧版本数据库）
+func (d *Database) updateShiliTableSchema() error {
+	// 检查并添加 level 字段
+	if err := d.addColumnIfNotExists("shili", "level", "INTEGER DEFAULT 1"); err != nil {
+		return err
+	}
+
+	// 检查并添加 founder 字段
+	if err := d.addColumnIfNotExists("shili", "founder", "TEXT NOT NULL DEFAULT ''"); err != nil {
+		return err
+	}
+
+	// 检查并添加 wealth 字段
+	if err := d.addColumnIfNotExists("shili", "wealth", "INTEGER DEFAULT 0"); err != nil {
+		return err
+	}
+
+	// 检查并添加 member_count 字段
+	if err := d.addColumnIfNotExists("shili", "member_count", "INTEGER DEFAULT 0"); err != nil {
+		return err
+	}
+
+	// 检查并添加 max_members 字段
+	if err := d.addColumnIfNotExists("shili", "max_members", "INTEGER DEFAULT 10"); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// createShiliPositionsTable 创建势力职务表
+func (d *Database) createShiliPositionsTable() error {
+	query := `
+	CREATE TABLE IF NOT EXISTS shili_positions (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		shili_id INTEGER NOT NULL,
+		position_name TEXT NOT NULL,
+		person_name TEXT NOT NULL DEFAULT '',
+		description TEXT DEFAULT '',
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY (shili_id) REFERENCES shili(id) ON DELETE CASCADE
+	)`
+
+	_, err := d.db.Exec(query)
+	return err
+}
+
+// createShiliAttributesTable 创建势力属性表
+func (d *Database) createShiliAttributesTable() error {
+	query := `
+	CREATE TABLE IF NOT EXISTS shili_attributes (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		shili_id INTEGER NOT NULL,
+		name TEXT NOT NULL,
+		description TEXT DEFAULT '',
+		value INTEGER DEFAULT 0,
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY (shili_id) REFERENCES shili(id) ON DELETE CASCADE
 	)`
 
 	_, err := d.db.Exec(query)
@@ -418,7 +501,7 @@ func (d *Database) CheckDatabase() (bool, error) {
 	}
 
 	// 检查所有表是否存在
-	tables := []string{"renwu", "renwu_attributes", "renwu_skills", "wuqi", "wuqi_attributes", "wuqi_skills", "shiqing", "shili", "guaiwu", "guaiwu_attributes", "guaiwu_skills", "daoju", "chongwu", "chongwu_attributes", "chongwu_skills"}
+	tables := []string{"renwu", "renwu_attributes", "renwu_skills", "wuqi", "wuqi_attributes", "wuqi_skills", "shiqing", "shiqing_details", "shili", "shili_positions", "shili_attributes", "guaiwu", "guaiwu_attributes", "guaiwu_skills", "daoju", "chongwu", "chongwu_attributes", "chongwu_skills"}
 
 	for _, table := range tables {
 		if err := d.checkTableExists(table); err != nil {
