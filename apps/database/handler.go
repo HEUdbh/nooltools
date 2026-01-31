@@ -95,6 +95,16 @@ func (d *Database) initTables() error {
 		return err
 	}
 
+	// 创建武器属性表
+	if err := d.createWuqiAttributesTable(); err != nil {
+		return err
+	}
+
+	// 创建武器技能表
+	if err := d.createWuqiSkillsTable(); err != nil {
+		return err
+	}
+
 	// 创建任务表
 	if err := d.createShiqingTable(); err != nil {
 		return err
@@ -216,13 +226,45 @@ func (d *Database) createWuqiTable() error {
 	CREATE TABLE IF NOT EXISTS wuqi (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		name TEXT NOT NULL UNIQUE,
-		attributes TEXT,
-		skills TEXT,
 		holder TEXT DEFAULT '',
-		price INTEGER DEFAULT 0,
 		level INTEGER DEFAULT 1,
 		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+	)`
+
+	_, err := d.db.Exec(query)
+	return err
+}
+
+// createWuqiAttributesTable 创建武器属性表
+func (d *Database) createWuqiAttributesTable() error {
+	query := `
+	CREATE TABLE IF NOT EXISTS wuqi_attributes (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		wuqi_id INTEGER NOT NULL,
+		name TEXT NOT NULL,
+		description TEXT DEFAULT '',
+		value INTEGER DEFAULT 0,
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY (wuqi_id) REFERENCES wuqi(id) ON DELETE CASCADE
+	)`
+
+	_, err := d.db.Exec(query)
+	return err
+}
+
+// createWuqiSkillsTable 创建武器技能表
+func (d *Database) createWuqiSkillsTable() error {
+	query := `
+	CREATE TABLE IF NOT EXISTS wuqi_skills (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		wuqi_id INTEGER NOT NULL,
+		name TEXT NOT NULL,
+		description TEXT DEFAULT '',
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY (wuqi_id) REFERENCES wuqi(id) ON DELETE CASCADE
 	)`
 
 	_, err := d.db.Exec(query)
@@ -330,7 +372,7 @@ func (d *Database) CheckDatabase() (bool, error) {
 	}
 
 	// 检查所有表是否存在
-	tables := []string{"renwu", "wuqi", "shiqing", "shili", "guaiwu", "daoju", "chongwu"}
+	tables := []string{"renwu", "renwu_attributes", "renwu_skills", "wuqi", "wuqi_attributes", "wuqi_skills", "shiqing", "shili", "guaiwu", "daoju", "chongwu"}
 
 	for _, table := range tables {
 		if err := d.checkTableExists(table); err != nil {

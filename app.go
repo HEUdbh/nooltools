@@ -199,3 +199,109 @@ func (a *app) UpdateCharacterSkill(skillID int, name, description string) error 
 	}
 	return a.database.UpdateCharacterSkill(skillID, name, description)
 }
+
+// ============ 武器相关接口 ============
+
+// GetAllWeapons 获取所有武器列表
+func (a *app) GetAllWeapons() ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+	return a.database.GetAllWeapons()
+}
+
+// GetWeaponInfo 获取武器详细信息
+func (a *app) GetWeaponInfo(weaponID int) (map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+
+	info, err := a.database.GetWeaponInfo(weaponID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := map[string]interface{}{
+		"id":         info.ID,
+		"name":       info.Name,
+		"holder":     info.Holder,
+		"level":      info.Level,
+		"attributes": info.Attributes,
+		"skills":     info.Skills,
+	}
+
+	return result, nil
+}
+
+// CreateWeapon 创建新武器
+func (a *app) CreateWeapon(name, holder string, level int) (int, error) {
+	if a.database == nil {
+		return 0, fmt.Errorf("数据库未初始化")
+	}
+	return a.database.CreateWeapon(name, holder, level)
+}
+
+// UpdateWeaponBasicInfo 更新武器基本信息
+func (a *app) UpdateWeaponBasicInfo(weaponID int, name, holder string, level int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdateWeaponBasicInfo(weaponID, name, holder, level)
+}
+
+// DeleteWeapon 删除武器
+func (a *app) DeleteWeapon(weaponID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeleteWeapon(weaponID)
+}
+
+// AddWeaponAttribute 添加武器属性
+func (a *app) AddWeaponAttribute(weaponID int, name, description string, value int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.AddWeaponAttribute(weaponID, name, description, value)
+}
+
+// DeleteWeaponAttribute 删除武器属性
+func (a *app) DeleteWeaponAttribute(attributeID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeleteWeaponAttribute(attributeID)
+}
+
+// UpdateWeaponAttribute 更新武器属性
+func (a *app) UpdateWeaponAttribute(attributeID int, name, description string, value int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdateWeaponAttribute(attributeID, name, description, value)
+}
+
+// AddWeaponSkill 添加武器技能
+func (a *app) AddWeaponSkill(weaponID int, name, description string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.AddWeaponSkill(weaponID, name, description)
+}
+
+// DeleteWeaponSkill 删除武器技能
+func (a *app) DeleteWeaponSkill(skillID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeleteWeaponSkill(skillID)
+}
+
+// UpdateWeaponSkill 更新武器技能
+func (a *app) UpdateWeaponSkill(skillID int, name, description string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdateWeaponSkill(skillID, name, description)
+}

@@ -10,12 +10,24 @@ export function AddCharacterSkill(arg1, arg2, arg3) {
   return window['go']['main']['app']['AddCharacterSkill'](arg1, arg2, arg3);
 }
 
+export function AddWeaponAttribute(arg1, arg2, arg3, arg4) {
+  return window['go']['main']['app']['AddWeaponAttribute'](arg1, arg2, arg3, arg4);
+}
+
+export function AddWeaponSkill(arg1, arg2, arg3) {
+  return window['go']['main']['app']['AddWeaponSkill'](arg1, arg2, arg3);
+}
+
 export function CheckDatabaseStatus() {
   return window['go']['main']['app']['CheckDatabaseStatus']();
 }
 
 export function CreateCharacter(arg1, arg2, arg3, arg4) {
   return window['go']['main']['app']['CreateCharacter'](arg1, arg2, arg3, arg4);
+}
+
+export function CreateWeapon(arg1, arg2, arg3) {
+  return window['go']['main']['app']['CreateWeapon'](arg1, arg2, arg3);
 }
 
 export function DeleteCharacter(arg1) {
@@ -30,8 +42,24 @@ export function DeleteCharacterSkill(arg1) {
   return window['go']['main']['app']['DeleteCharacterSkill'](arg1);
 }
 
+export function DeleteWeapon(arg1) {
+  return window['go']['main']['app']['DeleteWeapon'](arg1);
+}
+
+export function DeleteWeaponAttribute(arg1) {
+  return window['go']['main']['app']['DeleteWeaponAttribute'](arg1);
+}
+
+export function DeleteWeaponSkill(arg1) {
+  return window['go']['main']['app']['DeleteWeaponSkill'](arg1);
+}
+
 export function GetAllCharacters() {
   return window['go']['main']['app']['GetAllCharacters']();
+}
+
+export function GetAllWeapons() {
+  return window['go']['main']['app']['GetAllWeapons']();
 }
 
 export function GetCharacterInfo(arg1) {
@@ -46,6 +74,10 @@ export function GetDatabaseInfo() {
   return window['go']['main']['app']['GetDatabaseInfo']();
 }
 
+export function GetWeaponInfo(arg1) {
+  return window['go']['main']['app']['GetWeaponInfo'](arg1);
+}
+
 export function UpdateCharacterAttribute(arg1, arg2, arg3, arg4) {
   return window['go']['main']['app']['UpdateCharacterAttribute'](arg1, arg2, arg3, arg4);
 }
@@ -56,4 +88,16 @@ export function UpdateCharacterBasicInfo(arg1, arg2, arg3, arg4, arg5) {
 
 export function UpdateCharacterSkill(arg1, arg2, arg3) {
   return window['go']['main']['app']['UpdateCharacterSkill'](arg1, arg2, arg3);
+}
+
+export function UpdateWeaponAttribute(arg1, arg2, arg3, arg4) {
+  return window['go']['main']['app']['UpdateWeaponAttribute'](arg1, arg2, arg3, arg4);
+}
+
+export function UpdateWeaponBasicInfo(arg1, arg2, arg3, arg4) {
+  return window['go']['main']['app']['UpdateWeaponBasicInfo'](arg1, arg2, arg3, arg4);
+}
+
+export function UpdateWeaponSkill(arg1, arg2, arg3) {
+  return window['go']['main']['app']['UpdateWeaponSkill'](arg1, arg2, arg3);
 }
