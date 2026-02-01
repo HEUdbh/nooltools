@@ -10,7 +10,7 @@
           <div class="contact-icon">📧</div>
           <div class="contact-info">
             <h3>邮箱</h3>
-            <p>contact@nooltools.com</p>
+            <p>heuxry@outlook.com</p>
           </div>
         </div>
         <div class="contact-item">
@@ -24,7 +24,11 @@
           <div class="contact-icon">⭐</div>
           <div class="contact-info">
             <h3>支持我们</h3>
-            <p>感谢您的使用和支持</p>
+            <p>感谢您的使用和支持,关注微信公众号"夜天炫安全"获取最新动态和资讯</p>
+            <div class="image-container">
+              <img src="/wechat.png" alt="微信公众号" style="width: 360px; margin-top: 12px;">
+              <img src="/get.jpg" alt="赞助码" style="width: 240px; margin-top: 12px;">
+            </div>
           </div>
         </div>
       </div>
@@ -38,7 +42,7 @@
 
 <style scoped>
 .page-container {
-  height: 100%;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   padding: 32px;
@@ -112,5 +116,17 @@
 .contact-info p {
   font-size: 14px;
   color: #5a6c7d;
+}
+
+.image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-top: 12px;
+}
+
+.image-container img {
+  flex-shrink: 0;
 }
 </style>

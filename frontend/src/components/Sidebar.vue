@@ -31,7 +31,7 @@ function navigate(path) {
 <template>
   <aside class="sidebar">
     <div class="sidebar-header">
-      <h1>NoolTools</h1>
+      <h1>小说信息管理</h1>
     </div>
     <nav class="sidebar-nav">
       <button
