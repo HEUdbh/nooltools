@@ -1,19 +1,127 @@
-# README
+# NoolTools - 游戏管理工具
 
-## About
+一款简约实用的网游小说数据管理工具，帮助您轻松管理游戏中的各种数据。
 
-This is the official Wails Vue template.
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
+## 功能特性
 
-## Live Development
+### 📊 数据管理
+- **人物管理** - 管理游戏角色信息、属性和技能
+- **武器管理** - 管理武器数据、属性和技能
+- **宠物管理** - 管理宠物信息、属性和技能
+- **道具管理** - 管理游戏道具数据
+- **怪物管理** - 管理怪物信息、属性和技能
+- **势力管理** - 管理游戏势力、职务和属性
+- **任务管理** - 管理游戏任务和任务详情
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
+### ✨ 主要功能
+- 直观的用户界面，操作简单易用
+- 完整的增删改查功能
+- 数据本地存储，安全可靠
+- 响应式设计，适配不同屏幕尺寸
 
-## Building
 
-To build a redistributable, production mode package, use `wails build`.
+## 安装使用
+
+### 安装
+1. 从 [Releases](../../releases) 页面下载最新版本的 `网游小说管理工具.exe`
+2. 将下载的文件保存到任意目录
+3. 双击运行即可使用
+
+### 使用说明
+1. 启动程序后，左侧侧边栏显示所有功能模块
+2. 点击对应的模块进入管理页面
+3. 使用页面上的按钮进行数据的添加、编辑和删除操作
+4. 所有数据会自动保存到本地sqlite数据库
+
+## 界面预览
+
+### 人物管理
+- 查看所有人物列表
+- 添加新人物（名称、类型、等级等）
+- 编辑人物信息
+- 管理人物属性和技能，均可自定义添加删除，均可修改
+![人物管理](images/renwu.png)
+
+### 武器管理
+- 查看所有武器列表
+- 添加新武器（名称、类型、等级等）
+- 编辑武器信息
+- 管理武器属性和技能，均可自定义添加删除，均可修改
+![武器管理](images/wuqi.png)
+
+### 宠物管理
+- 查看所有宠物列表
+- 添加新宠物（名称、等级、属性等）
+- 编辑宠物信息
+- 管理宠物属性和技能，均可自定义添加删除，均可修改
+![宠物管理](images/chongwu.png)
+
+### 道具管理
+- 查看所有道具列表
+- 添加新道具（名称、等级、功能等）
+- 编辑道具信息，均可自定义添加删除，均可修改
+![道具管理](images/daoju.png)
+
+### 怪物管理
+- 查看所有怪物列表
+- 添加新怪物（名称、类型、等级等）
+- 编辑怪物信息
+- 管理怪物属性和技能，均可自定义添加删除，均可修改
+![怪物管理](images/guaiwu.png)
+
+### 势力管理
+- 查看所有势力列表
+- 添加新势力（名称、等级、创始人等）
+- 编辑势力基本信息
+- 管理势力职务，均可自定义添加删除，均可修改
+- 管理势力属性，均可自定义添加删除，均可修改
+![势力管理](images/shili.png)
+
+### 任务管理
+- 查看所有任务列表
+- 添加新任务（名称、类型、奖励等）
+- 编辑任务信息，均可自定义添加删除，均可修改
+- 管理任务详情，均可自定义添加删除，均可修改
+![任务管理](images/shiqing.png)
+
+## 数据存储
+
+所有数据存储在本地数据库中，不可更改存储位置（也没多大），数据库文件位置：
+```
+C:\Users\[用户名]\.nooltools\nooltools.db
+```
+
+如需备份数据，请复制该数据库文件。
+
+## 联系作者
+
+如有问题或建议，欢迎联系：
+
+- 📧 **邮箱**: heuxry@outlook.com
+- 💬 **反馈**: 欢迎提出宝贵意见和建议
+- ⭐ **支持我们**: 感谢您的使用和支持
+
+关注微信公众号"夜天炫安全"获取最新动态和资讯。
+
+<img src="images/wechat.png" alt="微信公众号" width="300">
+
+<img src="images/get.jpg" alt="赞赏码" width="200">
+
+## 更新日志
+
+### v1.0.0 (2025-02-01)
+- 初始版本发布
+- 支持人物、武器、宠物、道具、怪物管理
+- 支持势力管理（包含职务和属性）
+- 支持任务管理
+- 完整的增删改查功能
+- 优化的用户界面
+
+## 许可证
+
+本项目仅供学习和个人使用，不提供任何商业支持。
+
+## 免责声明
+
+本工具仅用于辅助游戏数据管理，请勿用于任何非法用途。使用本工具所产生的一切后果由使用者自行承担。
