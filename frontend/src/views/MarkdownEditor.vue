@@ -73,25 +73,44 @@ function createNewFile() {
       title: title.trim(),
       content: ''
     }
-    editorContent.value = ''
+    // 第一行作为标题
+    editorContent.value = `# ${title.trim()}\n\n`
     updatePreview()
   }
 }
 
 // 保存文件
 async function saveFile() {
-  if (!currentFile.value.title) {
-    const title = prompt('请输入文件标题:', '未命名文档')
-    if (!title || !title.trim()) {
-      return
+  // 从第一行读取标题
+  const lines = editorContent.value.split('\n')
+  let title = '未命名文档'
+  
+  // 查找第一个非空行作为标题
+  for (const line of lines) {
+    const trimmedLine = line.trim()
+    if (trimmedLine) {
+      // 移除markdown标题符号（#）
+      title = trimmedLine.replace(/^#+\s*/, '').trim()
+      break
     }
-    currentFile.value.title = title.trim()
-    currentFile.value.name = title.trim() + '.md'
+  }
+  
+  // 如果标题为空，使用默认标题
+  if (!title) {
+    title = '未命名文档'
   }
 
   try {
     loading.value = true
-    await SaveMarkdownFile(currentFile.value.title, editorContent.value)
+    await SaveMarkdownFile(title, editorContent.value)
+    
+    // 更新当前文件信息
+    currentFile.value = {
+      name: title + '.md',
+      title: title,
+      content: editorContent.value
+    }
+    
     errorMessage.value = ''
     await loadFileList()
     alert('保存成功!')
@@ -160,7 +179,26 @@ async function renameFile(oldName) {
 
 // 更新预览
 function updatePreview() {
-  previewContent.value = marked(editorContent.value)
+  if (!editorContent.value) {
+    previewContent.value = ''
+    return
+  }
+  
+  const lines = editorContent.value.split('\n')
+  let processedContent = editorContent.value
+  
+  // 检查第一行是否已经是标题格式
+  if (lines.length > 0) {
+    const firstLine = lines[0].trim()
+    // 如果第一行不是标题格式，且不为空，则将其转换为标题
+    if (firstLine && !firstLine.startsWith('#')) {
+      // 将第一行转换为一级标题
+      lines[0] = `# ${firstLine}`
+      processedContent = lines.join('\n')
+    }
+  }
+  
+  previewContent.value = marked(processedContent)
 }
 
 // 监听编辑器内容变化
@@ -485,11 +523,12 @@ onMounted(() => {
 
 /* Markdown预览样式 */
 .markdown-preview :deep(h1) {
-  font-size: 2em;
-  font-weight: 600;
-  margin: 0.67em 0;
-  border-bottom: 1px solid #eaecef;
+  font-size: 2.5em;
+  font-weight: 700;
+  margin: 0.5em 0;
+  border-bottom: 2px solid #eaecef;
   padding-bottom: 0.3em;
+  color: #1a1a1a;
 }
 
 .markdown-preview :deep(h2) {
