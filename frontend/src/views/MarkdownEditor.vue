@@ -22,6 +22,9 @@ const previewContent = ref('')
 // 是否显示预览
 const showPreview = ref(true)
 
+// 是否显示文件列表侧边栏
+const showFileSidebar = ref(true)
+
 // 是否正在加载
 const loading = ref(false)
 
@@ -211,6 +214,11 @@ function togglePreview() {
   showPreview.value = !showPreview.value
 }
 
+// 切换文件列表侧边栏显示
+function toggleFileSidebar() {
+  showFileSidebar.value = !showFileSidebar.value
+}
+
 // 组件挂载时加载文件列表
 onMounted(() => {
   loadFileList()
@@ -222,6 +230,9 @@ onMounted(() => {
     <!-- 工具栏 -->
     <div class="toolbar">
       <div class="toolbar-left">
+        <button class="btn btn-secondary" @click="toggleFileSidebar" title="切换文件列表">
+          {{ showFileSidebar ? '📁 隐藏列表' : '📁 显示列表' }}
+        </button>
         <button class="btn btn-primary" @click="saveFile" :disabled="loading">
           💾 保存
         </button>
@@ -242,28 +253,30 @@ onMounted(() => {
     <!-- 主内容区域 -->
     <div class="editor-content">
       <!-- 文件列表侧边栏 -->
-      <div class="file-sidebar">
-        <div class="file-sidebar-header">
-          <h3>📄 文件列表</h3>
-        </div>
-        <div class="file-list">
-          <div
-            v-for="file in fileList"
-            :key="file.name"
-            :class="['file-item', { active: currentFile.name === file.name }]"
-            @click="loadFile(file.name)"
-          >
-            <span class="file-name">{{ file.title }}</span>
-            <div class="file-actions">
-              <button class="btn-icon" @click.stop="renameFile(file.name)" title="重命名">✏️</button>
-              <button class="btn-icon" @click.stop="deleteFile(file.name)" title="删除">🗑️</button>
+      <transition name="sidebar-slide">
+        <div v-if="showFileSidebar" class="file-sidebar">
+          <div class="file-sidebar-header">
+            <h3>📄 文件列表</h3>
+          </div>
+          <div class="file-list">
+            <div
+              v-for="file in fileList"
+              :key="file.name"
+              :class="['file-item', { active: currentFile.name === file.name }]"
+              @click="loadFile(file.name)"
+            >
+              <span class="file-name">{{ file.title }}</span>
+              <div class="file-actions">
+                <button class="btn-icon" @click.stop="renameFile(file.name)" title="重命名">✏️</button>
+                <button class="btn-icon" @click.stop="deleteFile(file.name)" title="删除">🗑️</button>
+              </div>
+            </div>
+            <div v-if="fileList.length === 0" class="empty-state">
+              暂无文件，点击"新建"创建
             </div>
           </div>
-          <div v-if="fileList.length === 0" class="empty-state">
-            暂无文件，点击"新建"创建
-          </div>
         </div>
-      </div>
+      </transition>
 
       <!-- 编辑器和预览区域 -->
       <div class="editor-preview-container">
@@ -394,6 +407,29 @@ onMounted(() => {
   border-right: 1px solid #e8eaed;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
+}
+
+/* 侧边栏过渡动画 */
+.sidebar-slide-enter-active,
+.sidebar-slide-leave-active {
+  transition: all 0.3s ease;
+}
+
+.sidebar-slide-enter-from {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.sidebar-slide-leave-to {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.sidebar-slide-enter-to,
+.sidebar-slide-leave-from {
+  transform: translateX(0);
+  opacity: 1;
 }
 
 .file-sidebar-header {
