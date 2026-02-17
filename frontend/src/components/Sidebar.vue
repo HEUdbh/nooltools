@@ -7,6 +7,7 @@ const router = useRouter()
 
 // 导航菜单项
 const menuItems = [
+  { id: 'markdown', name: '小说编辑器', icon: '📝', path: '/markdown' },
   { id: 'renwu', name: '人物', icon: '👤', path: '/renwu' },
   { id: 'wuqi', name: '武器', icon: '⚔️', path: '/wuqi' },
   { id: 'daoju', name: '道具', icon: '🎒', path: '/daoju' },

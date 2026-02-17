@@ -114,6 +114,10 @@ export function DeleteGuaiwuSkill(arg1) {
   return window['go']['main']['app']['DeleteGuaiwuSkill'](arg1);
 }
 
+export function DeleteMarkdownFile(arg1) {
+  return window['go']['main']['app']['DeleteMarkdownFile'](arg1);
+}
+
 export function DeletePet(arg1) {
   return window['go']['main']['app']['DeletePet'](arg1);
 }
@@ -218,6 +222,10 @@ export function GetGuaiwuSkills(arg1) {
   return window['go']['main']['app']['GetGuaiwuSkills'](arg1);
 }
 
+export function GetMarkdownFiles() {
+  return window['go']['main']['app']['GetMarkdownFiles']();
+}
+
 export function GetPetInfo(arg1) {
   return window['go']['main']['app']['GetPetInfo'](arg1);
 }
@@ -244,6 +252,18 @@ export function GetShiqingInfo(arg1) {
 
 export function GetWeaponInfo(arg1) {
   return window['go']['main']['app']['GetWeaponInfo'](arg1);
+}
+
+export function ReadMarkdownFile(arg1) {
+  return window['go']['main']['app']['ReadMarkdownFile'](arg1);
+}
+
+export function RenameMarkdownFile(arg1, arg2) {
+  return window['go']['main']['app']['RenameMarkdownFile'](arg1, arg2);
+}
+
+export function SaveMarkdownFile(arg1, arg2) {
+  return window['go']['main']['app']['SaveMarkdownFile'](arg1, arg2);
 }
 
 export function UpdateCharacterAttribute(arg1, arg2, arg3, arg4) {

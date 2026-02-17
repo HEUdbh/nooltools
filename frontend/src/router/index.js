@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 // 页面组件（懒加载）
+const MarkdownEditor = () => import('../views/MarkdownEditor.vue')
 const Renwu = () => import('../views/Renwu.vue')
 const Wuqi = () => import('../views/Wuqi.vue')
 const Daoju = () => import('../views/Daoju.vue')
@@ -14,7 +15,13 @@ const Contact = () => import('../views/Contact.vue')
 const routes = [
   {
     path: '/',
-    redirect: '/renwu'
+    redirect: '/markdown'
+  },
+  {
+    path: '/markdown',
+    name: 'MarkdownEditor',
+    component: MarkdownEditor,
+    meta: { title: 'Markdown编辑器', icon: '📝' }
   },
   {
     path: '/renwu',

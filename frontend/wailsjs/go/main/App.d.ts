@@ -58,6 +58,8 @@ export function DeleteGuaiwuAttribute(arg1:number):Promise<void>;
 
 export function DeleteGuaiwuSkill(arg1:number):Promise<void>;
 
+export function DeleteMarkdownFile(arg1:string):Promise<void>;
+
 export function DeletePet(arg1:number):Promise<void>;
 
 export function DeletePetAttribute(arg1:number):Promise<void>;
@@ -110,6 +112,8 @@ export function GetGuaiwuInfo(arg1:number):Promise<Record<string, any>>;
 
 export function GetGuaiwuSkills(arg1:number):Promise<Array<Record<string, any>>>;
 
+export function GetMarkdownFiles():Promise<Array<Record<string, any>>>;
+
 export function GetPetInfo(arg1:number):Promise<Record<string, any>>;
 
 export function GetShiliAttributes(arg1:number):Promise<Array<Record<string, any>>>;
@@ -123,6 +127,12 @@ export function GetShiqingDetails(arg1:number):Promise<Array<Record<string, any>
 export function GetShiqingInfo(arg1:number):Promise<Record<string, any>>;
 
 export function GetWeaponInfo(arg1:number):Promise<Record<string, any>>;
+
+export function ReadMarkdownFile(arg1:string):Promise<string>;
+
+export function RenameMarkdownFile(arg1:string,arg2:string):Promise<void>;
+
+export function SaveMarkdownFile(arg1:string,arg2:string):Promise<void>;
 
 export function UpdateCharacterAttribute(arg1:number,arg2:string,arg3:string,arg4:number):Promise<void>;
 

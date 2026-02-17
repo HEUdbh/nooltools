@@ -1000,3 +1000,59 @@ func (a *app) UpdateShiliAttribute(attributeID int, name, description string, va
 	}
 	return a.database.UpdateShiliAttribute(attributeID, name, description, value)
 }
+
+// ============ Markdown编辑器相关接口 ============
+
+// GetMarkdownFiles 获取所有markdown文件列表
+func (a *app) GetMarkdownFiles() ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+	files, err := a.database.GetMarkdownFiles()
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := make([]map[string]interface{}, len(files))
+	for i, file := range files {
+		result[i] = map[string]interface{}{
+			"name":  file.Name,
+			"title": file.Title,
+		}
+	}
+
+	return result, nil
+}
+
+// ReadMarkdownFile 读取markdown文件内容
+func (a *app) ReadMarkdownFile(filename string) (string, error) {
+	if a.database == nil {
+		return "", fmt.Errorf("数据库未初始化")
+	}
+	return a.database.ReadMarkdownFile(filename)
+}
+
+// SaveMarkdownFile 保存markdown文件
+func (a *app) SaveMarkdownFile(title, content string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.SaveMarkdownFile(title, content)
+}
+
+// DeleteMarkdownFile 删除markdown文件
+func (a *app) DeleteMarkdownFile(filename string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeleteMarkdownFile(filename)
+}
+
+// RenameMarkdownFile 重命名markdown文件
+func (a *app) RenameMarkdownFile(oldName, newName string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.RenameMarkdownFile(oldName, newName)
+}
