@@ -25,6 +25,12 @@ const showPreview = ref(true)
 // 是否显示文件列表侧边栏
 const showFileSidebar = ref(true)
 
+// 是否显示目录侧边栏
+const showTocSidebar = ref(true)
+
+// 标题目录列表
+const tocList = ref([])
+
 // 是否正在加载
 const loading = ref(false)
 
@@ -184,6 +190,7 @@ async function renameFile(oldName) {
 function updatePreview() {
   if (!editorContent.value) {
     previewContent.value = ''
+    tocList.value = []
     return
   }
   
@@ -201,7 +208,56 @@ function updatePreview() {
     }
   }
   
+  // 配置marked的自定义渲染器
+  const renderer = new marked.Renderer()
+  let headingCounter = 0
+  
+  // 自定义标题渲染，添加data-heading-id属性
+  renderer.heading = function(text, level, raw) {
+    const headingId = `heading-${headingCounter++}`
+    return `<h${level} data-heading-id="${headingId}">${text}</h${level}>`
+  }
+  
+  // 使用自定义渲染器
+  marked.setOptions({
+    renderer: renderer
+  })
+  
   previewContent.value = marked(processedContent)
+  
+  // 更新目录
+  updateToc()
+}
+
+// 解析markdown标题，生成目录
+function updateToc() {
+  if (!editorContent.value) {
+    tocList.value = []
+    return
+  }
+  
+  const lines = editorContent.value.split('\n')
+  const toc = []
+  let idCounter = 0
+  
+  for (const line of lines) {
+    // 匹配markdown标题（# 到 ######）
+    const match = line.match(/^(#{1,6})\s+(.+)$/)
+    if (match) {
+      const level = match[1].length // 标题级别 1-6
+      const text = match[2].trim() // 标题文本
+      const id = `heading-${idCounter++}`
+      
+      toc.push({
+        id,
+        level,
+        text,
+        line: lines.indexOf(line)
+      })
+    }
+  }
+  
+  tocList.value = toc
 }
 
 // 监听编辑器内容变化
@@ -217,6 +273,20 @@ function togglePreview() {
 // 切换文件列表侧边栏显示
 function toggleFileSidebar() {
   showFileSidebar.value = !showFileSidebar.value
+}
+
+// 切换目录侧边栏显示
+function toggleTocSidebar() {
+  showTocSidebar.value = !showTocSidebar.value
+}
+
+// 滚动到指定标题
+function scrollToHeading(headingId) {
+  // 找到对应的标题元素
+  const headingElement = document.querySelector(`[data-heading-id="${headingId}"]`)
+  if (headingElement) {
+    headingElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 }
 
 // 组件挂载时加载文件列表
@@ -244,6 +314,9 @@ onMounted(() => {
         </span>
       </div>
       <div class="toolbar-right">
+        <button class="btn btn-secondary" @click="toggleTocSidebar" title="切换目录">
+          {{ showTocSidebar ? '📑 隐藏目录' : '📑 显示目录' }}
+        </button>
         <button class="btn btn-secondary" @click="togglePreview">
           {{ showPreview ? '👁️ 隐藏预览' : '👁️ 显示预览' }}
         </button>
@@ -292,6 +365,28 @@ onMounted(() => {
             spellcheck="false"
           ></textarea>
         </div>
+
+        <!-- 目录侧边栏 -->
+        <transition name="sidebar-slide">
+          <div v-if="showTocSidebar" class="toc-sidebar">
+            <div class="toc-sidebar-header">
+              <h3>📑 目录</h3>
+            </div>
+            <div class="toc-list">
+              <div
+                v-for="item in tocList"
+                :key="item.id"
+                :class="['toc-item', `toc-level-${item.level}`]"
+                @click="scrollToHeading(item.id)"
+              >
+                {{ item.text }}
+              </div>
+              <div v-if="tocList.length === 0" class="empty-state">
+                暂无标题
+              </div>
+            </div>
+          </div>
+        </transition>
 
         <!-- 预览 -->
         <div v-if="showPreview" class="preview-section">
@@ -496,6 +591,81 @@ onMounted(() => {
   color: #999;
   padding: 40px 20px;
   font-size: 14px;
+}
+
+/* 目录侧边栏样式 */
+.toc-sidebar {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-left: 1px solid #e8eaed;
+  flex-shrink: 0;
+}
+
+.toc-sidebar-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.toc-sidebar-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.toc-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.toc-item {
+  padding: 8px 12px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  color: #2c3e50;
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+.toc-item:hover {
+  background-color: #f0f7ff;
+  color: #1890ff;
+}
+
+/* 标题层级缩进 */
+.toc-level-1 {
+  padding-left: 12px;
+  font-weight: 600;
+}
+
+.toc-level-2 {
+  padding-left: 24px;
+  font-weight: 500;
+}
+
+.toc-level-3 {
+  padding-left: 36px;
+  font-weight: 400;
+}
+
+.toc-level-4 {
+  padding-left: 48px;
+  font-weight: 400;
+}
+
+.toc-level-5 {
+  padding-left: 60px;
+  font-weight: 400;
+}
+
+.toc-level-6 {
+  padding-left: 72px;
+  font-weight: 400;
 }
 
 /* 编辑器和预览容器 */
