@@ -148,28 +148,17 @@ func drawByRate(prizes []PrizeInfo) (PrizeInfo, error) {
 		totalRate += prize.Rate
 	}
 
-	// 如果总爆率不是 100，按比例调整
-	if totalRate != 100.0 {
-		// 生成 0-100 的随机数
-		randomNum := rand.Float64() * 100
-
-		// 按比例计算中奖
-		accumulatedRate := 0.0
-		for _, prize := range prizes {
-			accumulatedRate += prize.Rate
-			if randomNum <= accumulatedRate {
-				return prize, nil
-			}
-		}
-
-		// 如果由于浮点数精度问题没有匹配到，返回最后一个奖品
-		return prizes[len(prizes)-1], nil
+	// 如果总爆率为0，随机返回一个奖品
+	if totalRate == 0 {
+		randomIndex := rand.Intn(len(prizes))
+		return prizes[randomIndex], nil
 	}
 
-	// 如果总爆率正好是 100，直接抽奖
-	randomNum := rand.Float64() * 100
-	accumulatedRate := 0.0
+	// 生成 0 到总爆率之间的随机数
+	randomNum := rand.Float64() * totalRate
 
+	// 按比例计算中奖
+	accumulatedRate := 0.0
 	for _, prize := range prizes {
 		accumulatedRate += prize.Rate
 		if randomNum <= accumulatedRate {
