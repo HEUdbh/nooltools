@@ -44,6 +44,8 @@ export function CreateShili(arg1:string,arg2:string,arg3:number,arg4:number,arg5
 
 export function CreateShiqing(arg1:string,arg2:string,arg3:string):Promise<number>;
 
+export function CreateShopping(arg1:string,arg2:number,arg3:string,arg4:string):Promise<number>;
+
 export function CreateWeapon(arg1:string,arg2:string,arg3:number):Promise<number>;
 
 export function DeleteBeibao(arg1:number):Promise<void>;
@@ -84,6 +86,8 @@ export function DeleteShiqing(arg1:number):Promise<void>;
 
 export function DeleteShiqingDetail(arg1:number):Promise<void>;
 
+export function DeleteShopping(arg1:number):Promise<void>;
+
 export function DeleteWeapon(arg1:number):Promise<void>;
 
 export function DeleteWeaponAttribute(arg1:number):Promise<void>;
@@ -103,6 +107,8 @@ export function GetAllPets():Promise<Array<Record<string, any>>>;
 export function GetAllShili():Promise<Array<Record<string, any>>>;
 
 export function GetAllShiqing():Promise<Array<Record<string, any>>>;
+
+export function GetAllShopping():Promise<Array<Record<string, any>>>;
 
 export function GetAllWeapons():Promise<Array<Record<string, any>>>;
 
@@ -137,6 +143,8 @@ export function GetShiliPositions(arg1:number):Promise<Array<Record<string, any>
 export function GetShiqingDetails(arg1:number):Promise<Array<Record<string, any>>>;
 
 export function GetShiqingInfo(arg1:number):Promise<Record<string, any>>;
+
+export function GetShoppingInfo(arg1:number):Promise<Record<string, any>>;
 
 export function GetWeaponInfo(arg1:number):Promise<Record<string, any>>;
 
@@ -181,6 +189,8 @@ export function UpdateShiliPosition(arg1:number,arg2:string,arg3:string,arg4:str
 export function UpdateShiqingBasicInfo(arg1:number,arg2:string,arg3:string):Promise<void>;
 
 export function UpdateShiqingDetail(arg1:number,arg2:string):Promise<void>;
+
+export function UpdateShopping(arg1:number,arg2:string,arg3:number,arg4:string,arg5:string):Promise<void>;
 
 export function UpdateWeaponAttribute(arg1:number,arg2:string,arg3:string,arg4:number):Promise<void>;
 

@@ -86,6 +86,10 @@ export function CreateShiqing(arg1, arg2, arg3) {
   return window['go']['main']['app']['CreateShiqing'](arg1, arg2, arg3);
 }
 
+export function CreateShopping(arg1, arg2, arg3, arg4) {
+  return window['go']['main']['app']['CreateShopping'](arg1, arg2, arg3, arg4);
+}
+
 export function CreateWeapon(arg1, arg2, arg3) {
   return window['go']['main']['app']['CreateWeapon'](arg1, arg2, arg3);
 }
@@ -166,6 +170,10 @@ export function DeleteShiqingDetail(arg1) {
   return window['go']['main']['app']['DeleteShiqingDetail'](arg1);
 }
 
+export function DeleteShopping(arg1) {
+  return window['go']['main']['app']['DeleteShopping'](arg1);
+}
+
 export function DeleteWeapon(arg1) {
   return window['go']['main']['app']['DeleteWeapon'](arg1);
 }
@@ -204,6 +212,10 @@ export function GetAllShili() {
 
 export function GetAllShiqing() {
   return window['go']['main']['app']['GetAllShiqing']();
+}
+
+export function GetAllShopping() {
+  return window['go']['main']['app']['GetAllShopping']();
 }
 
 export function GetAllWeapons() {
@@ -272,6 +284,10 @@ export function GetShiqingDetails(arg1) {
 
 export function GetShiqingInfo(arg1) {
   return window['go']['main']['app']['GetShiqingInfo'](arg1);
+}
+
+export function GetShoppingInfo(arg1) {
+  return window['go']['main']['app']['GetShoppingInfo'](arg1);
 }
 
 export function GetWeaponInfo(arg1) {
@@ -360,6 +376,10 @@ export function UpdateShiqingBasicInfo(arg1, arg2, arg3) {
 
 export function UpdateShiqingDetail(arg1, arg2) {
   return window['go']['main']['app']['UpdateShiqingDetail'](arg1, arg2);
+}
+
+export function UpdateShopping(arg1, arg2, arg3, arg4, arg5) {
+  return window['go']['main']['app']['UpdateShopping'](arg1, arg2, arg3, arg4, arg5);
 }
 
 export function UpdateWeaponAttribute(arg1, arg2, arg3, arg4) {

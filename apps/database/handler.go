@@ -190,6 +190,11 @@ func (d *Database) initTables() error {
 		return err
 	}
 
+	// 创建商城表
+	if err := d.createShoppingTable(); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -715,6 +720,23 @@ func (d *Database) createBeibaoItemsTable() error {
 		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 		FOREIGN KEY (beibao_id) REFERENCES beibao(id) ON DELETE CASCADE
+	)`
+
+	_, err := d.db.Exec(query)
+	return err
+}
+
+// createShoppingTable 创建商城表
+func (d *Database) createShoppingTable() error {
+	query := `
+	CREATE TABLE IF NOT EXISTS shopping (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		name TEXT NOT NULL,
+		value INTEGER NOT NULL,
+		description TEXT DEFAULT '',
+		condition TEXT DEFAULT '',
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 	)`
 
 	_, err := d.db.Exec(query)

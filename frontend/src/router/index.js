@@ -10,6 +10,7 @@ const Shiqing = () => import('../views/Shiqing.vue')
 const Shili = () => import('../views/Shili.vue')
 const Guaiwu = () => import('../views/Guaiwu.vue')
 const Beibao = () => import('../views/Beibao.vue')
+const Shopping = () => import('../views/Shopping.vue')
 const Contact = () => import('../views/Contact.vue')
 
 // 路由配置
@@ -71,6 +72,12 @@ const routes = [
     name: 'Beibao',
     component: Beibao,
     meta: { title: '背包', icon: '🎒' }
+  },
+  {
+    path: '/shopping',
+    name: 'Shopping',
+    component: Shopping,
+    meta: { title: '商城', icon: '🛒' }
   },
   {
     path: '/contact',

@@ -1136,3 +1136,78 @@ func (a *app) UpdateBeibaoItem(itemID int, name string, quantity int, descriptio
 	}
 	return a.database.UpdateBeibaoItem(itemID, name, quantity, description)
 }
+
+// ============ 商城相关接口 ============
+
+// GetAllShopping 获取所有商城商品
+func (a *app) GetAllShopping() ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+	items, err := a.database.GetAllShopping()
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := make([]map[string]interface{}, len(items))
+	for i, item := range items {
+		result[i] = map[string]interface{}{
+			"id":          item.ID,
+			"name":        item.Name,
+			"value":       item.Value,
+			"description": item.Description,
+			"condition":   item.Condition,
+		}
+	}
+
+	return result, nil
+}
+
+// GetShoppingInfo 获取指定商城商品的详细信息
+func (a *app) GetShoppingInfo(id int) (map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+
+	item, err := a.database.GetShoppingInfo(id)
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := map[string]interface{}{
+		"id":          item.ID,
+		"name":        item.Name,
+		"value":       item.Value,
+		"description": item.Description,
+		"condition":   item.Condition,
+	}
+
+	return result, nil
+}
+
+// CreateShopping 创建新的商城商品
+func (a *app) CreateShopping(name string, value int, description, condition string) (int, error) {
+	if a.database == nil {
+		return 0, fmt.Errorf("数据库未初始化")
+	}
+	id, err := a.database.CreateShopping(name, value, description, condition)
+	return int(id), err
+}
+
+// DeleteShopping 删除商城商品
+func (a *app) DeleteShopping(id int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeleteShopping(id)
+}
+
+// UpdateShopping 更新商城商品信息
+func (a *app) UpdateShopping(id int, name string, value int, description, condition string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdateShopping(id, name, value, description, condition)
+}
