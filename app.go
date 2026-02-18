@@ -1211,3 +1211,180 @@ func (a *app) UpdateShopping(id int, name string, value int, description, condit
 	}
 	return a.database.UpdateShopping(id, name, value, description, condition)
 }
+
+// ============ 抽奖相关接口 ============
+
+// GetAllPrizes 获取所有奖品列表
+func (a *app) GetAllPrizes() ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+	prizes, err := a.database.GetAllPrizes()
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := make([]map[string]interface{}, len(prizes))
+	for i, prize := range prizes {
+		result[i] = map[string]interface{}{
+			"id":          prize.ID,
+			"name":        prize.Name,
+			"rate":        prize.Rate,
+			"description": prize.Description,
+			"variety":     prize.Variety,
+		}
+	}
+
+	return result, nil
+}
+
+// GetPrizeInfo 获取奖品详细信息
+func (a *app) GetPrizeInfo(prizeID int) (map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+
+	info, err := a.database.GetPrizeInfo(prizeID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	result := map[string]interface{}{
+		"id":          info.ID,
+		"name":        info.Name,
+		"rate":        info.Rate,
+		"description": info.Description,
+		"variety":     info.Variety,
+	}
+
+	return result, nil
+}
+
+// CreatePrize 创建新奖品
+func (a *app) CreatePrize(name string, rate float64, description, prizeVariety string) (int, error) {
+	if a.database == nil {
+		return 0, fmt.Errorf("数据库未初始化")
+	}
+	id, err := a.database.CreatePrize(name, rate, description, prizeVariety)
+	return int(id), err
+}
+
+// DeletePrize 删除奖品
+func (a *app) DeletePrize(prizeID int) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.DeletePrize(prizeID)
+}
+
+// UpdatePrize 更新奖品信息
+func (a *app) UpdatePrize(prizeID int, name string, rate float64, description, prizeVariety string) error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.UpdatePrize(prizeID, name, rate, description, prizeVariety)
+}
+
+// DrawOnce 单抽
+func (a *app) DrawOnce() (map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+
+	result, err := a.database.DrawPrize()
+	if err != nil {
+		return nil, err
+	}
+
+	// 获取奖品的详细信息（包括rate）
+	prizeInfo, err := a.database.GetPrizeInfo(result.PrizeID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化
+	return map[string]interface{}{
+		"id":          prizeInfo.ID,
+		"name":        prizeInfo.Name,
+		"rate":        prizeInfo.Rate,
+		"description": prizeInfo.Description,
+		"variety":     prizeInfo.Variety,
+		"drawn_at":    result.DrawnAt,
+	}, nil
+}
+
+// DrawTen 十连抽
+func (a *app) DrawTen() ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+
+	results, err := a.database.DrawTenPrizes()
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化，并获取每个奖品的详细信息
+	result := make([]map[string]interface{}, len(results))
+	for i, item := range results {
+		// 获取奖品的详细信息（包括rate）
+		prizeInfo, err := a.database.GetPrizeInfo(item.PrizeID)
+		if err != nil {
+			return nil, err
+		}
+
+		result[i] = map[string]interface{}{
+			"id":          prizeInfo.ID,
+			"name":        prizeInfo.Name,
+			"rate":        prizeInfo.Rate,
+			"description": prizeInfo.Description,
+			"variety":     prizeInfo.Variety,
+			"drawn_at":    item.DrawnAt,
+		}
+	}
+
+	return result, nil
+}
+
+// GetDrawHistory 获取抽奖历史
+func (a *app) GetDrawHistory() ([]map[string]interface{}, error) {
+	if a.database == nil {
+		return nil, fmt.Errorf("数据库未初始化")
+	}
+
+	history, err := a.database.GetDrawHistory(100)
+	if err != nil {
+		return nil, err
+	}
+
+	// 转换为 map 以便 JSON 序列化，并获取每个奖品的详细信息
+	result := make([]map[string]interface{}, len(history))
+	for i, item := range history {
+		// 获取奖品的详细信息（包括rate和variety）
+		prizeInfo, err := a.database.GetPrizeInfo(item.PrizeID)
+		if err != nil {
+			return nil, err
+		}
+
+		result[i] = map[string]interface{}{
+			"id":          item.PrizeID,
+			"name":        item.PrizeName,
+			"rate":        prizeInfo.Rate,
+			"variety":     prizeInfo.Variety,
+			"description": prizeInfo.Description,
+			"drawn_at":    item.DrawnAt,
+		}
+	}
+
+	return result, nil
+}
+
+// ClearDrawHistory 清空抽奖历史
+func (a *app) ClearDrawHistory() error {
+	if a.database == nil {
+		return fmt.Errorf("数据库未初始化")
+	}
+	return a.database.ClearDrawHistory()
+}

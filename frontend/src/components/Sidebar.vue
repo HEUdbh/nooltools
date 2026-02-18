@@ -13,6 +13,7 @@ const menuItems = [
   { id: 'daoju', name: '道具', icon: '🎒', path: '/daoju' },
   { id: 'beibao', name: '背包', icon: '🎒', path: '/beibao' },
   { id: 'shopping', name: '商城', icon: '🛒', path: '/shopping' },
+  { id: 'getjiang', name: '抽奖', icon: '🎰', path: '/getjiang' },
   { id: 'chongwu', name: '宠物', icon: '🐾', path: '/chongwu' },
   { id: 'shiqing', name: '任务', icon: '📋', path: '/shiqing' },
   { id: 'shili', name: '势力', icon: '🏰', path: '/shili' },

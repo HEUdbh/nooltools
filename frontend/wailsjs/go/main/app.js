@@ -58,6 +58,10 @@ export function CheckDatabaseStatus() {
   return window['go']['main']['app']['CheckDatabaseStatus']();
 }
 
+export function ClearDrawHistory() {
+  return window['go']['main']['app']['ClearDrawHistory']();
+}
+
 export function CreateBeibao(arg1) {
   return window['go']['main']['app']['CreateBeibao'](arg1);
 }
@@ -76,6 +80,10 @@ export function CreateGuaiwu(arg1, arg2, arg3, arg4, arg5, arg6, arg7) {
 
 export function CreatePet(arg1, arg2, arg3) {
   return window['go']['main']['app']['CreatePet'](arg1, arg2, arg3);
+}
+
+export function CreatePrize(arg1, arg2, arg3, arg4) {
+  return window['go']['main']['app']['CreatePrize'](arg1, arg2, arg3, arg4);
 }
 
 export function CreateShili(arg1, arg2, arg3, arg4, arg5) {
@@ -150,6 +158,10 @@ export function DeletePetSkill(arg1) {
   return window['go']['main']['app']['DeletePetSkill'](arg1);
 }
 
+export function DeletePrize(arg1) {
+  return window['go']['main']['app']['DeletePrize'](arg1);
+}
+
 export function DeleteShili(arg1) {
   return window['go']['main']['app']['DeleteShili'](arg1);
 }
@@ -186,6 +198,14 @@ export function DeleteWeaponSkill(arg1) {
   return window['go']['main']['app']['DeleteWeaponSkill'](arg1);
 }
 
+export function DrawOnce() {
+  return window['go']['main']['app']['DrawOnce']();
+}
+
+export function DrawTen() {
+  return window['go']['main']['app']['DrawTen']();
+}
+
 export function GetAllBeibao() {
   return window['go']['main']['app']['GetAllBeibao']();
 }
@@ -204,6 +224,10 @@ export function GetAllGuaiwu() {
 
 export function GetAllPets() {
   return window['go']['main']['app']['GetAllPets']();
+}
+
+export function GetAllPrizes() {
+  return window['go']['main']['app']['GetAllPrizes']();
 }
 
 export function GetAllShili() {
@@ -246,6 +270,10 @@ export function GetDatabaseInfo() {
   return window['go']['main']['app']['GetDatabaseInfo']();
 }
 
+export function GetDrawHistory() {
+  return window['go']['main']['app']['GetDrawHistory']();
+}
+
 export function GetGuaiwuAttributes(arg1) {
   return window['go']['main']['app']['GetGuaiwuAttributes'](arg1);
 }
@@ -264,6 +292,10 @@ export function GetMarkdownFiles() {
 
 export function GetPetInfo(arg1) {
   return window['go']['main']['app']['GetPetInfo'](arg1);
+}
+
+export function GetPrizeInfo(arg1) {
+  return window['go']['main']['app']['GetPrizeInfo'](arg1);
 }
 
 export function GetShiliAttributes(arg1) {
@@ -356,6 +388,10 @@ export function UpdatePetBasicInfo(arg1, arg2, arg3) {
 
 export function UpdatePetSkill(arg1, arg2, arg3) {
   return window['go']['main']['app']['UpdatePetSkill'](arg1, arg2, arg3);
+}
+
+export function UpdatePrize(arg1, arg2, arg3, arg4, arg5) {
+  return window['go']['main']['app']['UpdatePrize'](arg1, arg2, arg3, arg4, arg5);
 }
 
 export function UpdateShiliAttribute(arg1, arg2, arg3, arg4) {

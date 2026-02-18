@@ -195,6 +195,16 @@ func (d *Database) initTables() error {
 		return err
 	}
 
+	// 创建奖池表
+	if err := d.createPrizesTable(); err != nil {
+		return err
+	}
+
+	// 创建抽奖历史表
+	if err := d.createDrawHistoryTable(); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -737,6 +747,38 @@ func (d *Database) createShoppingTable() error {
 		condition TEXT DEFAULT '',
 		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+	)`
+
+	_, err := d.db.Exec(query)
+	return err
+}
+
+// createPrizesTable 创建奖池表
+func (d *Database) createPrizesTable() error {
+	query := `
+	CREATE TABLE IF NOT EXISTS prizes (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		name TEXT NOT NULL,
+		rate REAL NOT NULL,
+		description TEXT DEFAULT '',
+		variety TEXT DEFAULT '',
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+	)`
+
+	_, err := d.db.Exec(query)
+	return err
+}
+
+// createDrawHistoryTable 创建抽奖历史表
+func (d *Database) createDrawHistoryTable() error {
+	query := `
+	CREATE TABLE IF NOT EXISTS draw_history (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		prize_id INTEGER NOT NULL,
+		prize_name TEXT NOT NULL,
+		drawn_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY (prize_id) REFERENCES prizes(id) ON DELETE CASCADE
 	)`
 
 	_, err := d.db.Exec(query)

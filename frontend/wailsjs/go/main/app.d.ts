@@ -30,6 +30,8 @@ export function AddWeaponSkill(arg1:number,arg2:string,arg3:string):Promise<void
 
 export function CheckDatabaseStatus():Promise<boolean|string>;
 
+export function ClearDrawHistory():Promise<void>;
+
 export function CreateBeibao(arg1:string):Promise<number>;
 
 export function CreateCharacter(arg1:string,arg2:string,arg3:number,arg4:number):Promise<number>;
@@ -39,6 +41,8 @@ export function CreateDaoju(arg1:string,arg2:string,arg3:number):Promise<number>
 export function CreateGuaiwu(arg1:string,arg2:string,arg3:number,arg4:number,arg5:number,arg6:number,arg7:string):Promise<number>;
 
 export function CreatePet(arg1:string,arg2:string,arg3:number):Promise<number>;
+
+export function CreatePrize(arg1:string,arg2:number,arg3:string,arg4:string):Promise<number>;
 
 export function CreateShili(arg1:string,arg2:string,arg3:number,arg4:number,arg5:number):Promise<number>;
 
@@ -76,6 +80,8 @@ export function DeletePetAttribute(arg1:number):Promise<void>;
 
 export function DeletePetSkill(arg1:number):Promise<void>;
 
+export function DeletePrize(arg1:number):Promise<void>;
+
 export function DeleteShili(arg1:number):Promise<void>;
 
 export function DeleteShiliAttribute(arg1:number):Promise<void>;
@@ -94,6 +100,10 @@ export function DeleteWeaponAttribute(arg1:number):Promise<void>;
 
 export function DeleteWeaponSkill(arg1:number):Promise<void>;
 
+export function DrawOnce():Promise<Record<string, any>>;
+
+export function DrawTen():Promise<Array<Record<string, any>>>;
+
 export function GetAllBeibao():Promise<Array<Record<string, any>>>;
 
 export function GetAllCharacters():Promise<Array<Record<string, any>>>;
@@ -103,6 +113,8 @@ export function GetAllDaoju():Promise<Array<Record<string, any>>>;
 export function GetAllGuaiwu():Promise<Array<Record<string, any>>>;
 
 export function GetAllPets():Promise<Array<Record<string, any>>>;
+
+export function GetAllPrizes():Promise<Array<Record<string, any>>>;
 
 export function GetAllShili():Promise<Array<Record<string, any>>>;
 
@@ -124,6 +136,8 @@ export function GetDatabase():Promise<database.Database>;
 
 export function GetDatabaseInfo():Promise<Record<string, any>>;
 
+export function GetDrawHistory():Promise<Array<Record<string, any>>>;
+
 export function GetGuaiwuAttributes(arg1:number):Promise<Array<Record<string, any>>>;
 
 export function GetGuaiwuInfo(arg1:number):Promise<Record<string, any>>;
@@ -133,6 +147,8 @@ export function GetGuaiwuSkills(arg1:number):Promise<Array<Record<string, any>>>
 export function GetMarkdownFiles():Promise<Array<Record<string, any>>>;
 
 export function GetPetInfo(arg1:number):Promise<Record<string, any>>;
+
+export function GetPrizeInfo(arg1:number):Promise<Record<string, any>>;
 
 export function GetShiliAttributes(arg1:number):Promise<Array<Record<string, any>>>;
 
@@ -179,6 +195,8 @@ export function UpdatePetAttribute(arg1:number,arg2:string,arg3:string,arg4:numb
 export function UpdatePetBasicInfo(arg1:number,arg2:string,arg3:number):Promise<void>;
 
 export function UpdatePetSkill(arg1:number,arg2:string,arg3:string):Promise<void>;
+
+export function UpdatePrize(arg1:number,arg2:string,arg3:number,arg4:string,arg5:string):Promise<void>;
 
 export function UpdateShiliAttribute(arg1:number,arg2:string,arg3:string,arg4:number):Promise<void>;
 

@@ -11,6 +11,7 @@ const Shili = () => import('../views/Shili.vue')
 const Guaiwu = () => import('../views/Guaiwu.vue')
 const Beibao = () => import('../views/Beibao.vue')
 const Shopping = () => import('../views/Shopping.vue')
+const Getjiang = () => import('../views/Getjiang.vue')
 const Contact = () => import('../views/Contact.vue')
 
 // 路由配置
@@ -78,6 +79,12 @@ const routes = [
     name: 'Shopping',
     component: Shopping,
     meta: { title: '商城', icon: '🛒' }
+  },
+  {
+    path: '/getjiang',
+    name: 'Getjiang',
+    component: Getjiang,
+    meta: { title: '抽奖', icon: '🎰' }
   },
   {
     path: '/contact',
