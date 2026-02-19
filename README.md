@@ -208,3 +208,20 @@ C:\Users\[用户名]\.nooltools\nooltools.db
 ## 免责声明
 
 本工具仅用于辅助游戏数据管理，请勿用于任何非法用途。使用本工具所产生的一切后果由使用者自行承担。
+
+
+## GitHub Release Update Check
+
+- The app checks `https://github.com/HEUdbh/nooltools/releases/latest` once on startup.
+- Local version is fixed in backend code constant `AppVersion` (see `update_checker.go`).
+- GitHub Fine-grained PAT is loaded from user config file:
+  - `~/.nooltools/github_token.json`
+- This file is user-local and must not contain real tokens in repository files.
+
+Example:
+
+```json
+{
+  "github_token": ""
+}
+```

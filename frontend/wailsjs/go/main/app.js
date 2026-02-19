@@ -58,6 +58,10 @@ export function CheckDatabaseStatus() {
   return window['go']['main']['app']['CheckDatabaseStatus']();
 }
 
+export function CheckReleaseUpdate() {
+  return window['go']['main']['app']['CheckReleaseUpdate']();
+}
+
 export function ClearDrawHistory() {
   return window['go']['main']['app']['ClearDrawHistory']();
 }

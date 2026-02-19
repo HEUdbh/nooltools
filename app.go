@@ -93,6 +93,11 @@ func (a *app) GetDatabaseInfo() map[string]interface{} {
 	return info
 }
 
+// CheckReleaseUpdate checks whether a newer GitHub release is available.
+func (a *app) CheckReleaseUpdate() (UpdateCheckResult, error) {
+	return checkReleaseUpdate()
+}
+
 // ============ 人物相关接口 ============
 
 // GetAllCharacters 获取所有人物列表

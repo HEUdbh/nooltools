@@ -1,5 +1,26 @@
 <script setup>
+import { onMounted, ref } from 'vue'
 import Sidebar from './components/Sidebar.vue'
+import UpdateNoticeModal from './components/UpdateNoticeModal.vue'
+
+const showUpdateModal = ref(false)
+const updateInfo = ref(null)
+
+onMounted(async () => {
+  try {
+    const result = await window.go.main.app.CheckReleaseUpdate()
+    if (result?.has_update) {
+      updateInfo.value = result
+      showUpdateModal.value = true
+    }
+  } catch (error) {
+    console.error('检查更新失败:', error)
+  }
+})
+
+function handleCloseUpdateModal() {
+  showUpdateModal.value = false
+}
 </script>
 
 <template>
@@ -12,6 +33,11 @@ import Sidebar from './components/Sidebar.vue'
       <router-view />
     </main>
   </div>
+  <UpdateNoticeModal
+    :visible="showUpdateModal"
+    :update-info="updateInfo"
+    @close="handleCloseUpdateModal"
+  />
 </template>
 
 <style>
