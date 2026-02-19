@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -21,18 +22,25 @@ const (
 	githubRepoURL         = "https://github.com/HEUdbh/nooltools"
 	githubTokenConfigName = "github_token.json"
 	updateRequestTimeout  = 8 * time.Second
+
+	releaseAssetPrimaryName  = "nooltools.exe"
+	releaseAssetFallbackName = "noltools.exe"
 )
 
 type UpdateCheckResult struct {
-	HasUpdate      bool   `json:"has_update"`
-	CurrentVersion string `json:"current_version"`
-	LatestVersion  string `json:"latest_version"`
-	ReleaseName    string `json:"release_name"`
-	ReleaseURL     string `json:"release_url"`
-	PublishedAt    string `json:"published_at"`
-	ReleaseNotes   string `json:"release_notes"`
-	CheckedAt      string `json:"checked_at"`
-	Message        string `json:"message"`
+	HasUpdate        bool   `json:"has_update"`
+	CurrentVersion   string `json:"current_version"`
+	LatestVersion    string `json:"latest_version"`
+	ReleaseName      string `json:"release_name"`
+	ReleaseURL       string `json:"release_url"`
+	PublishedAt      string `json:"published_at"`
+	ReleaseNotes     string `json:"release_notes"`
+	CheckedAt        string `json:"checked_at"`
+	Message          string `json:"message"`
+	AssetName        string `json:"asset_name"`
+	AssetSize        int64  `json:"asset_size"`
+	CanAutoUpdate    bool   `json:"can_auto_update"`
+	AutoUpdateReason string `json:"auto_update_reason"`
 }
 
 type githubTokenConfig struct {
@@ -40,84 +48,38 @@ type githubTokenConfig struct {
 }
 
 type githubLatestRelease struct {
-	TagName     string `json:"tag_name"`
-	Name        string `json:"name"`
-	HTMLURL     string `json:"html_url"`
-	PublishedAt string `json:"published_at"`
-	Body        string `json:"body"`
+	TagName     string               `json:"tag_name"`
+	Name        string               `json:"name"`
+	HTMLURL     string               `json:"html_url"`
+	PublishedAt string               `json:"published_at"`
+	Body        string               `json:"body"`
+	Assets      []githubReleaseAsset `json:"assets"`
+}
+
+type githubReleaseAsset struct {
+	Name               string `json:"name"`
+	BrowserDownloadURL string `json:"browser_download_url"`
+	Size               int64  `json:"size"`
+	Digest             string `json:"digest"`
+}
+
+type updatePreparation struct {
+	Result        UpdateCheckResult
+	SelectedAsset *githubReleaseAsset
+	SHA256Digest  string
 }
 
 func checkReleaseUpdate() (UpdateCheckResult, error) {
-	result := UpdateCheckResult{
-		CurrentVersion: AppVersion,
-		CheckedAt:      time.Now().UTC().Format(time.RFC3339),
-	}
-
 	token, err := loadGitHubToken()
 	if err != nil {
-		return result, err
+		return UpdateCheckResult{}, err
 	}
 
-	apiURL, err := buildLatestReleaseAPIURL(githubRepoURL)
+	prep, err := prepareLatestReleaseUpdateWithToken(token)
 	if err != nil {
-		return result, err
+		return UpdateCheckResult{}, err
 	}
-
-	req, err := http.NewRequest(http.MethodGet, apiURL, nil)
-	if err != nil {
-		return result, fmt.Errorf("failed to create request: %w", err)
-	}
-	req.Header.Set("Accept", "application/vnd.github+json")
-	req.Header.Set("User-Agent", "nooltools-update-checker")
-	if token != "" {
-		req.Header.Set("Authorization", "Bearer "+token)
-	}
-
-	client := &http.Client{Timeout: updateRequestTimeout}
-	resp, err := client.Do(req)
-	if err != nil {
-		return result, fmt.Errorf("failed to query github release: %w", err)
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(io.LimitReader(resp.Body, 2048))
-		return result, fmt.Errorf("github api returned status %d: %s", resp.StatusCode, strings.TrimSpace(string(body)))
-	}
-
-	var release githubLatestRelease
-	if err := json.NewDecoder(io.LimitReader(resp.Body, 1<<20)).Decode(&release); err != nil {
-		return result, fmt.Errorf("failed to decode github release response: %w", err)
-	}
-
-	latestVersion := strings.TrimSpace(release.TagName)
-	if latestVersion == "" {
-		latestVersion = strings.TrimSpace(release.Name)
-	}
-	if latestVersion == "" {
-		return result, errors.New("latest release version is empty")
-	}
-
-	result.LatestVersion = latestVersion
-	result.ReleaseName = strings.TrimSpace(release.Name)
-	result.ReleaseURL = strings.TrimSpace(release.HTMLURL)
-	result.PublishedAt = strings.TrimSpace(release.PublishedAt)
-	result.ReleaseNotes = strings.TrimSpace(release.Body)
-
-	cmp, err := compareVersions(AppVersion, latestVersion)
-	if err != nil {
-		return result, fmt.Errorf("failed to compare versions: %w", err)
-	}
-
-	if cmp < 0 {
-		result.HasUpdate = true
-		result.Message = "A new version is available."
-	} else {
-		result.HasUpdate = false
-		result.Message = "You are using the latest version."
-	}
-
-	return result, nil
+	return prep.Result, nil
 }
 
 func getTokenConfigPath() (string, error) {
@@ -186,6 +148,140 @@ func writeTokenConfig(configPath string, cfg githubTokenConfig) error {
 		return fmt.Errorf("failed to write token config file: %w", err)
 	}
 	return nil
+}
+
+func prepareLatestReleaseUpdateWithToken(token string) (updatePreparation, error) {
+	release, err := fetchLatestRelease(token)
+	if err != nil {
+		return updatePreparation{}, err
+	}
+	return buildUpdatePreparation(release)
+}
+
+func fetchLatestRelease(token string) (githubLatestRelease, error) {
+	apiURL, err := buildLatestReleaseAPIURL(githubRepoURL)
+	if err != nil {
+		return githubLatestRelease{}, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, apiURL, nil)
+	if err != nil {
+		return githubLatestRelease{}, fmt.Errorf("failed to create request: %w", err)
+	}
+	req.Header.Set("Accept", "application/vnd.github+json")
+	req.Header.Set("User-Agent", "nooltools-update-checker")
+	if token != "" {
+		req.Header.Set("Authorization", "Bearer "+token)
+	}
+
+	client := &http.Client{Timeout: updateRequestTimeout}
+	resp, err := client.Do(req)
+	if err != nil {
+		return githubLatestRelease{}, fmt.Errorf("failed to query github release: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		body, _ := io.ReadAll(io.LimitReader(resp.Body, 2048))
+		return githubLatestRelease{}, fmt.Errorf("github api returned status %d: %s", resp.StatusCode, strings.TrimSpace(string(body)))
+	}
+
+	var release githubLatestRelease
+	if err := json.NewDecoder(io.LimitReader(resp.Body, 2<<20)).Decode(&release); err != nil {
+		return githubLatestRelease{}, fmt.Errorf("failed to decode github release response: %w", err)
+	}
+	return release, nil
+}
+
+func buildUpdatePreparation(release githubLatestRelease) (updatePreparation, error) {
+	result := UpdateCheckResult{
+		CurrentVersion: AppVersion,
+		CheckedAt:      time.Now().UTC().Format(time.RFC3339),
+	}
+
+	latestVersion := strings.TrimSpace(release.TagName)
+	if latestVersion == "" {
+		latestVersion = strings.TrimSpace(release.Name)
+	}
+	if latestVersion == "" {
+		return updatePreparation{}, errors.New("latest release version is empty")
+	}
+
+	result.LatestVersion = latestVersion
+	result.ReleaseName = strings.TrimSpace(release.Name)
+	result.ReleaseURL = strings.TrimSpace(release.HTMLURL)
+	result.PublishedAt = strings.TrimSpace(release.PublishedAt)
+	result.ReleaseNotes = strings.TrimSpace(release.Body)
+
+	cmp, err := compareVersions(AppVersion, latestVersion)
+	if err != nil {
+		return updatePreparation{}, fmt.Errorf("failed to compare versions: %w", err)
+	}
+	if cmp >= 0 {
+		result.HasUpdate = false
+		result.Message = "You are using the latest version."
+		return updatePreparation{Result: result}, nil
+	}
+
+	result.HasUpdate = true
+	result.Message = "A new version is available."
+
+	asset, ok := selectPreferredAsset(release.Assets)
+	if !ok {
+		result.CanAutoUpdate = false
+		result.AutoUpdateReason = "No supported Windows release asset found."
+		return updatePreparation{Result: result}, nil
+	}
+	result.AssetName = asset.Name
+	result.AssetSize = asset.Size
+
+	sha256Digest, err := parseSHA256Digest(asset.Digest)
+	if err != nil {
+		result.CanAutoUpdate = false
+		result.AutoUpdateReason = "Missing valid SHA256 digest, automatic replacement is blocked."
+		return updatePreparation{Result: result, SelectedAsset: &asset}, nil
+	}
+
+	result.CanAutoUpdate = true
+	result.AutoUpdateReason = ""
+	return updatePreparation{
+		Result:        result,
+		SelectedAsset: &asset,
+		SHA256Digest:  sha256Digest,
+	}, nil
+}
+
+func selectPreferredAsset(assets []githubReleaseAsset) (githubReleaseAsset, bool) {
+	names := []string{releaseAssetPrimaryName, releaseAssetFallbackName}
+	for _, expectedName := range names {
+		for _, asset := range assets {
+			if strings.EqualFold(strings.TrimSpace(asset.Name), expectedName) {
+				return asset, true
+			}
+		}
+	}
+	return githubReleaseAsset{}, false
+}
+
+func parseSHA256Digest(digest string) (string, error) {
+	trimmed := strings.TrimSpace(digest)
+	if trimmed == "" {
+		return "", errors.New("digest is empty")
+	}
+
+	prefix := "sha256:"
+	if !strings.HasPrefix(strings.ToLower(trimmed), prefix) {
+		return "", errors.New("digest must start with sha256:")
+	}
+
+	sum := strings.TrimSpace(trimmed[len(prefix):])
+	if len(sum) != 64 {
+		return "", errors.New("sha256 digest must be 64 hex chars")
+	}
+	if _, err := hex.DecodeString(sum); err != nil {
+		return "", errors.New("sha256 digest contains non-hex chars")
+	}
+	return strings.ToLower(sum), nil
 }
 
 func buildLatestReleaseAPIURL(repoURL string) (string, error) {

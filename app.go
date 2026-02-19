@@ -5,11 +5,15 @@ import (
 	"fmt"
 	"log"
 	"nooltools/apps/database"
+	"sync"
 )
 
 // app 结构体
 type app struct {
-	database *database.Database
+	database   *database.Database
+	ctx        context.Context
+	updateMu   sync.Mutex
+	isUpdating bool
 }
 
 // NewApp 创建应用实例
@@ -19,6 +23,8 @@ func NewApp() *app {
 
 // startup 应用启动时调用
 func (a *app) startup(ctx context.Context) {
+	a.ctx = ctx
+
 	// 初始化数据库
 	db, err := database.NewDatabase()
 	if err != nil {

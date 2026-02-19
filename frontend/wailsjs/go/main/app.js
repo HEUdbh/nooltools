@@ -342,6 +342,10 @@ export function SaveMarkdownFile(arg1, arg2) {
   return window['go']['main']['app']['SaveMarkdownFile'](arg1, arg2);
 }
 
+export function StartAutoUpdate() {
+  return window['go']['main']['app']['StartAutoUpdate']();
+}
+
 export function UpdateBeibao(arg1, arg2) {
   return window['go']['main']['app']['UpdateBeibao'](arg1, arg2);
 }

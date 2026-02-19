@@ -27,6 +27,10 @@ export namespace main {
 	    release_notes: string;
 	    checked_at: string;
 	    message: string;
+	    asset_name: string;
+	    asset_size: number;
+	    can_auto_update: boolean;
+	    auto_update_reason: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new UpdateCheckResult(source);
@@ -43,6 +47,10 @@ export namespace main {
 	        this.release_notes = source["release_notes"];
 	        this.checked_at = source["checked_at"];
 	        this.message = source["message"];
+	        this.asset_name = source["asset_name"];
+	        this.asset_size = source["asset_size"];
+	        this.can_auto_update = source["can_auto_update"];
+	        this.auto_update_reason = source["auto_update_reason"];
 	    }
 	}
 

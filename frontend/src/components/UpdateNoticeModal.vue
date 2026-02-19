@@ -10,10 +10,38 @@ const props = defineProps({
   updateInfo: {
     type: Object,
     default: null
+  },
+  isUpdating: {
+    type: Boolean,
+    default: false
+  },
+  progress: {
+    type: Object,
+    default: () => ({
+      stage: '',
+      percent: 0,
+      message: '',
+      detail: ''
+    })
   }
 })
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'start-update'])
+const TEXT = {
+  title: '发现新版本',
+  currentVersion: '当前版本:',
+  latestVersion: '最新版本:',
+  publishedAt: '发布时间:',
+  releaseName: '发布名称:',
+  assetName: '资产文件:',
+  releaseNotes: '更新说明:',
+  autoUpdateDisabled: '当前版本不支持自动替换，请去下载页手动更新。',
+  progressDefault: '更新进行中...',
+  remindLater: '稍后提醒',
+  updateNow: '立即更新',
+  updating: '更新中...',
+  goDownload: '去下载页'
+}
 
 const formattedPublishedAt = computed(() => {
   const value = props.updateInfo?.published_at
@@ -32,16 +60,50 @@ const releaseNotes = computed(() => {
   return notes.trim() || 'No release notes.'
 })
 
+const canAutoUpdate = computed(() => {
+  return Boolean(props.updateInfo?.can_auto_update)
+})
+
+const progressPercent = computed(() => {
+  const value = Number(props.progress?.percent || 0)
+  if (value < 0) {
+    return 0
+  }
+  if (value > 100) {
+    return 100
+  }
+  return value
+})
+
+const hasProgress = computed(() => {
+  return Boolean(props.progress?.stage)
+})
+
+const isError = computed(() => {
+  return props.progress?.stage === 'error'
+})
+
 function handleClose() {
+  if (props.isUpdating) {
+    return
+  }
   emit('close')
 }
 
-function handleOpenRelease() {
+function openReleasePage() {
   const releaseURL = props.updateInfo?.release_url
   if (releaseURL) {
     BrowserOpenURL(releaseURL)
   }
+}
+
+function handleFallbackDownload() {
+  openReleasePage()
   emit('close')
+}
+
+function handleStartUpdate() {
+  emit('start-update')
 }
 </script>
 
@@ -51,37 +113,73 @@ function handleOpenRelease() {
       <div v-if="visible" class="modal-overlay" @click="handleClose">
         <div class="modal-container" @click.stop>
           <div class="modal-header">
-            <h3>发现新版本</h3>
-            <button class="close-btn" @click="handleClose">x</button>
+            <h3>{{ TEXT.title }}</h3>
+            <button class="close-btn" :disabled="isUpdating" @click="handleClose">x</button>
           </div>
 
           <div class="modal-body">
             <p class="row">
-              <span class="label">当前版本:</span>
+              <span class="label">{{ TEXT.currentVersion }}</span>
               <span class="value">{{ updateInfo?.current_version || '-' }}</span>
             </p>
             <p class="row">
-              <span class="label">最新版本:</span>
+              <span class="label">{{ TEXT.latestVersion }}</span>
               <span class="value">{{ updateInfo?.latest_version || '-' }}</span>
             </p>
             <p class="row">
-              <span class="label">发布时间:</span>
+              <span class="label">{{ TEXT.publishedAt }}</span>
               <span class="value">{{ formattedPublishedAt }}</span>
             </p>
             <p class="row">
-              <span class="label">发布名称:</span>
+              <span class="label">{{ TEXT.releaseName }}</span>
               <span class="value">{{ updateInfo?.release_name || '-' }}</span>
+            </p>
+            <p class="row">
+              <span class="label">{{ TEXT.assetName }}</span>
+              <span class="value">{{ updateInfo?.asset_name || '-' }}</span>
             </p>
 
             <div class="notes-wrapper">
-              <div class="label">更新说明:</div>
+              <div class="label">{{ TEXT.releaseNotes }}</div>
               <pre class="notes">{{ releaseNotes }}</pre>
+            </div>
+
+            <div v-if="!canAutoUpdate" class="auto-update-disabled">
+              {{ updateInfo?.auto_update_reason || TEXT.autoUpdateDisabled }}
+            </div>
+
+            <div v-if="hasProgress" class="progress-wrapper">
+              <div class="progress-header">
+                <span>{{ progress?.message || TEXT.progressDefault }}</span>
+                <span>{{ progressPercent }}%</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" :style="{ width: `${progressPercent}%` }"></div>
+              </div>
+              <p v-if="progress?.detail" :class="['progress-detail', { error: isError }]">
+                {{ progress.detail }}
+              </p>
             </div>
           </div>
 
           <div class="modal-footer">
-            <button class="btn btn-cancel" @click="handleClose">稍后提醒</button>
-            <button class="btn btn-confirm" @click="handleOpenRelease">立即更新</button>
+            <button class="btn btn-cancel" :disabled="isUpdating" @click="handleClose">{{ TEXT.remindLater }}</button>
+            <button
+              v-if="canAutoUpdate"
+              class="btn btn-confirm"
+              :disabled="isUpdating"
+              @click="handleStartUpdate"
+            >
+              {{ isUpdating ? TEXT.updating : TEXT.updateNow }}
+            </button>
+            <button v-else class="btn btn-confirm" @click="handleFallbackDownload">{{ TEXT.goDownload }}</button>
+            <button
+              v-if="isError && canAutoUpdate"
+              class="btn btn-fallback"
+              @click="openReleasePage"
+            >
+              {{ TEXT.goDownload }}
+            </button>
           </div>
         </div>
       </div>
@@ -143,6 +241,11 @@ function handleOpenRelease() {
   color: #2c3e50;
 }
 
+.close-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .modal-body {
   padding: 18px 20px;
 }
@@ -182,6 +285,50 @@ function handleOpenRelease() {
   line-height: 1.5;
 }
 
+.auto-update-disabled {
+  margin-top: 12px;
+  padding: 8px 10px;
+  background: #fff7e6;
+  border: 1px solid #ffe7ba;
+  color: #ad6800;
+  border-radius: 6px;
+}
+
+.progress-wrapper {
+  margin-top: 14px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.progress-track {
+  width: 100%;
+  height: 10px;
+  background: #edf2f7;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1677ff, #36cfc9);
+  transition: width 0.2s ease;
+}
+
+.progress-detail {
+  margin-top: 8px;
+  color: #64748b;
+  word-break: break-word;
+}
+
+.progress-detail.error {
+  color: #d4380d;
+}
+
 .modal-footer {
   display: flex;
   justify-content: flex-end;
@@ -214,5 +361,19 @@ function handleOpenRelease() {
 
 .btn-confirm:hover {
   background-color: #0958d9;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-fallback {
+  background-color: #fff1f0;
+  color: #cf1322;
+}
+
+.btn-fallback:hover {
+  background-color: #ffccc7;
 }
 </style>

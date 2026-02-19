@@ -173,6 +173,8 @@ export function RenameMarkdownFile(arg1:string,arg2:string):Promise<void>;
 
 export function SaveMarkdownFile(arg1:string,arg2:string):Promise<void>;
 
+export function StartAutoUpdate():Promise<Record<string, any>>;
+
 export function UpdateBeibao(arg1:number,arg2:string):Promise<void>;
 
 export function UpdateBeibaoItem(arg1:number,arg2:string,arg3:number,arg4:string):Promise<void>;

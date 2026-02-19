@@ -225,3 +225,12 @@ Example:
   "github_token": ""
 }
 ```
+
+### Auto Update Flow (Windows)
+
+- When a new release is detected, the app can run one-click auto update:
+  - Download release asset (`nooltools.exe`, fallback `noltools.exe`)
+  - Verify SHA256 from GitHub release `digest`
+  - Quit current app, run external PowerShell replacement script
+  - Replace executable, keep `.bak` backup, restart app
+- If the release asset has no valid SHA256 digest, auto replacement is blocked and fallback to manual download.
