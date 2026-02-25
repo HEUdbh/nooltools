@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"nooltools/apps/storage"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -240,12 +241,12 @@ func verifyFileSHA256(filePath, expectedDigest string) error {
 }
 
 func getUpdatesDirectory() (string, error) {
-	homeDir, err := os.UserHomeDir()
+	dataDir, err := storage.ResolveDataDir()
 	if err != nil {
-		return "", fmt.Errorf("failed to get user home directory: %w", err)
+		return "", fmt.Errorf("failed to resolve data directory: %w", err)
 	}
 
-	updatesDir := filepath.Join(homeDir, ".nooltools", "updates")
+	updatesDir := filepath.Join(dataDir, storage.UpdatesDirName)
 	if err := os.MkdirAll(updatesDir, 0o755); err != nil {
 		return "", fmt.Errorf("failed to create updates directory: %w", err)
 	}

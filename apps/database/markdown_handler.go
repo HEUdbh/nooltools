@@ -3,6 +3,7 @@ package database
 
 import (
 	"fmt"
+	"nooltools/apps/storage"
 	"os"
 	"path/filepath"
 	"strings"
@@ -17,12 +18,12 @@ type MarkdownFile struct {
 
 // GetMarkdownDir 获取markdown文件存储目录
 func (d *Database) GetMarkdownDir() (string, error) {
-	homeDir, err := os.UserHomeDir()
+	dataDir, err := d.GetDataDir()
 	if err != nil {
-		return "", fmt.Errorf("获取用户目录失败: %v", err)
+		return "", fmt.Errorf("获取数据目录失败: %v", err)
 	}
 
-	markdownDir := filepath.Join(homeDir, ".nooltools", "markdown")
+	markdownDir := filepath.Join(dataDir, storage.MarkdownDirName)
 	if err := os.MkdirAll(markdownDir, 0755); err != nil {
 		return "", fmt.Errorf("创建markdown目录失败: %v", err)
 	}

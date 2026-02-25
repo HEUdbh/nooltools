@@ -17,6 +17,40 @@ export namespace database {
 
 export namespace main {
 	
+	export class StorageMigrationResult {
+	    from_dir: string;
+	    to_dir: string;
+	    backed_up_conflicts: string[];
+	    restart_recommended: boolean;
+	
+	    static createFrom(source: any = {}) {
+	        return new StorageMigrationResult(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.from_dir = source["from_dir"];
+	        this.to_dir = source["to_dir"];
+	        this.backed_up_conflicts = source["backed_up_conflicts"];
+	        this.restart_recommended = source["restart_recommended"];
+	    }
+	}
+	export class StorageSettings {
+	    current_data_dir: string;
+	    default_data_dir: string;
+	    is_custom: boolean;
+	
+	    static createFrom(source: any = {}) {
+	        return new StorageSettings(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.current_data_dir = source["current_data_dir"];
+	        this.default_data_dir = source["default_data_dir"];
+	        this.is_custom = source["is_custom"];
+	    }
+	}
 	export class UpdateCheckResult {
 	    has_update: boolean;
 	    current_version: string;

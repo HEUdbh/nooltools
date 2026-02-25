@@ -12,7 +12,6 @@ const Guaiwu = () => import('../views/Guaiwu.vue')
 const Beibao = () => import('../views/Beibao.vue')
 const Shopping = () => import('../views/Shopping.vue')
 const Getjiang = () => import('../views/Getjiang.vue')
-const Contact = () => import('../views/Contact.vue')
 
 // 路由配置
 const routes = [
@@ -86,12 +85,6 @@ const routes = [
     component: Getjiang,
     meta: { title: '抽奖', icon: '🎰' }
   },
-  {
-    path: '/contact',
-    name: 'Contact',
-    component: Contact,
-    meta: { title: '联系作者', icon: '📧' }
-  }
 ]
 
 // 创建路由实例

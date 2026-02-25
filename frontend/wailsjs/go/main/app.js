@@ -326,8 +326,16 @@ export function GetShoppingInfo(arg1) {
   return window['go']['main']['app']['GetShoppingInfo'](arg1);
 }
 
+export function GetStorageSettings() {
+  return window['go']['main']['app']['GetStorageSettings']();
+}
+
 export function GetWeaponInfo(arg1) {
   return window['go']['main']['app']['GetWeaponInfo'](arg1);
+}
+
+export function MigrateStorageDirectory(arg1) {
+  return window['go']['main']['app']['MigrateStorageDirectory'](arg1);
 }
 
 export function ReadMarkdownFile(arg1) {
@@ -338,8 +346,16 @@ export function RenameMarkdownFile(arg1, arg2) {
   return window['go']['main']['app']['RenameMarkdownFile'](arg1, arg2);
 }
 
+export function RestartApplication() {
+  return window['go']['main']['app']['RestartApplication']();
+}
+
 export function SaveMarkdownFile(arg1, arg2) {
   return window['go']['main']['app']['SaveMarkdownFile'](arg1, arg2);
+}
+
+export function SelectStorageParentDirectory() {
+  return window['go']['main']['app']['SelectStorageParentDirectory']();
 }
 
 export function StartAutoUpdate() {

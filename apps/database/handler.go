@@ -5,6 +5,7 @@ package database
 import (
 	"database/sql"
 	"fmt"
+	"nooltools/apps/storage"
 	"os"
 	"path/filepath"
 
@@ -13,25 +14,33 @@ import (
 
 // Database 数据库处理器
 type Database struct {
-	db *sql.DB
+	db      *sql.DB
+	dataDir string
 }
 
 // NewDatabase 创建新的数据库实例
 func NewDatabase() (*Database, error) {
-	// 获取用户主目录
-	homeDir, err := os.UserHomeDir()
+	dataDir, err := storage.ResolveDataDir()
 	if err != nil {
-		return nil, fmt.Errorf("获取用户目录失败: %v", err)
+		return nil, fmt.Errorf("获取数据目录失败: %v", err)
+	}
+	return NewDatabaseAtDir(dataDir)
+}
+
+// NewDatabaseAtDir 使用指定目录创建新的数据库实例
+func NewDatabaseAtDir(dataDir string) (*Database, error) {
+	normalizedDir, err := storage.NormalizePath(dataDir)
+	if err != nil {
+		return nil, fmt.Errorf("数据目录无效: %v", err)
 	}
 
 	// 创建应用数据目录
-	appDataDir := filepath.Join(homeDir, ".nooltools")
-	if err := os.MkdirAll(appDataDir, 0755); err != nil {
+	if err := os.MkdirAll(normalizedDir, 0755); err != nil {
 		return nil, fmt.Errorf("创建应用目录失败: %v", err)
 	}
 
 	// 数据库文件路径
-	dbPath := filepath.Join(appDataDir, "nooltools.db")
+	dbPath := filepath.Join(normalizedDir, storage.DatabaseFileName)
 
 	// 打开数据库连接
 	db, err := sql.Open("sqlite3", dbPath)
@@ -44,7 +53,10 @@ func NewDatabase() (*Database, error) {
 		return nil, fmt.Errorf("连接数据库失败: %v", err)
 	}
 
-	database := &Database{db: db}
+	database := &Database{
+		db:      db,
+		dataDir: normalizedDir,
+	}
 
 	// 初始化数据库表
 	if err := database.initTables(); err != nil {
@@ -66,6 +78,14 @@ func (d *Database) Close() error {
 // GetDB 获取数据库连接
 func (d *Database) GetDB() *sql.DB {
 	return d.db
+}
+
+// GetDataDir 获取当前数据库实例的数据目录
+func (d *Database) GetDataDir() (string, error) {
+	if d.dataDir != "" {
+		return d.dataDir, nil
+	}
+	return storage.ResolveDataDir()
 }
 
 // initTables 初始化所有数据库表
@@ -557,12 +577,12 @@ func (d *Database) checkTableExists(tableName string) error {
 
 // GetDatabasePath 获取数据库文件路径
 func GetDatabasePath() (string, error) {
-	homeDir, err := os.UserHomeDir()
+	dataDir, err := storage.ResolveDataDir()
 	if err != nil {
-		return "", fmt.Errorf("获取用户目录失败: %v", err)
+		return "", fmt.Errorf("获取数据目录失败: %v", err)
 	}
 
-	dbPath := filepath.Join(homeDir, ".nooltools", "nooltools.db")
+	dbPath := filepath.Join(dataDir, storage.DatabaseFileName)
 	return dbPath, nil
 }
 

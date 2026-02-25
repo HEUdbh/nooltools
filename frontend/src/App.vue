@@ -1,6 +1,7 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import Sidebar from './components/Sidebar.vue'
+import SettingsModal from './components/SettingsModal.vue'
 import UpdateNoticeModal from './components/UpdateNoticeModal.vue'
 import { EventsOff, EventsOn } from '../wailsjs/runtime/runtime'
 
@@ -15,6 +16,7 @@ const updateProgress = ref({
 })
 const theme = ref('light')
 const THEME_STORAGE_KEY = 'nooltools-theme'
+const showSettingsModal = ref(false)
 
 function handleUpdateProgress(event) {
   if (!event || typeof event !== 'object') {
@@ -43,6 +45,14 @@ function applyTheme(nextTheme) {
 
 function toggleTheme() {
   applyTheme(theme.value === 'dark' ? 'light' : 'dark')
+}
+
+function openSettingsModal() {
+  showSettingsModal.value = true
+}
+
+function closeSettingsModal() {
+  showSettingsModal.value = false
 }
 
 onMounted(async () => {
@@ -101,13 +111,14 @@ async function handleStartAutoUpdate() {
 <template>
   <div class="app-container">
     <!-- 左侧侧边栏 -->
-    <Sidebar :theme="theme" @toggle-theme="toggleTheme" />
+    <Sidebar :theme="theme" @toggle-theme="toggleTheme" @open-settings="openSettingsModal" />
 
     <!-- 右侧内容区域 -->
     <main class="main-content">
       <router-view />
     </main>
   </div>
+  <SettingsModal :visible="showSettingsModal" @close="closeSettingsModal" />
   <UpdateNoticeModal
     :visible="showUpdateModal"
     :update-info="updateInfo"

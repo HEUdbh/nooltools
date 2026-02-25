@@ -10,7 +10,7 @@ const props = defineProps({
     default: 'light'
   }
 })
-const emit = defineEmits(['toggle-theme'])
+const emit = defineEmits(['toggle-theme', 'open-settings'])
 
 // 导航菜单项
 const menuItems = [
@@ -24,8 +24,7 @@ const menuItems = [
   { id: 'chongwu', name: '宠物', icon: '🐾', path: '/chongwu' },
   { id: 'shiqing', name: '任务', icon: '📋', path: '/shiqing' },
   { id: 'shili', name: '势力', icon: '🏰', path: '/shili' },
-  { id: 'guaiwu', name: '怪物', icon: '👹', path: '/guaiwu' },
-  { id: 'contact', name: '联系作者', icon: '📧', path: '/contact' }
+  { id: 'guaiwu', name: '怪物', icon: '👹', path: '/guaiwu' }
 ]
 
 // 当前激活的菜单项
@@ -40,6 +39,10 @@ function navigate(path) {
 
 function handleToggleTheme() {
   emit('toggle-theme')
+}
+
+function handleOpenSettings() {
+  emit('open-settings')
 }
 </script>
 
@@ -60,6 +63,9 @@ function handleToggleTheme() {
       </button>
     </nav>
     <div class="sidebar-footer">
+      <button class="settings-btn" @click="handleOpenSettings">
+        ⚙️ 设置
+      </button>
       <button class="theme-toggle-btn" @click="handleToggleTheme">
         {{ props.theme === 'dark' ? '☀️ 白天模式' : '🌙 黑夜模式' }}
       </button>
@@ -137,10 +143,30 @@ function handleToggleTheme() {
 .sidebar-footer {
   padding: 12px;
   border-top: 1px solid var(--app-divider-soft);
+  display: flex;
+  gap: 8px;
+}
+
+.settings-btn {
+  flex: 1;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: var(--app-muted-bg);
+  color: var(--app-text-secondary);
+  transition: all 0.2s ease;
+}
+
+.settings-btn:hover {
+  background-color: var(--app-hover-bg);
+  color: var(--app-accent);
 }
 
 .theme-toggle-btn {
-  width: 100%;
+  flex: 1;
   padding: 10px 12px;
   border: none;
   border-radius: 8px;

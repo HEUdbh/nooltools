@@ -165,13 +165,21 @@ export function GetShiqingInfo(arg1:number):Promise<Record<string, any>>;
 
 export function GetShoppingInfo(arg1:number):Promise<Record<string, any>>;
 
+export function GetStorageSettings():Promise<main.StorageSettings>;
+
 export function GetWeaponInfo(arg1:number):Promise<Record<string, any>>;
+
+export function MigrateStorageDirectory(arg1:string):Promise<main.StorageMigrationResult>;
 
 export function ReadMarkdownFile(arg1:string):Promise<string>;
 
 export function RenameMarkdownFile(arg1:string,arg2:string):Promise<void>;
 
+export function RestartApplication():Promise<void>;
+
 export function SaveMarkdownFile(arg1:string,arg2:string):Promise<void>;
+
+export function SelectStorageParentDirectory():Promise<string>;
 
 export function StartAutoUpdate():Promise<Record<string, any>>;
 

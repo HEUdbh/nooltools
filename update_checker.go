@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"nooltools/apps/storage"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -83,11 +84,11 @@ func checkReleaseUpdate() (UpdateCheckResult, error) {
 }
 
 func getTokenConfigPath() (string, error) {
-	homeDir, err := os.UserHomeDir()
+	dataDir, err := storage.ResolveDataDir()
 	if err != nil {
-		return "", fmt.Errorf("failed to get user home directory: %w", err)
+		return "", fmt.Errorf("failed to resolve data directory: %w", err)
 	}
-	return filepath.Join(homeDir, ".nooltools", githubTokenConfigName), nil
+	return filepath.Join(dataDir, githubTokenConfigName), nil
 }
 
 func loadGitHubToken() (string, error) {
