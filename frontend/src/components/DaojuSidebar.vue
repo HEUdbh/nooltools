@@ -73,8 +73,8 @@ function deleteDaoju(daojuId, event) {
 <style scoped>
 .daoju-sidebar {
   width: 200px;
-  background-color: #ffffff;
-  border-right: 1px solid #e8eaed;
+  background-color: var(--app-surface);
+  border-right: 1px solid var(--app-border);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -82,7 +82,7 @@ function deleteDaoju(daojuId, event) {
 
 .sidebar-header {
   padding: 20px;
-  border-bottom: 1px solid #f0f2f5;
+  border-bottom: 1px solid var(--app-divider-soft);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -91,7 +91,7 @@ function deleteDaoju(daojuId, event) {
 .sidebar-header h2 {
   font-size: 18px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   margin: 0;
 }
 
@@ -99,8 +99,8 @@ function deleteDaoju(daojuId, event) {
   width: 32px;
   height: 32px;
   border: none;
-  background-color: #1890ff;
-  color: white;
+  background-color: var(--app-accent);
+  color: var(--app-text-inverse);
   border-radius: 50%;
   cursor: pointer;
   font-size: 20px;
@@ -111,7 +111,7 @@ function deleteDaoju(daojuId, event) {
 }
 
 .add-btn:hover {
-  background-color: #40a9ff;
+  background-color: var(--app-accent-hover);
   transform: scale(1.1);
 }
 
@@ -129,12 +129,12 @@ function deleteDaoju(daojuId, event) {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
-  background-color: #f8f9fa;
+  background-color: var(--app-item-bg);
   position: relative;
 }
 
 .daoju-item:hover {
-  background-color: #f0f7ff;
+  background-color: var(--app-hover-bg);
 }
 
 .daoju-item:hover .delete-daoju-btn {
@@ -142,16 +142,16 @@ function deleteDaoju(daojuId, event) {
 }
 
 .daoju-item.active {
-  background-color: #e6f7ff;
-  border: 1px solid #1890ff;
+  background-color: var(--app-active-bg);
+  border: 1px solid var(--app-accent);
 }
 
 .daoju-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--app-gradient-primary);
+  color: var(--app-text-inverse);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -169,7 +169,7 @@ function deleteDaoju(daojuId, event) {
 .daoju-name {
   font-size: 14px;
   font-weight: 500;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   margin-bottom: 4px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -178,13 +178,13 @@ function deleteDaoju(daojuId, event) {
 
 .daoju-level {
   font-size: 12px;
-  color: #8c92a0;
+  color: var(--app-text-muted);
 }
 
 .empty-tip {
   text-align: center;
   padding: 40px 20px;
-  color: #8c92a0;
+  color: var(--app-text-muted);
 }
 
 .empty-tip p {
@@ -193,7 +193,7 @@ function deleteDaoju(daojuId, event) {
 
 .tip {
   font-size: 12px;
-  color: #b0b8c3;
+  color: var(--app-text-muted);
 }
 
 .delete-daoju-btn {
@@ -201,7 +201,7 @@ function deleteDaoju(daojuId, event) {
   height: 24px;
   border: none;
   background: none;
-  color: #8c92a0;
+  color: var(--app-text-muted);
   font-size: 20px;
   cursor: pointer;
   display: flex;
@@ -216,7 +216,7 @@ function deleteDaoju(daojuId, event) {
 }
 
 .delete-daoju-btn:hover {
-  background-color: #fff1f0;
-  color: #ff4d4f;
+  background-color: var(--app-danger-soft-bg);
+  color: var(--app-danger);
 }
 </style>

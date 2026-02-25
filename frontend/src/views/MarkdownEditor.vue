@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch, nextTick } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { GetMarkdownFiles, ReadMarkdownFile, SaveMarkdownFile, DeleteMarkdownFile, RenameMarkdownFile } from '../../wailsjs/go/main/App.js'
 import { marked } from 'marked'
 
@@ -19,8 +19,8 @@ const editorContent = ref('')
 // 预览内容
 const previewContent = ref('')
 
-// 是否显示预览
-const showPreview = ref(true)
+// 编辑器视图模式（editor/preview）
+const viewMode = ref('editor')
 
 // 是否显示文件列表侧边栏
 const showFileSidebar = ref(true)
@@ -77,37 +77,26 @@ async function loadFile(filename) {
 function createNewFile() {
   const title = prompt('请输入新文件标题:', '未命名文档')
   if (title && title.trim()) {
+    const trimmedTitle = title.trim()
     currentFile.value = {
-      name: title.trim() + '.md',
-      title: title.trim(),
+      name: trimmedTitle + '.md',
+      title: trimmedTitle,
       content: ''
     }
-    // 第一行作为标题
-    editorContent.value = `# ${title.trim()}\n\n`
+    editorContent.value = ''
     updatePreview()
   }
 }
 
 // 保存文件
 async function saveFile() {
-  // 从第一行读取标题
-  const lines = editorContent.value.split('\n')
-  let title = '未命名文档'
-  
-  // 查找第一个非空行作为标题
-  for (const line of lines) {
-    const trimmedLine = line.trim()
-    if (trimmedLine) {
-      // 移除markdown标题符号（#）
-      title = trimmedLine.replace(/^#+\s*/, '').trim()
-      break
-    }
+  let fileName = (currentFile.value.name || '').trim()
+  if (!fileName) {
+    const fallbackTitle = (currentFile.value.title || '未命名文档').trim() || '未命名文档'
+    fileName = `${fallbackTitle}.md`
   }
-  
-  // 如果标题为空，使用默认标题
-  if (!title) {
-    title = '未命名文档'
-  }
+  const normalizedFileName = /\.md$/i.test(fileName) ? fileName : `${fileName}.md`
+  const title = normalizedFileName.replace(/\.md$/i, '')
 
   try {
     loading.value = true
@@ -115,7 +104,7 @@ async function saveFile() {
     
     // 更新当前文件信息
     currentFile.value = {
-      name: title + '.md',
+      name: normalizedFileName,
       title: title,
       content: editorContent.value
     }
@@ -194,20 +183,6 @@ function updatePreview() {
     return
   }
   
-  const lines = editorContent.value.split('\n')
-  let processedContent = editorContent.value
-  
-  // 检查第一行是否已经是标题格式
-  if (lines.length > 0) {
-    const firstLine = lines[0].trim()
-    // 如果第一行不是标题格式，且不为空，则将其转换为标题
-    if (firstLine && !firstLine.startsWith('#')) {
-      // 将第一行转换为一级标题
-      lines[0] = `# ${firstLine}`
-      processedContent = lines.join('\n')
-    }
-  }
-  
   // 配置marked的自定义渲染器
   const renderer = new marked.Renderer()
   let headingCounter = 0
@@ -223,7 +198,7 @@ function updatePreview() {
     renderer: renderer
   })
   
-  previewContent.value = marked(processedContent)
+  previewContent.value = marked(editorContent.value)
   
   // 更新目录
   updateToc()
@@ -265,9 +240,9 @@ watch(editorContent, () => {
   updatePreview()
 })
 
-// 切换预览显示
-function togglePreview() {
-  showPreview.value = !showPreview.value
+// 切换编辑器/预览模式
+function toggleViewMode() {
+  viewMode.value = viewMode.value === 'editor' ? 'preview' : 'editor'
 }
 
 // 切换文件列表侧边栏显示
@@ -317,8 +292,8 @@ onMounted(() => {
         <button class="btn btn-secondary" @click="toggleTocSidebar" title="切换目录">
           {{ showTocSidebar ? '📑 隐藏目录' : '📑 显示目录' }}
         </button>
-        <button class="btn btn-secondary" @click="togglePreview">
-          {{ showPreview ? '👁️ 隐藏预览' : '👁️ 显示预览' }}
+        <button class="btn btn-secondary" @click="toggleViewMode">
+          {{ viewMode === 'editor' ? '👁️ 切换到预览' : '📝 切换到编辑' }}
         </button>
       </div>
     </div>
@@ -354,7 +329,7 @@ onMounted(() => {
       <!-- 编辑器和预览区域 -->
       <div class="editor-preview-container">
         <!-- 编辑器 -->
-        <div class="editor-section" :class="{ 'full-width': !showPreview }">
+        <div v-if="viewMode === 'editor'" class="editor-section full-width">
           <div class="section-header">
             <h3>📝 编辑器</h3>
           </div>
@@ -364,6 +339,14 @@ onMounted(() => {
             placeholder="开始编写你的Markdown文档..."
             spellcheck="false"
           ></textarea>
+        </div>
+
+        <!-- 预览 -->
+        <div v-else class="preview-section full-width">
+          <div class="section-header">
+            <h3>👁️ 预览</h3>
+          </div>
+          <div class="markdown-preview" v-html="previewContent"></div>
         </div>
 
         <!-- 目录侧边栏 -->
@@ -387,14 +370,6 @@ onMounted(() => {
             </div>
           </div>
         </transition>
-
-        <!-- 预览 -->
-        <div v-if="showPreview" class="preview-section">
-          <div class="section-header">
-            <h3>👁️ 预览</h3>
-          </div>
-          <div class="markdown-preview" v-html="previewContent"></div>
-        </div>
       </div>
     </div>
 
@@ -410,7 +385,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #f5f7fa;
+  background-color: var(--app-bg);
 }
 
 /* 工具栏样式 */
@@ -419,9 +394,9 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   padding: 12px 20px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e8eaed;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  background-color: var(--app-surface);
+  border-bottom: 1px solid var(--app-border);
+  box-shadow: var(--app-shadow-sm);
 }
 
 .toolbar-left,
@@ -432,10 +407,10 @@ onMounted(() => {
 }
 
 .current-file {
-  color: #5a6c7d;
+  color: var(--app-text-secondary);
   font-size: 14px;
   padding: 6px 12px;
-  background-color: #f0f7ff;
+  background-color: var(--app-hover-bg);
   border-radius: 4px;
 }
 
@@ -456,22 +431,22 @@ onMounted(() => {
 }
 
 .btn-primary {
-  background-color: #1890ff;
-  color: white;
+  background-color: var(--app-accent);
+  color: var(--app-text-inverse);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #40a9ff;
+  background-color: var(--app-accent-hover);
 }
 
 .btn-secondary {
-  background-color: #f0f2f5;
-  color: #5a6c7d;
+  background-color: var(--app-muted-bg);
+  color: var(--app-text-secondary);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background-color: #e6f7ff;
-  color: #1890ff;
+  background-color: var(--app-hover-bg);
+  color: var(--app-accent);
 }
 
 .btn-icon {
@@ -485,7 +460,7 @@ onMounted(() => {
 }
 
 .btn-icon:hover {
-  background-color: #f0f7ff;
+  background-color: var(--app-hover-bg);
 }
 
 /* 主内容区域 */
@@ -498,8 +473,8 @@ onMounted(() => {
 /* 文件列表侧边栏 */
 .file-sidebar {
   width: 280px;
-  background-color: #ffffff;
-  border-right: 1px solid #e8eaed;
+  background-color: var(--app-surface);
+  border-right: 1px solid var(--app-border);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -529,14 +504,14 @@ onMounted(() => {
 
 .file-sidebar-header {
   padding: 16px 20px;
-  border-bottom: 1px solid #f0f2f5;
+  border-bottom: 1px solid var(--app-divider-soft);
 }
 
 .file-sidebar-header h3 {
   margin: 0;
   font-size: 16px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--app-text-primary);
 }
 
 .file-list {
@@ -551,25 +526,25 @@ onMounted(() => {
   align-items: center;
   padding: 10px 12px;
   margin-bottom: 8px;
-  background-color: #f8f9fa;
+  background-color: var(--app-item-bg);
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .file-item:hover {
-  background-color: #f0f7ff;
+  background-color: var(--app-hover-bg);
 }
 
 .file-item.active {
-  background-color: #e6f7ff;
-  border: 1px solid #1890ff;
+  background-color: var(--app-active-bg);
+  border: 1px solid var(--app-accent);
 }
 
 .file-name {
   flex: 1;
   font-size: 14px;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -588,7 +563,7 @@ onMounted(() => {
 
 .empty-state {
   text-align: center;
-  color: #999;
+  color: var(--app-text-muted);
   padding: 40px 20px;
   font-size: 14px;
 }
@@ -598,21 +573,21 @@ onMounted(() => {
   width: 280px;
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
-  border-left: 1px solid #e8eaed;
+  background-color: var(--app-surface);
+  border-left: 1px solid var(--app-border);
   flex-shrink: 0;
 }
 
 .toc-sidebar-header {
   padding: 16px 20px;
-  border-bottom: 1px solid #f0f2f5;
+  border-bottom: 1px solid var(--app-divider-soft);
 }
 
 .toc-sidebar-header h3 {
   margin: 0;
   font-size: 16px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--app-text-primary);
 }
 
 .toc-list {
@@ -627,14 +602,14 @@ onMounted(() => {
   cursor: pointer;
   transition: all 0.2s ease;
   font-size: 14px;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   border-radius: 4px;
   line-height: 1.5;
 }
 
 .toc-item:hover {
-  background-color: #f0f7ff;
-  color: #1890ff;
+  background-color: var(--app-hover-bg);
+  color: var(--app-accent);
 }
 
 /* 标题层级缩进 */
@@ -689,15 +664,15 @@ onMounted(() => {
 
 .section-header {
   padding: 12px 20px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e8eaed;
+  background-color: var(--app-surface);
+  border-bottom: 1px solid var(--app-border);
 }
 
 .section-header h3 {
   margin: 0;
   font-size: 14px;
   font-weight: 600;
-  color: #5a6c7d;
+  color: var(--app-text-secondary);
 }
 
 /* 编辑器样式 */
@@ -709,13 +684,13 @@ onMounted(() => {
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   font-size: 14px;
   line-height: 1.6;
-  background-color: #ffffff;
-  color: #2c3e50;
+  background-color: var(--app-surface);
+  color: var(--app-text-primary);
   outline: none;
 }
 
 .markdown-editor::placeholder {
-  color: #bdc3c7;
+  color: var(--app-text-muted);
 }
 
 /* 预览样式 */
@@ -723,8 +698,8 @@ onMounted(() => {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
-  background-color: #ffffff;
-  border-left: 1px solid #e8eaed;
+  background-color: var(--app-surface);
+  color: var(--app-text-primary);
 }
 
 /* Markdown预览样式 */
@@ -732,16 +707,16 @@ onMounted(() => {
   font-size: 2.5em;
   font-weight: 700;
   margin: 0.5em 0;
-  border-bottom: 2px solid #eaecef;
+  border-bottom: 2px solid var(--md-divider);
   padding-bottom: 0.3em;
-  color: #1a1a1a;
+  color: var(--md-heading-color);
 }
 
 .markdown-preview :deep(h2) {
   font-size: 1.5em;
   font-weight: 600;
   margin: 0.83em 0;
-  border-bottom: 1px solid #eaecef;
+  border-bottom: 1px solid var(--md-divider);
   padding-bottom: 0.3em;
 }
 
@@ -760,7 +735,7 @@ onMounted(() => {
   padding: 0.2em 0.4em;
   margin: 0;
   font-size: 85%;
-  background-color: rgba(27, 31, 35, 0.05);
+  background-color: var(--md-inline-code-bg);
   border-radius: 3px;
   font-family: 'Monaco', 'Menlo', monospace;
 }
@@ -770,7 +745,7 @@ onMounted(() => {
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  background-color: #f6f8fa;
+  background-color: var(--md-code-block-bg);
   border-radius: 6px;
 }
 
@@ -783,8 +758,8 @@ onMounted(() => {
 
 .markdown-preview :deep(blockquote) {
   padding: 0 1em;
-  color: #6a737d;
-  border-left: 0.25em solid #dfe2e5;
+  color: var(--md-blockquote-text);
+  border-left: 0.25em solid var(--md-blockquote-border);
   margin: 1em 0;
 }
 
@@ -799,7 +774,7 @@ onMounted(() => {
 }
 
 .markdown-preview :deep(a) {
-  color: #0366d6;
+  color: var(--md-link-color);
   text-decoration: none;
 }
 
@@ -817,12 +792,12 @@ onMounted(() => {
 .markdown-preview :deep(table th),
 .markdown-preview :deep(table td) {
   padding: 6px 13px;
-  border: 1px solid #dfe2e5;
+  border: 1px solid var(--md-table-border);
 }
 
 .markdown-preview :deep(table th) {
   font-weight: 600;
-  background-color: #f6f8fa;
+  background-color: var(--md-code-block-bg);
 }
 
 .markdown-preview :deep(img) {
@@ -836,10 +811,10 @@ onMounted(() => {
   bottom: 20px;
   right: 20px;
   padding: 12px 20px;
-  background-color: #f5222d;
-  color: white;
+  background-color: var(--app-danger);
+  color: var(--app-text-inverse);
   border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--app-shadow-lg);
   z-index: 1000;
   animation: slideIn 0.3s ease;
 }

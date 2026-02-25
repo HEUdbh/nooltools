@@ -4,6 +4,13 @@ import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
+const props = defineProps({
+  theme: {
+    type: String,
+    default: 'light'
+  }
+})
+const emit = defineEmits(['toggle-theme'])
 
 // 导航菜单项
 const menuItems = [
@@ -30,6 +37,10 @@ const activeItem = computed(() => {
 function navigate(path) {
   router.push(path)
 }
+
+function handleToggleTheme() {
+  emit('toggle-theme')
+}
 </script>
 
 <template>
@@ -48,29 +59,34 @@ function navigate(path) {
         <span class="nav-text">{{ item.name }}</span>
       </button>
     </nav>
+    <div class="sidebar-footer">
+      <button class="theme-toggle-btn" @click="handleToggleTheme">
+        {{ props.theme === 'dark' ? '☀️ 白天模式' : '🌙 黑夜模式' }}
+      </button>
+    </div>
   </aside>
 </template>
 
 <style scoped>
 .sidebar {
   width: 220px;
-  background-color: #ffffff;
-  border-right: 1px solid #e8eaed;
+  background-color: var(--app-surface);
+  border-right: 1px solid var(--app-border);
   display: flex;
   flex-direction: column;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--app-shadow-md);
   height: 100%;
 }
 
 .sidebar-header {
   padding: 24px 20px;
-  border-bottom: 1px solid #f0f2f5;
+  border-bottom: 1px solid var(--app-divider-soft);
 }
 
 .sidebar-header h1 {
   font-size: 24px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   letter-spacing: 1px;
 }
 
@@ -92,17 +108,17 @@ function navigate(path) {
   cursor: pointer;
   transition: all 0.2s ease;
   font-size: 15px;
-  color: #5a6c7d;
+  color: var(--app-text-secondary);
 }
 
 .nav-button:hover {
-  background-color: #f0f7ff;
-  color: #1890ff;
+  background-color: var(--app-hover-bg);
+  color: var(--app-accent);
 }
 
 .nav-button.active {
-  background-color: #e6f7ff;
-  color: #1890ff;
+  background-color: var(--app-active-bg);
+  color: var(--app-accent);
   font-weight: 500;
 }
 
@@ -116,5 +132,28 @@ function navigate(path) {
 .nav-text {
   flex: 1;
   text-align: left;
+}
+
+.sidebar-footer {
+  padding: 12px;
+  border-top: 1px solid var(--app-divider-soft);
+}
+
+.theme-toggle-btn {
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: var(--app-muted-bg);
+  color: var(--app-text-secondary);
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  background-color: var(--app-hover-bg);
+  color: var(--app-accent);
 }
 </style>

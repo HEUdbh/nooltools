@@ -66,8 +66,8 @@ function handleDelete(id) {
 <style scoped>
 .shopping-sidebar {
   width: 250px;
-  background-color: white;
-  border-right: 1px solid #e0e0e0;
+  background-color: var(--app-surface);
+  border-right: 1px solid var(--app-border);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -75,7 +75,7 @@ function handleDelete(id) {
 
 .sidebar-header {
   padding: 20px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--app-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -84,15 +84,15 @@ function handleDelete(id) {
 .sidebar-header h3 {
   margin: 0;
   font-size: 18px;
-  color: #333;
+  color: var(--app-text-primary);
 }
 
 .add-btn {
   width: 32px;
   height: 32px;
   border: none;
-  background-color: #4CAF50;
-  color: white;
+  background-color: var(--app-success);
+  color: var(--app-text-inverse);
   border-radius: 50%;
   cursor: pointer;
   font-size: 24px;
@@ -104,7 +104,7 @@ function handleDelete(id) {
 }
 
 .add-btn:hover {
-  background-color: #45a049;
+  background-color: var(--app-success-hover);
   transform: scale(1.1);
 }
 
@@ -117,8 +117,8 @@ function handleDelete(id) {
 .shopping-item {
   padding: 12px 15px;
   margin-bottom: 8px;
-  background-color: #fafafa;
-  border: 1px solid #e0e0e0;
+  background-color: var(--app-bg);
+  border: 1px solid var(--app-border);
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s;
@@ -126,25 +126,25 @@ function handleDelete(id) {
 }
 
 .shopping-item:hover {
-  background-color: #f0f0f0;
-  border-color: #d0d0d0;
+  background-color: var(--app-divider-soft);
+  border-color: var(--app-border);
 }
 
 .shopping-item.active {
-  background-color: #e8f5e9;
-  border-color: #4CAF50;
+  background-color: var(--app-success-soft-bg);
+  border-color: var(--app-success);
 }
 
 .shopping-name {
   font-weight: 500;
-  color: #333;
+  color: var(--app-text-primary);
   margin-bottom: 4px;
   font-size: 14px;
 }
 
 .shopping-value {
   font-size: 12px;
-  color: #666;
+  color: var(--app-text-secondary);
 }
 
 .delete-item-btn {
@@ -154,8 +154,8 @@ function handleDelete(id) {
   width: 20px;
   height: 20px;
   border: none;
-  background-color: #ff5252;
-  color: white;
+  background-color: var(--app-danger);
+  color: var(--app-text-inverse);
   border-radius: 50%;
   cursor: pointer;
   font-size: 14px;
@@ -167,14 +167,14 @@ function handleDelete(id) {
 }
 
 .delete-item-btn:hover {
-  background-color: #ff1744;
+  background-color: var(--app-danger-hover);
   transform: scale(1.1);
 }
 
 .empty-state {
   text-align: center;
   padding: 40px 20px;
-  color: #999;
+  color: var(--app-text-muted);
 }
 
 .empty-state p {
@@ -183,6 +183,6 @@ function handleDelete(id) {
 
 .empty-state .tip {
   font-size: 12px;
-  color: #bbb;
+  color: var(--app-text-muted);
 }
 </style>

@@ -49,8 +49,8 @@ defineEmits(['select', 'add', 'delete'])
 <style scoped>
 .shiqing-sidebar {
   width: 280px;
-  background-color: white;
-  border-right: 1px solid #e8eaed;
+  background-color: var(--app-surface);
+  border-right: 1px solid var(--app-border);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -58,7 +58,7 @@ defineEmits(['select', 'add', 'delete'])
 
 .sidebar-header {
   padding: 24px;
-  border-bottom: 1px solid #f0f2f5;
+  border-bottom: 1px solid var(--app-divider-soft);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -67,7 +67,7 @@ defineEmits(['select', 'add', 'delete'])
 .sidebar-header h3 {
   font-size: 16px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   margin: 0;
 }
 
@@ -75,8 +75,8 @@ defineEmits(['select', 'add', 'delete'])
   width: 32px;
   height: 32px;
   border: none;
-  background-color: #1890ff;
-  color: white;
+  background-color: var(--app-accent);
+  color: var(--app-text-inverse);
   border-radius: 6px;
   font-size: 20px;
   cursor: pointer;
@@ -89,7 +89,7 @@ defineEmits(['select', 'add', 'delete'])
 }
 
 .add-btn:hover {
-  background-color: #40a9ff;
+  background-color: var(--app-accent-hover);
   transform: scale(1.05);
 }
 
@@ -105,7 +105,7 @@ defineEmits(['select', 'add', 'delete'])
   justify-content: space-between;
   padding: 14px 16px;
   margin-bottom: 8px;
-  background-color: #f8f9fa;
+  background-color: var(--app-item-bg);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -113,19 +113,19 @@ defineEmits(['select', 'add', 'delete'])
 }
 
 .shiqing-item:hover {
-  background-color: #f0f7ff;
-  border-color: #1890ff;
+  background-color: var(--app-hover-bg);
+  border-color: var(--app-accent);
 }
 
 .shiqing-item.active {
-  background-color: #e6f7ff;
-  border-color: #1890ff;
+  background-color: var(--app-active-bg);
+  border-color: var(--app-accent);
 }
 
 .shiqing-name {
   flex: 1;
   font-size: 14px;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -137,7 +137,7 @@ defineEmits(['select', 'add', 'delete'])
   height: 24px;
   border: none;
   background: none;
-  color: #8c92a0;
+  color: var(--app-text-muted);
   font-size: 20px;
   cursor: pointer;
   display: flex;
@@ -152,14 +152,14 @@ defineEmits(['select', 'add', 'delete'])
 }
 
 .delete-btn:hover {
-  background-color: #fff1f0;
-  color: #ff4d4f;
+  background-color: var(--app-danger-soft-bg);
+  color: var(--app-danger);
 }
 
 .empty-state {
   text-align: center;
   padding: 48px 20px;
-  color: #8c92a0;
+  color: var(--app-text-muted);
 }
 
 .empty-state p {
@@ -168,7 +168,7 @@ defineEmits(['select', 'add', 'delete'])
 
 .tip {
   font-size: 13px;
-  color: #b0b8c3;
+  color: var(--app-text-muted);
 }
 
 /* 滚动条样式 */
@@ -177,15 +177,15 @@ defineEmits(['select', 'add', 'delete'])
 }
 
 .sidebar-content::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--app-divider-soft);
 }
 
 .sidebar-content::-webkit-scrollbar-thumb {
-  background: #d9d9d9;
+  background: var(--app-border);
   border-radius: 3px;
 }
 
 .sidebar-content::-webkit-scrollbar-thumb:hover {
-  background: #b0b8c3;
+  background: var(--app-text-muted);
 }
 </style>

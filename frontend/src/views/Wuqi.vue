@@ -497,7 +497,7 @@ async function saveBasicInfo(field) {
 .weapon-page {
   display: flex;
   height: 100%;
-  background-color: #f5f7fa;
+  background-color: var(--app-bg);
 }
 
 .main-content {
@@ -552,23 +552,23 @@ async function saveBasicInfo(field) {
 .info-section,
 .attributes-section,
 .skills-section {
-  background-color: #ffffff;
+  background-color: var(--app-surface);
   border-radius: 8px;
   padding: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--app-shadow-sm);
   height: fit-content;
 }
 
 .section-header {
   margin-bottom: 20px;
   padding-bottom: 12px;
-  border-bottom: 2px solid #e8eaed;
+  border-bottom: 2px solid var(--app-border);
 }
 
 .section-header h2 {
   font-size: 18px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   margin: 0;
 }
 
@@ -587,27 +587,27 @@ async function saveBasicInfo(field) {
 .info-item {
   padding: 16px;
   border-radius: 8px;
-  border: 1px solid #e8eaed;
+  border: 1px solid var(--app-border);
   transition: all 0.3s ease;
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  background: linear-gradient(135deg, var(--app-surface) 0%, var(--app-item-bg) 100%);
 }
 
 .info-item:hover {
-  border-color: #409eff;
+  border-color: var(--app-accent);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(64, 158, 255, 0.15);
+  box-shadow: var(--app-shadow-accent-lg);
 }
 
 .info-item.editing {
-  border-color: #409eff;
-  background-color: #f0f7ff;
-  box-shadow: 0 2px 12px rgba(64, 158, 255, 0.2);
+  border-color: var(--app-accent);
+  background-color: var(--app-hover-bg);
+  box-shadow: var(--app-shadow-accent-md);
 }
 
 .info-item label {
   display: block;
   font-size: 12px;
-  color: #8c92a0;
+  color: var(--app-text-muted);
   margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -615,23 +615,23 @@ async function saveBasicInfo(field) {
 
 .info-value {
   font-size: 16px;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   font-weight: 500;
 }
 
 .edit-input {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid #dcdfe6;
+  border: 1px solid var(--app-border);
   border-radius: 4px;
   font-size: 14px;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   outline: none;
   transition: border-color 0.2s;
 }
 
 .edit-input:focus {
-  border-color: #409eff;
+  border-color: var(--app-accent);
 }
 
 .attributes-list,
@@ -653,19 +653,19 @@ async function saveBasicInfo(field) {
 
 .attributes-list::-webkit-scrollbar-track,
 .skills-list::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--app-divider-soft);
   border-radius: 3px;
 }
 
 .attributes-list::-webkit-scrollbar-thumb,
 .skills-list::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: var(--app-border);
   border-radius: 3px;
 }
 
 .attributes-list::-webkit-scrollbar-thumb:hover,
 .skills-list::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+  background: var(--app-text-muted);
 }
 
 .attribute-item,
@@ -673,26 +673,26 @@ async function saveBasicInfo(field) {
   display: flex;
   align-items: center;
   padding: 18px;
-  background-color: #f8f9fa;
+  background-color: var(--app-item-bg);
   border-radius: 8px;
-  border: 1px solid #e8eaed;
+  border: 1px solid var(--app-border);
   transition: all 0.3s ease;
   position: relative;
 }
 
 .attribute-item:hover,
 .skill-item:hover {
-  border-color: #409eff;
-  background-color: #f0f7ff;
+  border-color: var(--app-accent);
+  background-color: var(--app-hover-bg);
   transform: translateX(4px);
-  box-shadow: 0 2px 8px rgba(64, 158, 255, 0.1);
+  box-shadow: var(--app-shadow-accent-sm);
 }
 
 .attribute-item.editing,
 .skill-item.editing {
-  border-color: #409eff;
-  background-color: #f0f7ff;
-  box-shadow: 0 2px 12px rgba(64, 158, 255, 0.2);
+  border-color: var(--app-accent);
+  background-color: var(--app-hover-bg);
+  box-shadow: var(--app-shadow-accent-md);
 }
 
 .attribute-content,
@@ -714,21 +714,21 @@ async function saveBasicInfo(field) {
 .skill-name {
   font-size: 16px;
   font-weight: 500;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   min-width: 120px;
 }
 
 .attribute-description,
 .skill-description {
   font-size: 14px;
-  color: #606266;
+  color: var(--app-text-secondary);
   flex: 1;
 }
 
 .attribute-value {
   font-size: 16px;
   font-weight: 600;
-  color: #409eff;
+  color: var(--app-accent);
   min-width: 60px;
   text-align: right;
 }
@@ -750,21 +750,21 @@ async function saveBasicInfo(field) {
 }
 
 .save-btn {
-  background-color: #409eff;
-  color: #ffffff;
+  background-color: var(--app-accent);
+  color: var(--app-text-inverse);
 }
 
 .save-btn:hover {
-  background-color: #66b1ff;
+  background-color: var(--app-accent-hover);
 }
 
 .cancel-btn {
-  background-color: #f4f4f5;
-  color: #606266;
+  background-color: var(--app-muted-bg);
+  color: var(--app-text-secondary);
 }
 
 .cancel-btn:hover {
-  background-color: #e9e9eb;
+  background-color: var(--app-divider-soft);
 }
 
 .delete-btn {
@@ -775,8 +775,8 @@ async function saveBasicInfo(field) {
   width: 24px;
   height: 24px;
   border: none;
-  background-color: #f56c6c;
-  color: #ffffff;
+  background-color: var(--app-danger);
+  color: var(--app-text-inverse);
   border-radius: 50%;
   cursor: pointer;
   font-size: 18px;
@@ -791,16 +791,16 @@ async function saveBasicInfo(field) {
 }
 
 .delete-btn:hover {
-  background-color: #f78989;
+  background-color: var(--app-danger-hover);
 }
 
 .add-btn {
   width: 100%;
   padding: 14px;
-  border: 2px dashed #dcdfe6;
+  border: 2px dashed var(--app-border);
   border-radius: 8px;
-  background-color: #ffffff;
-  color: #909399;
+  background-color: var(--app-surface);
+  color: var(--app-text-secondary);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -814,11 +814,11 @@ async function saveBasicInfo(field) {
 }
 
 .add-btn:hover {
-  border-color: #409eff;
-  color: #409eff;
-  background-color: #f0f7ff;
+  border-color: var(--app-accent);
+  color: var(--app-accent);
+  background-color: var(--app-hover-bg);
   transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(64, 158, 255, 0.2);
+  box-shadow: var(--app-shadow-accent-md);
 }
 
 .add-btn:active {
@@ -830,14 +830,14 @@ async function saveBasicInfo(field) {
   align-items: center;
   justify-content: center;
   height: 400px;
-  color: #909399;
+  color: var(--app-text-secondary);
   font-size: 16px;
 }
 
 .empty-skills {
   text-align: center;
   padding: 40px 20px;
-  color: #909399;
+  color: var(--app-text-secondary);
 }
 
 .empty-skills p {
@@ -846,6 +846,6 @@ async function saveBasicInfo(field) {
 
 .empty-skills .tip {
   font-size: 12px;
-  color: #c0c4cc;
+  color: var(--app-border);
 }
 </style>

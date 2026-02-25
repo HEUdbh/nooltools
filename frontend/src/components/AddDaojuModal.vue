@@ -108,7 +108,7 @@ function handleClose() {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--app-overlay-mask);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -117,9 +117,9 @@ function handleClose() {
 }
 
 .modal-container {
-  background-color: white;
+  background-color: var(--app-surface);
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--app-shadow-lg);
   width: 100%;
   max-width: 480px;
   overflow: hidden;
@@ -130,13 +130,13 @@ function handleClose() {
   align-items: center;
   justify-content: space-between;
   padding: 20px 24px;
-  border-bottom: 1px solid #f0f2f5;
+  border-bottom: 1px solid var(--app-divider-soft);
 }
 
 .modal-header h3 {
   font-size: 18px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   margin: 0;
 }
 
@@ -145,7 +145,7 @@ function handleClose() {
   height: 32px;
   border: none;
   background: none;
-  color: #8c92a0;
+  color: var(--app-text-muted);
   font-size: 28px;
   cursor: pointer;
   display: flex;
@@ -158,8 +158,8 @@ function handleClose() {
 }
 
 .close-btn:hover {
-  background-color: #f5f5f5;
-  color: #2c3e50;
+  background-color: var(--app-item-bg);
+  color: var(--app-text-primary);
 }
 
 .modal-body {
@@ -178,21 +178,21 @@ function handleClose() {
   display: block;
   font-size: 14px;
   font-weight: 500;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   margin-bottom: 8px;
 }
 
 .required {
-  color: #ff4d4f;
+  color: var(--app-danger);
 }
 
 .form-group input {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--app-border);
   border-radius: 6px;
   font-size: 14px;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   transition: all 0.2s ease;
   box-sizing: border-box;
   font-family: inherit;
@@ -200,12 +200,12 @@ function handleClose() {
 
 .form-group input:focus {
   outline: none;
-  border-color: #1890ff;
-  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+  border-color: var(--app-accent);
+  box-shadow: var(--app-shadow-focus);
 }
 
 .form-group input::placeholder {
-  color: #b0b8c3;
+  color: var(--app-text-muted);
 }
 
 .modal-footer {
@@ -214,8 +214,8 @@ function handleClose() {
   justify-content: flex-end;
   gap: 12px;
   padding: 16px 24px;
-  border-top: 1px solid #f0f2f5;
-  background-color: #fafafa;
+  border-top: 1px solid var(--app-divider-soft);
+  background-color: var(--app-bg);
 }
 
 .btn {
@@ -229,23 +229,23 @@ function handleClose() {
 }
 
 .btn-cancel {
-  background-color: white;
-  color: #2c3e50;
-  border: 1px solid #d9d9d9;
+  background-color: var(--app-surface);
+  color: var(--app-text-primary);
+  border: 1px solid var(--app-border);
 }
 
 .btn-cancel:hover {
-  background-color: #f5f5f5;
-  border-color: #b0b8c3;
+  background-color: var(--app-item-bg);
+  border-color: var(--app-text-muted);
 }
 
 .btn-confirm {
-  background-color: #1890ff;
-  color: white;
+  background-color: var(--app-accent);
+  color: var(--app-text-inverse);
 }
 
 .btn-confirm:hover {
-  background-color: #40a9ff;
+  background-color: var(--app-accent-hover);
 }
 
 .modal-enter-active,

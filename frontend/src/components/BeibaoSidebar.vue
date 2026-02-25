@@ -115,8 +115,8 @@ function handleKeydown(event, beibaoId) {
 <style scoped>
 .beibao-sidebar {
   width: 200px;
-  background-color: #ffffff;
-  border-right: 1px solid #e8eaed;
+  background-color: var(--app-surface);
+  border-right: 1px solid var(--app-border);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -124,7 +124,7 @@ function handleKeydown(event, beibaoId) {
 
 .sidebar-header {
   padding: 20px;
-  border-bottom: 1px solid #f0f2f5;
+  border-bottom: 1px solid var(--app-divider-soft);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -133,7 +133,7 @@ function handleKeydown(event, beibaoId) {
 .sidebar-header h2 {
   font-size: 18px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   margin: 0;
 }
 
@@ -141,8 +141,8 @@ function handleKeydown(event, beibaoId) {
   width: 32px;
   height: 32px;
   border: none;
-  background-color: #1890ff;
-  color: white;
+  background-color: var(--app-accent);
+  color: var(--app-text-inverse);
   border-radius: 50%;
   cursor: pointer;
   font-size: 20px;
@@ -153,7 +153,7 @@ function handleKeydown(event, beibaoId) {
 }
 
 .add-btn:hover {
-  background-color: #40a9ff;
+  background-color: var(--app-accent-hover);
   transform: scale(1.1);
 }
 
@@ -171,12 +171,12 @@ function handleKeydown(event, beibaoId) {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
-  background-color: #f8f9fa;
+  background-color: var(--app-item-bg);
   position: relative;
 }
 
 .beibao-item:hover {
-  background-color: #f0f7ff;
+  background-color: var(--app-hover-bg);
 }
 
 .beibao-item:hover .delete-beibao-btn {
@@ -184,16 +184,16 @@ function handleKeydown(event, beibaoId) {
 }
 
 .beibao-item.active {
-  background-color: #e6f7ff;
-  border: 1px solid #1890ff;
+  background-color: var(--app-active-bg);
+  border: 1px solid var(--app-accent);
 }
 
 .beibao-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  color: white;
+  background: var(--app-gradient-secondary);
+  color: var(--app-text-inverse);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -213,7 +213,7 @@ function handleKeydown(event, beibaoId) {
 .beibao-name {
   font-size: 14px;
   font-weight: 500;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -222,27 +222,27 @@ function handleKeydown(event, beibaoId) {
 }
 
 .beibao-name:hover {
-  color: #1890ff;
+  color: var(--app-accent);
 }
 
 .edit-input {
   width: 100%;
   padding: 4px 8px;
-  border: 1px solid #1890ff;
+  border: 1px solid var(--app-accent);
   border-radius: 4px;
   font-size: 14px;
   outline: none;
-  background-color: white;
+  background-color: var(--app-surface);
 }
 
 .edit-input:focus {
-  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  box-shadow: var(--app-shadow-focus-strong);
 }
 
 .empty-tip {
   text-align: center;
   padding: 40px 20px;
-  color: #8c92a0;
+  color: var(--app-text-muted);
 }
 
 .empty-tip p {
@@ -251,15 +251,15 @@ function handleKeydown(event, beibaoId) {
 
 .tip {
   font-size: 12px;
-  color: #b0b8c3;
+  color: var(--app-text-muted);
 }
 
 .delete-beibao-btn {
   width: 24px;
   height: 24px;
   border: none;
-  background-color: #ff4d4f;
-  color: white;
+  background-color: var(--app-danger);
+  color: var(--app-text-inverse);
   border-radius: 50%;
   cursor: pointer;
   font-size: 18px;
@@ -271,7 +271,7 @@ function handleKeydown(event, beibaoId) {
 }
 
 .delete-beibao-btn:hover {
-  background-color: #ff7875;
+  background-color: var(--app-danger-hover);
   transform: scale(1.1);
 }
 </style>

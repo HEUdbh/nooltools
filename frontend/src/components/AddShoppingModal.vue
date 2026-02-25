@@ -120,7 +120,7 @@ function handleConfirm() {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--app-overlay-mask);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,13 +138,13 @@ function handleConfirm() {
 }
 
 .modal-content {
-  background-color: white;
+  background-color: var(--app-surface);
   border-radius: 8px;
   width: 500px;
   max-width: 90%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--app-shadow-lg);
   animation: slideIn 0.2s;
 }
 
@@ -161,7 +161,7 @@ function handleConfirm() {
 
 .modal-header {
   padding: 20px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--app-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -170,7 +170,7 @@ function handleConfirm() {
 .modal-header h3 {
   margin: 0;
   font-size: 18px;
-  color: #333;
+  color: var(--app-text-primary);
 }
 
 .close-btn {
@@ -178,7 +178,7 @@ function handleConfirm() {
   height: 32px;
   border: none;
   background-color: transparent;
-  color: #999;
+  color: var(--app-text-muted);
   border-radius: 50%;
   cursor: pointer;
   font-size: 24px;
@@ -190,8 +190,8 @@ function handleConfirm() {
 }
 
 .close-btn:hover {
-  background-color: #f5f5f5;
-  color: #666;
+  background-color: var(--app-item-bg);
+  color: var(--app-text-secondary);
 }
 
 .modal-body {
@@ -210,7 +210,7 @@ function handleConfirm() {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
-  color: #333;
+  color: var(--app-text-primary);
   font-size: 14px;
 }
 
@@ -218,7 +218,7 @@ function handleConfirm() {
 .form-group textarea {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--app-border);
   border-radius: 4px;
   font-size: 14px;
   transition: border-color 0.2s;
@@ -228,7 +228,7 @@ function handleConfirm() {
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #4CAF50;
+  border-color: var(--app-success);
 }
 
 .form-group textarea {
@@ -239,7 +239,7 @@ function handleConfirm() {
 
 .modal-footer {
   padding: 20px;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--app-border);
   display: flex;
   justify-content: flex-end;
   gap: 10px;
@@ -257,20 +257,20 @@ function handleConfirm() {
 }
 
 .cancel-btn {
-  background-color: #f5f5f5;
-  color: #666;
+  background-color: var(--app-item-bg);
+  color: var(--app-text-secondary);
 }
 
 .cancel-btn:hover {
-  background-color: #e0e0e0;
+  background-color: var(--app-border);
 }
 
 .confirm-btn {
-  background-color: #4CAF50;
-  color: white;
+  background-color: var(--app-success);
+  color: var(--app-text-inverse);
 }
 
 .confirm-btn:hover {
-  background-color: #45a049;
+  background-color: var(--app-success-hover);
 }
 </style>

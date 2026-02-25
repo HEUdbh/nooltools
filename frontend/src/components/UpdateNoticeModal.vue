@@ -194,7 +194,7 @@ function handleStartUpdate() {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.45);
+  background-color: var(--app-overlay-mask);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -205,9 +205,9 @@ function handleStartUpdate() {
 .modal-container {
   width: 100%;
   max-width: 640px;
-  background-color: #ffffff;
+  background-color: var(--app-surface);
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--app-shadow-xl);
   overflow: hidden;
 }
 
@@ -216,12 +216,12 @@ function handleStartUpdate() {
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  border-bottom: 1px solid #f0f2f5;
+  border-bottom: 1px solid var(--app-divider-soft);
 }
 
 .modal-header h3 {
   margin: 0;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   font-size: 18px;
 }
 
@@ -229,7 +229,7 @@ function handleStartUpdate() {
   border: none;
   background: none;
   cursor: pointer;
-  color: #8c92a0;
+  color: var(--app-text-muted);
   font-size: 16px;
   width: 28px;
   height: 28px;
@@ -237,8 +237,8 @@ function handleStartUpdate() {
 }
 
 .close-btn:hover {
-  background: #f5f5f5;
-  color: #2c3e50;
+  background: var(--app-item-bg);
+  color: var(--app-text-primary);
 }
 
 .close-btn:disabled {
@@ -257,12 +257,12 @@ function handleStartUpdate() {
 }
 
 .label {
-  color: #8c92a0;
+  color: var(--app-text-muted);
   min-width: 72px;
 }
 
 .value {
-  color: #2c3e50;
+  color: var(--app-text-primary);
   font-weight: 500;
   word-break: break-all;
 }
@@ -274,23 +274,23 @@ function handleStartUpdate() {
 .notes {
   margin-top: 6px;
   padding: 10px 12px;
-  background: #f8f9fa;
+  background: var(--app-item-bg);
   border-radius: 8px;
-  border: 1px solid #e8eaed;
+  border: 1px solid var(--app-border);
   max-height: 220px;
   overflow: auto;
   white-space: pre-wrap;
   word-break: break-word;
-  color: #34495e;
+  color: var(--app-text-primary);
   line-height: 1.5;
 }
 
 .auto-update-disabled {
   margin-top: 12px;
   padding: 8px 10px;
-  background: #fff7e6;
-  border: 1px solid #ffe7ba;
-  color: #ad6800;
+  background: var(--app-warning-soft-bg);
+  border: 1px solid var(--app-warning-soft-border);
+  color: var(--app-warning-text);
   border-radius: 6px;
 }
 
@@ -301,32 +301,32 @@ function handleStartUpdate() {
 .progress-header {
   display: flex;
   justify-content: space-between;
-  color: #334155;
+  color: var(--app-text-primary);
   margin-bottom: 6px;
 }
 
 .progress-track {
   width: 100%;
   height: 10px;
-  background: #edf2f7;
+  background: var(--app-item-bg);
   border-radius: 999px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #1677ff, #36cfc9);
+  background: var(--app-gradient-accent);
   transition: width 0.2s ease;
 }
 
 .progress-detail {
   margin-top: 8px;
-  color: #64748b;
+  color: var(--app-text-muted);
   word-break: break-word;
 }
 
 .progress-detail.error {
-  color: #d4380d;
+  color: var(--app-warning-text);
 }
 
 .modal-footer {
@@ -334,7 +334,7 @@ function handleStartUpdate() {
   justify-content: flex-end;
   gap: 10px;
   padding: 16px 20px;
-  border-top: 1px solid #f0f2f5;
+  border-top: 1px solid var(--app-divider-soft);
 }
 
 .btn {
@@ -346,21 +346,21 @@ function handleStartUpdate() {
 }
 
 .btn-cancel {
-  background-color: #f3f4f6;
-  color: #475569;
+  background-color: var(--app-item-bg);
+  color: var(--app-text-secondary);
 }
 
 .btn-cancel:hover {
-  background-color: #e5e7eb;
+  background-color: var(--app-border);
 }
 
 .btn-confirm {
-  background-color: #1677ff;
-  color: #ffffff;
+  background-color: var(--app-info);
+  color: var(--app-text-inverse);
 }
 
 .btn-confirm:hover {
-  background-color: #0958d9;
+  background-color: var(--app-info-hover);
 }
 
 .btn:disabled {
@@ -369,11 +369,11 @@ function handleStartUpdate() {
 }
 
 .btn-fallback {
-  background-color: #fff1f0;
-  color: #cf1322;
+  background-color: var(--app-danger-soft-bg);
+  color: var(--app-danger-text);
 }
 
 .btn-fallback:hover {
-  background-color: #ffccc7;
+  background-color: var(--app-danger-soft-border);
 }
 </style>

@@ -55,21 +55,21 @@
 .page-header h1 {
   font-size: 28px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   margin-bottom: 8px;
 }
 
 .page-header p {
   font-size: 14px;
-  color: #8c92a0;
+  color: var(--app-text-muted);
 }
 
 .page-content {
   flex: 1;
-  background-color: #ffffff;
+  background-color: var(--app-surface);
   border-radius: 8px;
   padding: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--app-shadow-sm);
 }
 
 .contact-card {
@@ -82,15 +82,15 @@
   align-items: center;
   padding: 24px;
   margin-bottom: 16px;
-  background-color: #f8f9fa;
+  background-color: var(--app-item-bg);
   border-radius: 8px;
   transition: all 0.2s ease;
 }
 
 .contact-item:hover {
-  background-color: #f0f7ff;
+  background-color: var(--app-hover-bg);
   transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--app-shadow-md);
 }
 
 .contact-icon {
@@ -101,21 +101,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
+  background-color: var(--app-surface);
   border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--app-shadow-sm);
 }
 
 .contact-info h3 {
   font-size: 18px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   margin-bottom: 4px;
 }
 
 .contact-info p {
   font-size: 14px;
-  color: #5a6c7d;
+  color: var(--app-text-secondary);
 }
 
 .image-container {

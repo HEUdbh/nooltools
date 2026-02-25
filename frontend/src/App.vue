@@ -13,6 +13,8 @@ const updateProgress = ref({
   message: '',
   detail: ''
 })
+const theme = ref('light')
+const THEME_STORAGE_KEY = 'nooltools-theme'
 
 function handleUpdateProgress(event) {
   if (!event || typeof event !== 'object') {
@@ -31,8 +33,21 @@ function handleUpdateProgress(event) {
   }
 }
 
+function applyTheme(nextTheme) {
+  const normalizedTheme = nextTheme === 'dark' ? 'dark' : 'light'
+  theme.value = normalizedTheme
+  document.body.classList.toggle('theme-dark', normalizedTheme === 'dark')
+  document.body.classList.toggle('theme-light', normalizedTheme === 'light')
+  localStorage.setItem(THEME_STORAGE_KEY, normalizedTheme)
+}
+
+function toggleTheme() {
+  applyTheme(theme.value === 'dark' ? 'light' : 'dark')
+}
+
 onMounted(async () => {
   EventsOn('update:progress', handleUpdateProgress)
+  applyTheme(localStorage.getItem(THEME_STORAGE_KEY) || 'light')
 
   try {
     const result = await window.go.main.app.CheckReleaseUpdate()
@@ -86,7 +101,7 @@ async function handleStartAutoUpdate() {
 <template>
   <div class="app-container">
     <!-- 左侧侧边栏 -->
-    <Sidebar />
+    <Sidebar :theme="theme" @toggle-theme="toggleTheme" />
 
     <!-- 右侧内容区域 -->
     <main class="main-content">
@@ -107,7 +122,7 @@ async function handleStartAutoUpdate() {
 .app-container {
   display: flex;
   height: 100vh;
-  background-color: #f5f7fa;
+  background-color: var(--app-bg);
 }
 
 /* 主内容区域样式 */

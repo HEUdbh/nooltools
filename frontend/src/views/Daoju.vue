@@ -358,7 +358,7 @@ function cancelEditFunction() {
 .daoju-page {
   display: flex;
   height: 100%;
-  background-color: #f5f7fa;
+  background-color: var(--app-bg);
 }
 
 .main-content {
@@ -373,23 +373,23 @@ function cancelEditFunction() {
 
 .info-section,
 .functions-section {
-  background-color: white;
+  background-color: var(--app-surface);
   border-radius: 12px;
   padding: 32px;
   margin-bottom: 28px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--app-shadow-sm);
 }
 
 .section-header {
   margin-bottom: 24px;
   padding-bottom: 16px;
-  border-bottom: 1px solid #f0f2f5;
+  border-bottom: 1px solid var(--app-divider-soft);
 }
 
 .section-header h2 {
   font-size: 20px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   margin: 0;
 }
 
@@ -407,14 +407,14 @@ function cancelEditFunction() {
 
 .info-item label {
   font-size: 13px;
-  color: #8c92a0;
+  color: var(--app-text-muted);
   margin-bottom: 12px;
   font-weight: 500;
 }
 
 .info-value {
   font-size: 16px;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   font-weight: 500;
 }
 
@@ -430,15 +430,15 @@ function cancelEditFunction() {
   display: flex;
   align-items: flex-start;
   padding: 20px;
-  background-color: #f8f9fa;
+  background-color: var(--app-item-bg);
   border-radius: 8px;
-  border: 1px solid #e8eaed;
+  border: 1px solid var(--app-border);
   transition: all 0.2s ease;
 }
 
 .function-item:hover {
-  border-color: #1890ff;
-  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.1);
+  border-color: var(--app-accent);
+  box-shadow: var(--app-shadow-accent-sm);
 }
 
 .function-content {
@@ -449,13 +449,13 @@ function cancelEditFunction() {
 .function-name {
   font-size: 15px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   margin-bottom: 8px;
 }
 
 .function-description {
   font-size: 13px;
-  color: #8c92a0;
+  color: var(--app-text-muted);
   line-height: 1.6;
 }
 
@@ -463,7 +463,7 @@ function cancelEditFunction() {
   grid-column: 1 / -1;
   text-align: center;
   padding: 48px 20px;
-  color: #8c92a0;
+  color: var(--app-text-muted);
 }
 
 .empty-functions p {
@@ -472,7 +472,7 @@ function cancelEditFunction() {
 
 .tip {
   font-size: 13px;
-  color: #b0b8c3;
+  color: var(--app-text-muted);
 }
 
 /* 删除按钮 */
@@ -481,7 +481,7 @@ function cancelEditFunction() {
   height: 30px;
   border: none;
   background: none;
-  color: #8c92a0;
+  color: var(--app-text-muted);
   font-size: 24px;
   cursor: pointer;
   display: flex;
@@ -496,19 +496,19 @@ function cancelEditFunction() {
 }
 
 .delete-btn:hover {
-  background-color: #fff1f0;
-  color: #ff4d4f;
+  background-color: var(--app-danger-soft-bg);
+  color: var(--app-danger);
 }
 
 /* 添加按钮 */
 .add-btn {
   width: 100%;
   padding: 14px 20px;
-  border: 2px dashed #d9d9d9;
+  border: 2px dashed var(--app-border);
   background: none;
   border-radius: 8px;
   font-size: 14px;
-  color: #8c92a0;
+  color: var(--app-text-muted);
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
@@ -518,9 +518,9 @@ function cancelEditFunction() {
 }
 
 .add-btn:hover {
-  border-color: #1890ff;
-  color: #1890ff;
-  background-color: #f0f7ff;
+  border-color: var(--app-accent);
+  color: var(--app-accent);
+  background-color: var(--app-hover-bg);
 }
 
 .add-btn span {
@@ -534,7 +534,7 @@ function cancelEditFunction() {
   align-items: center;
   justify-content: center;
   height: 500px;
-  color: #8c92a0;
+  color: var(--app-text-muted);
   font-size: 16px;
 }
 
@@ -542,7 +542,7 @@ function cancelEditFunction() {
 .edit-input {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--app-border);
   border-radius: 4px;
   font-size: 14px;
   margin-bottom: 8px;
@@ -551,19 +551,19 @@ function cancelEditFunction() {
 
 .edit-input:focus {
   outline: none;
-  border-color: #1890ff;
-  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+  border-color: var(--app-accent);
+  box-shadow: var(--app-shadow-focus);
 }
 
 .edit-input::placeholder {
-  color: #b0b8c3;
+  color: var(--app-text-muted);
 }
 
 /* 编辑状态 */
 .function-item.editing {
-  border-color: #1890ff;
-  background-color: #fff;
-  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.15);
+  border-color: var(--app-accent);
+  background-color: var(--app-surface);
+  box-shadow: var(--app-shadow-accent-sm);
 }
 
 /* 编辑按钮 */
@@ -577,8 +577,8 @@ function cancelEditFunction() {
   flex: 1;
   padding: 6px 12px;
   border: none;
-  background-color: #1890ff;
-  color: white;
+  background-color: var(--app-accent);
+  color: var(--app-text-inverse);
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
@@ -586,15 +586,15 @@ function cancelEditFunction() {
 }
 
 .save-btn:hover {
-  background-color: #40a9ff;
+  background-color: var(--app-accent-hover);
 }
 
 .cancel-btn {
   flex: 1;
   padding: 6px 12px;
-  border: 1px solid #d9d9d9;
-  background-color: white;
-  color: #595959;
+  border: 1px solid var(--app-border);
+  background-color: var(--app-surface);
+  color: var(--app-text-secondary);
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
@@ -602,8 +602,8 @@ function cancelEditFunction() {
 }
 
 .cancel-btn:hover {
-  border-color: #8c92a0;
-  color: #2c3e50;
+  border-color: var(--app-text-muted);
+  color: var(--app-text-primary);
 }
 
 /* 基本信息编辑状态 */

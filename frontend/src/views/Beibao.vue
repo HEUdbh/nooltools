@@ -294,7 +294,7 @@ function cancelEditItem() {
 .beibao-page {
   display: flex;
   height: 100%;
-  background-color: #f5f7fa;
+  background-color: var(--app-bg);
 }
 
 .main-content {
@@ -309,23 +309,23 @@ function cancelEditItem() {
 
 .info-section,
 .items-section {
-  background-color: white;
+  background-color: var(--app-surface);
   border-radius: 12px;
   padding: 32px;
   margin-bottom: 28px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--app-shadow-sm);
 }
 
 .section-header {
   margin-bottom: 24px;
   padding-bottom: 16px;
-  border-bottom: 1px solid #f0f2f5;
+  border-bottom: 1px solid var(--app-divider-soft);
 }
 
 .section-header h2 {
   font-size: 20px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   margin: 0;
 }
 
@@ -339,21 +339,21 @@ function cancelEditItem() {
 
 .item-card {
   position: relative;
-  background-color: #fafbfc;
-  border: 1px solid #e8eaed;
+  background-color: var(--app-item-bg);
+  border: 1px solid var(--app-border);
   border-radius: 8px;
   padding: 20px;
   transition: all 0.2s ease;
 }
 
 .item-card:hover {
-  border-color: #1890ff;
-  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.1);
+  border-color: var(--app-accent);
+  box-shadow: var(--app-shadow-accent-sm);
 }
 
 .item-card.editing {
-  border-color: #1890ff;
-  background-color: #fff;
+  border-color: var(--app-accent);
+  background-color: var(--app-surface);
 }
 
 .item-content {
@@ -370,31 +370,31 @@ function cancelEditItem() {
 .item-name {
   font-size: 16px;
   font-weight: 500;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   flex: 1;
 }
 
 .item-quantity {
   font-size: 14px;
-  color: #1890ff;
+  color: var(--app-accent);
   font-weight: 600;
-  background-color: #e6f7ff;
+  background-color: var(--app-active-bg);
   padding: 4px 12px;
   border-radius: 12px;
 }
 
 .item-description {
   font-size: 14px;
-  color: #5a6c7d;
+  color: var(--app-text-secondary);
   line-height: 1.6;
   padding-top: 8px;
-  border-top: 1px solid #e8eaed;
+  border-top: 1px solid var(--app-border);
 }
 
 .edit-input {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--app-border);
   border-radius: 4px;
   font-size: 14px;
   transition: all 0.2s;
@@ -403,8 +403,8 @@ function cancelEditItem() {
 
 .edit-input:focus {
   outline: none;
-  border-color: #1890ff;
-  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+  border-color: var(--app-accent);
+  box-shadow: var(--app-shadow-focus);
 }
 
 .quantity-input {
@@ -430,21 +430,21 @@ function cancelEditItem() {
 }
 
 .save-btn {
-  background-color: #1890ff;
-  color: white;
+  background-color: var(--app-accent);
+  color: var(--app-text-inverse);
 }
 
 .save-btn:hover {
-  background-color: #40a9ff;
+  background-color: var(--app-accent-hover);
 }
 
 .cancel-btn {
-  background-color: #f5f5f5;
-  color: #5a6c7d;
+  background-color: var(--app-item-bg);
+  color: var(--app-text-secondary);
 }
 
 .cancel-btn:hover {
-  background-color: #e8e8e8;
+  background-color: var(--app-border);
 }
 
 .delete-btn {
@@ -454,8 +454,8 @@ function cancelEditItem() {
   width: 24px;
   height: 24px;
   border: none;
-  background-color: #ff4d4f;
-  color: white;
+  background-color: var(--app-danger);
+  color: var(--app-text-inverse);
   border-radius: 50%;
   cursor: pointer;
   font-size: 18px;
@@ -469,7 +469,7 @@ function cancelEditItem() {
 }
 
 .delete-btn:hover {
-  background-color: #ff7875;
+  background-color: var(--app-danger-hover);
   transform: scale(1.1);
 }
 
@@ -477,7 +477,7 @@ function cancelEditItem() {
   grid-column: 1 / -1;
   text-align: center;
   padding: 60px 20px;
-  color: #8c8c8c;
+  color: var(--app-text-muted);
 }
 
 .empty-items p {
@@ -486,14 +486,14 @@ function cancelEditItem() {
 
 .empty-items .tip {
   font-size: 14px;
-  color: #bfbfbf;
+  color: var(--app-divider-soft);
 }
 
 .add-btn {
   width: 100%;
   padding: 14px 24px;
-  background-color: #1890ff;
-  color: white;
+  background-color: var(--app-accent);
+  color: var(--app-text-inverse);
   border: none;
   border-radius: 8px;
   font-size: 15px;
@@ -506,9 +506,9 @@ function cancelEditItem() {
 }
 
 .add-btn:hover {
-  background-color: #40a9ff;
+  background-color: var(--app-accent-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.2);
+  box-shadow: var(--app-shadow-accent-lg);
 }
 
 .add-btn span {
@@ -521,7 +521,7 @@ function cancelEditItem() {
   align-items: center;
   justify-content: center;
   height: 100%;
-  color: #8c8c8c;
+  color: var(--app-text-muted);
   font-size: 16px;
 }
 </style>

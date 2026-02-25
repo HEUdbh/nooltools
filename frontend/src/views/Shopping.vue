@@ -257,26 +257,26 @@ async function saveShopping() {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
-  background-color: #f5f5f5;
+  background-color: var(--app-item-bg);
 }
 
 .shopping-detail {
-  background-color: white;
+  background-color: var(--app-surface);
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--app-shadow-md);
 }
 
 .section-header {
   margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: 2px solid var(--app-border);
 }
 
 .section-header h2 {
   margin: 0;
   font-size: 24px;
-  color: #333;
+  color: var(--app-text-primary);
 }
 
 .info-section {
@@ -289,22 +289,22 @@ async function saveShopping() {
 
 .shopping-content {
   padding: 15px;
-  background-color: #fafafa;
+  background-color: var(--app-bg);
   border-radius: 6px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--app-border);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .shopping-content:hover {
-  background-color: #f0f0f0;
-  border-color: #d0d0d0;
+  background-color: var(--app-divider-soft);
+  border-color: var(--app-border);
 }
 
 .shopping-content.editing {
   cursor: default;
-  background-color: white;
-  border: 2px solid #4CAF50;
+  background-color: var(--app-surface);
+  border: 2px solid var(--app-success);
 }
 
 .info-row {
@@ -320,20 +320,20 @@ async function saveShopping() {
 .label {
   min-width: 100px;
   font-weight: bold;
-  color: #666;
+  color: var(--app-text-secondary);
   padding-top: 5px;
 }
 
 .value {
   flex: 1;
-  color: #333;
+  color: var(--app-text-primary);
   line-height: 1.6;
 }
 
 .edit-input {
   flex: 1;
   padding: 8px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--app-border);
   border-radius: 4px;
   font-size: 14px;
   transition: border-color 0.2s;
@@ -341,7 +341,7 @@ async function saveShopping() {
 
 .edit-input:focus {
   outline: none;
-  border-color: #4CAF50;
+  border-color: var(--app-success);
 }
 
 .edit-input.textarea {
@@ -355,7 +355,7 @@ async function saveShopping() {
   gap: 10px;
   margin-top: 20px;
   padding-top: 15px;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--app-border);
 }
 
 .save-btn,
@@ -370,21 +370,21 @@ async function saveShopping() {
 }
 
 .save-btn {
-  background-color: #4CAF50;
-  color: white;
+  background-color: var(--app-success);
+  color: var(--app-text-inverse);
 }
 
 .save-btn:hover {
-  background-color: #45a049;
+  background-color: var(--app-success-hover);
 }
 
 .cancel-btn {
-  background-color: #f5f5f5;
-  color: #666;
+  background-color: var(--app-item-bg);
+  color: var(--app-text-secondary);
 }
 
 .cancel-btn:hover {
-  background-color: #e0e0e0;
+  background-color: var(--app-border);
 }
 
 .delete-btn {
@@ -394,8 +394,8 @@ async function saveShopping() {
   width: 30px;
   height: 30px;
   border: none;
-  background-color: #ff5252;
-  color: white;
+  background-color: var(--app-danger);
+  color: var(--app-text-inverse);
   border-radius: 50%;
   cursor: pointer;
   font-size: 20px;
@@ -407,7 +407,7 @@ async function saveShopping() {
 }
 
 .delete-btn:hover {
-  background-color: #ff1744;
+  background-color: var(--app-danger-hover);
   transform: scale(1.1);
 }
 
@@ -416,7 +416,7 @@ async function saveShopping() {
   align-items: center;
   justify-content: center;
   height: 100%;
-  color: #999;
+  color: var(--app-text-muted);
   font-size: 16px;
 }
 </style>

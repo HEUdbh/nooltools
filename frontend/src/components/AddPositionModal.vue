@@ -106,7 +106,7 @@ function handleCancel() {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.45);
+  background-color: var(--app-overlay-mask);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -124,13 +124,13 @@ function handleCancel() {
 }
 
 .modal-container {
-  background-color: white;
+  background-color: var(--app-surface);
   border-radius: 8px;
   width: 90%;
   max-width: 500px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--app-shadow-lg);
   animation: slideIn 0.3s ease;
 }
 
@@ -150,14 +150,14 @@ function handleCancel() {
   justify-content: space-between;
   align-items: center;
   padding: 20px 24px;
-  border-bottom: 1px solid #f0f2f5;
+  border-bottom: 1px solid var(--app-divider-soft);
 }
 
 .modal-header h3 {
   margin: 0;
   font-size: 18px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--app-text-primary);
 }
 
 .close-btn {
@@ -166,7 +166,7 @@ function handleCancel() {
   border: none;
   background: none;
   font-size: 24px;
-  color: #8c92a0;
+  color: var(--app-text-muted);
   cursor: pointer;
   border-radius: 4px;
   display: flex;
@@ -178,8 +178,8 @@ function handleCancel() {
 }
 
 .close-btn:hover {
-  background-color: #f5f7fa;
-  color: #2c3e50;
+  background-color: var(--app-bg);
+  color: var(--app-text-primary);
 }
 
 .modal-body {
@@ -198,7 +198,7 @@ function handleCancel() {
   display: block;
   font-size: 14px;
   font-weight: 500;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   margin-bottom: 8px;
 }
 
@@ -206,10 +206,10 @@ function handleCancel() {
 .form-group textarea {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--app-border);
   border-radius: 4px;
   font-size: 14px;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   transition: all 0.2s ease;
   box-sizing: border-box;
 }
@@ -217,13 +217,13 @@ function handleCancel() {
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #1890ff;
-  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+  border-color: var(--app-accent);
+  box-shadow: var(--app-shadow-focus);
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: #b0b8c3;
+  color: var(--app-text-muted);
 }
 
 .form-group textarea {
@@ -237,7 +237,7 @@ function handleCancel() {
   justify-content: flex-end;
   gap: 12px;
   padding: 16px 24px;
-  border-top: 1px solid #f0f2f5;
+  border-top: 1px solid var(--app-divider-soft);
 }
 
 .btn {
@@ -251,28 +251,28 @@ function handleCancel() {
 }
 
 .btn-cancel {
-  background-color: white;
-  border-color: #d9d9d9;
-  color: #595959;
+  background-color: var(--app-surface);
+  border-color: var(--app-border);
+  color: var(--app-text-secondary);
 }
 
 .btn-cancel:hover {
-  border-color: #8c92a0;
-  color: #2c3e50;
+  border-color: var(--app-text-muted);
+  color: var(--app-text-primary);
 }
 
 .btn-confirm {
-  background-color: #1890ff;
-  color: white;
+  background-color: var(--app-accent);
+  color: var(--app-text-inverse);
 }
 
 .btn-confirm:hover:not(:disabled) {
-  background-color: #40a9ff;
+  background-color: var(--app-accent-hover);
 }
 
 .btn-confirm:disabled {
-  background-color: #d9d9d9;
-  color: #8c92a0;
+  background-color: var(--app-border);
+  color: var(--app-text-muted);
   cursor: not-allowed;
 }
 </style>

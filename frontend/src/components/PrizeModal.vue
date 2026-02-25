@@ -141,7 +141,7 @@ function handleSubmit() {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--app-overlay-mask);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -159,9 +159,9 @@ function handleSubmit() {
 }
 
 .modal-content {
-  background: white;
+  background: var(--app-surface);
   border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--app-shadow-xl);
   width: 90%;
   max-width: 500px;
   animation: slideUp 0.3s ease-out;
@@ -183,20 +183,20 @@ function handleSubmit() {
   justify-content: space-between;
   align-items: center;
   padding: 20px 24px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--app-border);
 }
 
 .modal-header h3 {
   margin: 0;
   font-size: 20px;
-  color: #333;
+  color: var(--app-text-primary);
 }
 
 .close-btn {
   background: none;
   border: none;
   font-size: 24px;
-  color: #999;
+  color: var(--app-text-muted);
   cursor: pointer;
   padding: 0;
   width: 32px;
@@ -209,8 +209,8 @@ function handleSubmit() {
 }
 
 .close-btn:hover {
-  background: #f5f5f5;
-  color: #333;
+  background: var(--app-item-bg);
+  color: var(--app-text-primary);
 }
 
 .modal-body {
@@ -225,7 +225,7 @@ function handleSubmit() {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
-  color: #333;
+  color: var(--app-text-primary);
   font-size: 14px;
 }
 
@@ -234,7 +234,7 @@ function handleSubmit() {
 .form-group textarea {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--app-border);
   border-radius: 6px;
   font-size: 14px;
   transition: all 0.3s;
@@ -245,8 +245,8 @@ function handleSubmit() {
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: var(--app-accent);
+  box-shadow: var(--app-shadow-focus-strong);
 }
 
 .form-group textarea {
@@ -256,7 +256,7 @@ function handleSubmit() {
 
 .form-hint {
   font-size: 12px;
-  color: #999;
+  color: var(--app-text-muted);
   margin-top: 6px;
 }
 
@@ -265,7 +265,7 @@ function handleSubmit() {
   justify-content: flex-end;
   gap: 12px;
   padding-top: 20px;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--app-border);
 }
 
 .cancel-btn,
@@ -280,21 +280,21 @@ function handleSubmit() {
 }
 
 .cancel-btn {
-  background: #f5f5f5;
-  color: #666;
+  background: var(--app-item-bg);
+  color: var(--app-text-secondary);
 }
 
 .cancel-btn:hover {
-  background: #e0e0e0;
+  background: var(--app-border);
 }
 
 .confirm-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--app-gradient-primary);
+  color: var(--app-text-inverse);
 }
 
 .confirm-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: var(--app-shadow-accent-lg);
 }
 </style>

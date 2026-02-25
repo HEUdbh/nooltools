@@ -295,7 +295,7 @@ function formatTime(timeStr) {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
-  background: #f5f5f5;
+  background: var(--app-item-bg);
 }
 
 .section-header {
@@ -304,15 +304,15 @@ function formatTime(timeStr) {
   align-items: center;
   margin-bottom: 20px;
   padding: 15px 20px;
-  background: white;
+  background: var(--app-surface);
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--app-shadow-sm);
 }
 
 .section-header h2 {
   margin: 0;
   font-size: 24px;
-  color: #333;
+  color: var(--app-text-primary);
 }
 
 /* 抽奖区域 */
@@ -336,18 +336,18 @@ function formatTime(timeStr) {
 }
 
 .draw-btn.once {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--app-gradient-primary);
+  color: var(--app-text-inverse);
 }
 
 .draw-btn.ten {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  color: white;
+  background: var(--app-gradient-secondary);
+  color: var(--app-text-inverse);
 }
 
 .draw-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--app-shadow-lg);
 }
 
 .draw-btn:disabled {
@@ -364,9 +364,9 @@ function formatTime(timeStr) {
 
 .draw-result-item {
   padding: 15px;
-  background: white;
+  background: var(--app-surface);
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--app-shadow-sm);
   animation: slideIn 0.3s ease-out;
 }
 
@@ -382,28 +382,28 @@ function formatTime(timeStr) {
 }
 
 .draw-result-item.传说 {
-  border: 3px solid #ffd700;
-  background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+  border: 3px solid var(--app-prize-gold);
+  background: var(--app-gradient-prize-gold);
 }
 
 .draw-result-item.史诗 {
-  border: 3px solid #ff9800;
-  background: linear-gradient(135deg, #ffe0b2 0%, #ffcc80 100%);
+  border: 3px solid var(--app-warning);
+  background: var(--app-gradient-prize-silver);
 }
 
 .draw-result-item.稀有 {
-  border: 3px solid #9c27b0;
-  background: linear-gradient(135deg, #e1bee7 0%, #ce93d8 100%);
+  border: 3px solid var(--app-prize-bronze);
+  background: var(--app-gradient-prize-bronze);
 }
 
 .draw-result-item.普通 {
-  border: 2px solid #9e9e9e;
+  border: 2px solid var(--app-text-muted);
 }
 
 .result-name {
   font-size: 18px;
   font-weight: bold;
-  color: #333;
+  color: var(--app-text-primary);
   margin-bottom: 8px;
 }
 
@@ -412,7 +412,7 @@ function formatTime(timeStr) {
   justify-content: space-between;
   margin-bottom: 8px;
   font-size: 14px;
-  color: #666;
+  color: var(--app-text-secondary);
 }
 
 .result-variety {
@@ -421,7 +421,7 @@ function formatTime(timeStr) {
 
 .result-description {
   font-size: 14px;
-  color: #999;
+  color: var(--app-text-muted);
   margin-top: 8px;
 }
 
@@ -432,8 +432,8 @@ function formatTime(timeStr) {
 
 .add-btn {
   padding: 8px 16px;
-  background: #4caf50;
-  color: white;
+  background: var(--app-success);
+  color: var(--app-text-inverse);
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -442,7 +442,7 @@ function formatTime(timeStr) {
 }
 
 .add-btn:hover {
-  background: #45a049;
+  background: var(--app-success-hover);
   transform: translateY(-2px);
 }
 
@@ -454,9 +454,9 @@ function formatTime(timeStr) {
 
 .prize-item {
   padding: 15px;
-  background: white;
+  background: var(--app-surface);
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--app-shadow-sm);
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -464,23 +464,23 @@ function formatTime(timeStr) {
 }
 
 .prize-item:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--app-shadow-lg);
 }
 
 .prize-item.传说 {
-  border-left: 4px solid #ffd700;
+  border-left: 4px solid var(--app-prize-gold);
 }
 
 .prize-item.史诗 {
-  border-left: 4px solid #ff9800;
+  border-left: 4px solid var(--app-warning);
 }
 
 .prize-item.稀有 {
-  border-left: 4px solid #9c27b0;
+  border-left: 4px solid var(--app-prize-bronze);
 }
 
 .prize-item.普通 {
-  border-left: 4px solid #9e9e9e;
+  border-left: 4px solid var(--app-text-muted);
 }
 
 .prize-info {
@@ -490,7 +490,7 @@ function formatTime(timeStr) {
 .prize-name {
   font-size: 16px;
   font-weight: bold;
-  color: #333;
+  color: var(--app-text-primary);
   margin-bottom: 8px;
 }
 
@@ -499,7 +499,7 @@ function formatTime(timeStr) {
   gap: 10px;
   margin-bottom: 8px;
   font-size: 14px;
-  color: #666;
+  color: var(--app-text-secondary);
 }
 
 .prize-variety {
@@ -508,7 +508,7 @@ function formatTime(timeStr) {
 
 .prize-description {
   font-size: 13px;
-  color: #999;
+  color: var(--app-text-muted);
 }
 
 .prize-actions {
@@ -527,21 +527,21 @@ function formatTime(timeStr) {
 }
 
 .edit-btn {
-  background: #2196f3;
-  color: white;
+  background: var(--app-info);
+  color: var(--app-text-inverse);
 }
 
 .edit-btn:hover {
-  background: #1976d2;
+  background: var(--app-info-hover);
 }
 
 .delete-btn {
-  background: #f44336;
-  color: white;
+  background: var(--app-danger);
+  color: var(--app-text-inverse);
 }
 
 .delete-btn:hover {
-  background: #d32f2f;
+  background: var(--app-danger-hover);
 }
 
 /* 抽奖历史区域 */
@@ -551,8 +551,8 @@ function formatTime(timeStr) {
 
 .clear-btn {
   padding: 8px 16px;
-  background: #f44336;
-  color: white;
+  background: var(--app-danger);
+  color: var(--app-text-inverse);
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -561,7 +561,7 @@ function formatTime(timeStr) {
 }
 
 .clear-btn:hover:not(:disabled) {
-  background: #d32f2f;
+  background: var(--app-danger-hover);
   transform: translateY(-2px);
 }
 
@@ -580,49 +580,49 @@ function formatTime(timeStr) {
   justify-content: space-between;
   align-items: center;
   padding: 12px 15px;
-  background: white;
+  background: var(--app-surface);
   border-radius: 6px;
   margin-bottom: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--app-shadow-sm);
 }
 
 .history-item.传说 {
-  border-left: 4px solid #ffd700;
+  border-left: 4px solid var(--app-prize-gold);
 }
 
 .history-item.史诗 {
-  border-left: 4px solid #ff9800;
+  border-left: 4px solid var(--app-warning);
 }
 
 .history-item.稀有 {
-  border-left: 4px solid #9c27b0;
+  border-left: 4px solid var(--app-prize-bronze);
 }
 
 .history-item.普通 {
-  border-left: 4px solid #9e9e9e;
+  border-left: 4px solid var(--app-text-muted);
 }
 
 .history-index {
   font-weight: bold;
-  color: #666;
+  color: var(--app-text-secondary);
   min-width: 50px;
 }
 
 .history-name {
   flex: 1;
   font-weight: bold;
-  color: #333;
+  color: var(--app-text-primary);
 }
 
 .history-time {
   font-size: 12px;
-  color: #999;
+  color: var(--app-text-muted);
 }
 
 .empty-state {
   text-align: center;
   padding: 40px;
-  color: #999;
+  color: var(--app-text-muted);
 }
 
 .empty-state p {

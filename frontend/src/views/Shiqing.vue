@@ -354,7 +354,7 @@ onMounted(() => {
 .shiqing-page {
   display: flex;
   height: 100%;
-  background-color: #f5f7fa;
+  background-color: var(--app-bg);
 }
 
 .main-content {
@@ -369,7 +369,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   height: 500px;
-  color: #8c92a0;
+  color: var(--app-text-muted);
   font-size: 16px;
 }
 
@@ -379,7 +379,7 @@ onMounted(() => {
 
 .tip {
   font-size: 13px;
-  color: #b0b8c3;
+  color: var(--app-text-muted);
 }
 
 .shiqing-detail {
@@ -392,10 +392,10 @@ onMounted(() => {
 
 .info-section,
 .details-section {
-  background-color: white;
+  background-color: var(--app-surface);
   border-radius: 12px;
   padding: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--app-shadow-md);
 }
 
 .info-section {
@@ -419,7 +419,7 @@ onMounted(() => {
 .details-section h2 {
   font-size: 20px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   margin: 0 0 24px 0;
 }
 
@@ -436,14 +436,14 @@ onMounted(() => {
 
 .info-item label {
   font-size: 13px;
-  color: #8c92a0;
+  color: var(--app-text-muted);
   margin-bottom: 12px;
   font-weight: 500;
 }
 
 .info-value {
   font-size: 16px;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   font-weight: 500;
   cursor: pointer;
   padding: 8px;
@@ -452,12 +452,12 @@ onMounted(() => {
 }
 
 .info-value:hover {
-  background-color: #f5f7fa;
+  background-color: var(--app-bg);
 }
 
 .info-value:empty::before {
   content: '未设置';
-  color: #b0b8c3;
+  color: var(--app-text-muted);
 }
 
 .edit-wrapper {
@@ -469,7 +469,7 @@ onMounted(() => {
 .edit-input {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--app-border);
   border-radius: 4px;
   font-size: 14px;
   transition: all 0.2s ease;
@@ -478,8 +478,8 @@ onMounted(() => {
 
 .edit-input:focus {
   outline: none;
-  border-color: #1890ff;
-  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+  border-color: var(--app-accent);
+  box-shadow: var(--app-shadow-focus);
 }
 
 .edit-actions {
@@ -491,8 +491,8 @@ onMounted(() => {
   flex: 1;
   padding: 6px 12px;
   border: none;
-  background-color: #1890ff;
-  color: white;
+  background-color: var(--app-accent);
+  color: var(--app-text-inverse);
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
@@ -500,15 +500,15 @@ onMounted(() => {
 }
 
 .save-btn:hover {
-  background-color: #40a9ff;
+  background-color: var(--app-accent-hover);
 }
 
 .cancel-btn {
   flex: 1;
   padding: 6px 12px;
-  border: 1px solid #d9d9d9;
-  background-color: white;
-  color: #595959;
+  border: 1px solid var(--app-border);
+  background-color: var(--app-surface);
+  color: var(--app-text-secondary);
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
@@ -516,8 +516,8 @@ onMounted(() => {
 }
 
 .cancel-btn:hover {
-  border-color: #8c92a0;
-  color: #2c3e50;
+  border-color: var(--app-text-muted);
+  color: var(--app-text-primary);
 }
 
 .details-list {
@@ -531,15 +531,15 @@ onMounted(() => {
   display: flex;
   align-items: flex-start;
   padding: 20px;
-  background-color: #f8f9fa;
+  background-color: var(--app-item-bg);
   border-radius: 8px;
-  border: 1px solid #e8eaed;
+  border: 1px solid var(--app-border);
   transition: all 0.2s ease;
 }
 
 .detail-item:hover {
-  border-color: #1890ff;
-  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.1);
+  border-color: var(--app-accent);
+  box-shadow: var(--app-shadow-accent-sm);
 }
 
 .detail-content {
@@ -549,7 +549,7 @@ onMounted(() => {
 
 .detail-description {
   font-size: 14px;
-  color: #2c3e50;
+  color: var(--app-text-primary);
   line-height: 1.6;
   margin: 0;
   white-space: pre-wrap;
@@ -568,7 +568,7 @@ onMounted(() => {
   height: 28px;
   border: none;
   background: none;
-  color: #8c92a0;
+  color: var(--app-text-muted);
   font-size: 16px;
   cursor: pointer;
   display: flex;
@@ -580,8 +580,8 @@ onMounted(() => {
 }
 
 .edit-btn:hover {
-  background-color: #f0f7ff;
-  color: #1890ff;
+  background-color: var(--app-hover-bg);
+  color: var(--app-accent);
 }
 
 .delete-btn {
@@ -589,7 +589,7 @@ onMounted(() => {
   height: 28px;
   border: none;
   background: none;
-  color: #8c92a0;
+  color: var(--app-text-muted);
   font-size: 20px;
   cursor: pointer;
   display: flex;
@@ -602,14 +602,14 @@ onMounted(() => {
 }
 
 .delete-btn:hover {
-  background-color: #fff1f0;
-  color: #ff4d4f;
+  background-color: var(--app-danger-soft-bg);
+  color: var(--app-danger);
 }
 
 .empty-details {
   text-align: center;
   padding: 48px 20px;
-  color: #8c92a0;
+  color: var(--app-text-muted);
 }
 
 .empty-details p {
@@ -619,11 +619,11 @@ onMounted(() => {
 .add-btn {
   width: 100%;
   padding: 14px 20px;
-  border: 2px dashed #d9d9d9;
+  border: 2px dashed var(--app-border);
   background: none;
   border-radius: 8px;
   font-size: 14px;
-  color: #8c92a0;
+  color: var(--app-text-muted);
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
@@ -633,9 +633,9 @@ onMounted(() => {
 }
 
 .add-btn:hover {
-  border-color: #1890ff;
-  color: #1890ff;
-  background-color: #f0f7ff;
+  border-color: var(--app-accent);
+  color: var(--app-accent);
+  background-color: var(--app-hover-bg);
 }
 
 .add-btn span {
