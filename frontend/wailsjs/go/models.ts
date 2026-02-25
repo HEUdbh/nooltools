@@ -39,6 +39,7 @@ export namespace main {
 	    current_data_dir: string;
 	    default_data_dir: string;
 	    is_custom: boolean;
+	    startup_notice: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new StorageSettings(source);
@@ -49,6 +50,7 @@ export namespace main {
 	        this.current_data_dir = source["current_data_dir"];
 	        this.default_data_dir = source["default_data_dir"];
 	        this.is_custom = source["is_custom"];
+	        this.startup_notice = source["startup_notice"];
 	    }
 	}
 	export class UpdateCheckResult {

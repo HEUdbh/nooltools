@@ -43,6 +43,18 @@ func TestResolveDataDir_DefaultAndCustom(t *testing.T) {
 	if !PathsEqual(resolvedDir, customDir) {
 		t.Fatalf("expected custom data dir %q, got %q", customDir, resolvedDir)
 	}
+
+	if err := ClearCustomDataDir(); err != nil {
+		t.Fatalf("ClearCustomDataDir() failed: %v", err)
+	}
+
+	resolvedDir, err = ResolveDataDir()
+	if err != nil {
+		t.Fatalf("ResolveDataDir() after clear failed: %v", err)
+	}
+	if !PathsEqual(resolvedDir, defaultDir) {
+		t.Fatalf("expected default data dir after clear %q, got %q", defaultDir, resolvedDir)
+	}
 }
 
 func TestBuildTargetDataDir(t *testing.T) {

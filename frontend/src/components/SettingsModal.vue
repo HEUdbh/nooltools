@@ -21,7 +21,8 @@ const selectedParentDir = ref('')
 const currentSettings = ref({
   current_data_dir: '',
   default_data_dir: '',
-  is_custom: false
+  is_custom: false,
+  startup_notice: ''
 })
 const migrationResult = ref(null)
 const errorMessage = ref('')
@@ -192,6 +193,9 @@ function handleRestartLater() {
             </div>
 
             <div v-else class="tab-content">
+              <div v-if="currentSettings.startup_notice" class="startup-notice">
+                {{ currentSettings.startup_notice }}
+              </div>
               <div class="storage-row">
                 <span class="label">当前存储目录</span>
                 <span class="value">{{ currentSettings.current_data_dir || '-' }}</span>
@@ -455,6 +459,15 @@ function handleRestartLater() {
 .tip {
   color: var(--app-text-muted);
   margin-top: 10px;
+}
+
+.startup-notice {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--app-warning-soft-border);
+  background-color: var(--app-warning-soft-bg);
+  color: var(--app-warning-text);
 }
 
 .message {

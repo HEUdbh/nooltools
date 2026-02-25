@@ -21,6 +21,7 @@ type StorageSettings struct {
 	CurrentDataDir string `json:"current_data_dir"`
 	DefaultDataDir string `json:"default_data_dir"`
 	IsCustom       bool   `json:"is_custom"`
+	StartupNotice  string `json:"startup_notice"`
 }
 
 type StorageMigrationResult struct {
@@ -44,6 +45,7 @@ func (a *app) GetStorageSettings() (StorageSettings, error) {
 		CurrentDataDir: currentDataDir,
 		DefaultDataDir: defaultDataDir,
 		IsCustom:       !storage.PathsEqual(currentDataDir, defaultDataDir),
+		StartupNotice:  a.storageStartupNotice,
 	}, nil
 }
 

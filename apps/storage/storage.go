@@ -119,6 +119,15 @@ func SetCustomDataDir(dataDir string) error {
 	return SaveConfig(cfg)
 }
 
+func ClearCustomDataDir() error {
+	cfg, err := LoadConfig()
+	if err != nil {
+		return err
+	}
+	cfg.CustomDataDir = ""
+	return SaveConfig(cfg)
+}
+
 func ResolveDataDir() (string, error) {
 	defaultDir, err := DefaultDataDir()
 	if err != nil {

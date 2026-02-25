@@ -10,10 +10,11 @@ import (
 
 // app 结构体
 type app struct {
-	database   *database.Database
-	ctx        context.Context
-	updateMu   sync.Mutex
-	isUpdating bool
+	database             *database.Database
+	ctx                  context.Context
+	updateMu             sync.Mutex
+	isUpdating           bool
+	storageStartupNotice string
 }
 
 // NewApp 创建应用实例
@@ -25,21 +26,10 @@ func NewApp() *app {
 func (a *app) startup(ctx context.Context) {
 	a.ctx = ctx
 
-	// 初始化数据库
-	db, err := database.NewDatabase()
-	if err != nil {
-		log.Printf("初始化数据库失败: %v", err)
+	// 初始化存储与数据库（包含启动期自愈）
+	if err := a.initializeStorageAndDatabase(); err != nil {
+		log.Printf("初始化存储或数据库失败: %v", err)
 		return
-	}
-
-	a.database = db
-	log.Println("数据库初始化成功")
-
-	// 检查数据库和表是否存在
-	if ok, err := a.database.CheckDatabase(); err != nil {
-		log.Printf("检查数据库失败: %v", err)
-	} else if ok {
-		log.Println("数据库和所有表检查通过")
 	}
 }
 

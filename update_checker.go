@@ -18,7 +18,7 @@ import (
 
 const (
 	// AppVersion is the local application version used for release comparison.
-	AppVersion = "v1.4.0"
+	AppVersion = "v1.5.0"
 
 	githubRepoURL         = "https://github.com/HEUdbh/nooltools"
 	githubTokenConfigName = "github_token.json"
